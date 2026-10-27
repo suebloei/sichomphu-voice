@@ -441,8 +441,27 @@
       -webkit-appearance: none;
     }
 
+    /* Footer: ผู้พัฒนา จบในบรรทัดเดียว */
+    footer {
+      padding: 10px 12px 14px 12px;
+      text-align: center;
+      border-top: 1px solid #f1f5f9;
+      background-color: #ffffff;
+    }
+
+    .developer-text {
+      font-size: 0.68rem;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      width: 100%;
+      letter-spacing: -0.01em;
+    }
+
     /* ==========================================================================
-       ADAPTIVE LANDSCAPE (หมุนแนวนอน ทั้งโทรศัพท์, แท็บเล็ต และ iPad)
+       ADAPTIVE LANDSCAPE (หมุนแนวนอน)
        ========================================================================== */
     @media (orientation: landscape) {
       .app-container {
@@ -458,7 +477,6 @@
         padding: 14px;
       }
 
-      /* จัดฝั่งซ้ายเป็นแถบเลือกบริการแนวตั้ง Scrollable */
       .landscape-left-col {
         display: flex;
         flex-direction: column;
@@ -468,7 +486,7 @@
       .landscape-left-col .service-scroll {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        max-height: calc(100vh - 170px);
+        max-height: calc(100vh - 190px);
         overflow-y: auto;
         overflow-x: hidden;
         padding-right: 4px;
@@ -479,14 +497,17 @@
         width: 100%;
       }
 
-      /* ฝั่งขวาแสดงรายละเอียดเอกสารและปุ่มเสียง */
       .landscape-right-col {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        max-height: calc(100vh - 120px);
+        max-height: calc(100vh - 140px);
         overflow-y: auto;
         padding-right: 4px;
+      }
+
+      .developer-text {
+        font-size: 0.72rem;
       }
     }
   </style>
@@ -542,7 +563,7 @@
     <!-- Main Content -->
     <main>
       
-      <!-- โซนที่ 1: เมนูและตัวเลือกบริการ (ฝั่งซ้ายเมื่ออยู่แนวนอน) -->
+      <!-- โซนที่ 1: เมนูและตัวเลือกบริการ -->
       <div class="landscape-left-col">
         <div class="alert-card">
           <span style="font-size:1.3rem;">🐘</span>
@@ -568,7 +589,7 @@
         </div>
       </div>
 
-      <!-- โซนที่ 2: รายละเอียดเอกสารและปุ่มฟังเสียง (ฝั่งขวาเมื่ออยู่แนวนอน) -->
+      <!-- โซนที่ 2: รายละเอียดเอกสารและปุ่มฟังเสียง -->
       <div class="landscape-right-col">
         
         <div class="detail-box">
@@ -623,10 +644,17 @@
 
     </main>
 
+    <!-- Footer: ผู้พัฒนา จบในบรรทัดเดียว -->
+    <footer>
+      <span class="developer-text" id="ui-developer">
+        พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น
+      </span>
+    </footer>
+
   </div>
 
   <script>
-    // พจนานุกรม UI
+    // พจนานุกรม UI รวมเครดิตผู้พัฒนา
     const i18n = {
       th: {
         district: "ที่ว่าการอำเภอสีชมพู",
@@ -646,7 +674,8 @@
         timeLabel: "⏱️ ระยะเวลาดำเนินการ",
         feeLabel: "💰 ค่าธรรมเนียม",
         btnPlay: "กดเพื่อฟังเสียงบรรยาย",
-        btnStop: "กดเพื่อหยุดฟังเสียง"
+        btnStop: "กดเพื่อหยุดฟังเสียง",
+        developer: "พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น"
       },
       is: {
         district: "ที่ว่าการอำเภอสีชมพู",
@@ -666,7 +695,8 @@
         timeLabel: "⏱️ ระยะเวลาดำเนินการ",
         feeLabel: "💰 ค่าธรรมเนียม",
         btnPlay: "กดเพื่อฟังเสียงเว้าสู่ฟัง",
-        btnStop: "กดเพื่อหยุดฟังเสียง"
+        btnStop: "กดเพื่อหยุดฟังเสียง",
+        developer: "พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น"
       },
       en: {
         district: "Si Chomphu District Office",
@@ -686,7 +716,8 @@
         timeLabel: "⏱️ Estimated Time",
         feeLabel: "💰 Official Fee",
         btnPlay: "Listen to Voice Guide",
-        btnStop: "Stop Audio Guide"
+        btnStop: "Stop Audio Guide",
+        developer: "Developed by Mr.Noppakhun Suebloei and Mr.Panya Kumsmile, Sichomphusuksa School, Khon Kaen Provincial Administrative Organization"
       }
     };
 
@@ -1154,7 +1185,7 @@
     let synth = window.speechSynthesis;
     let currentUtterance = null;
 
-    // ผูก Event Listener เมื่อ DOM โหลดเสร็จ เพื่อให้ทำงานบน iOS/iPad ได้ 100%
+    // ผูก Event Listener เมื่อ DOM โหลดเสร็จ
     document.addEventListener('DOMContentLoaded', function() {
       setupEventListeners();
       applyLanguageTexts();
@@ -1233,6 +1264,9 @@
       document.getElementById('ui-time-label').innerText = t.timeLabel;
       document.getElementById('ui-fee-label').innerText = t.feeLabel;
       document.getElementById('voice-btn-text').innerText = isSpeaking ? t.btnStop : t.btnPlay;
+
+      // อัปเดตบรรทัดผู้พัฒนา
+      document.getElementById('ui-developer').innerText = t.developer;
     }
 
     function filterCat(cat) {
@@ -1256,7 +1290,6 @@
         chip.className = `service-chip ${s.id === currentId ? 'active' : ''}`;
         chip.setAttribute('data-id', s.id);
         
-        // ผูก Touch / Click Event ให้ชัวร์บน iOS & Android
         chip.addEventListener('click', function() {
           selectService(s.id);
         });
