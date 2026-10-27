@@ -2,850 +2,811 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>เสียงนำทางเตรียมเอกสาร - ที่ว่าการอำเภอสีชมพู จ.ขอนแก่น</title>
   
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts Sarabun & Mali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;700&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Phosphor Icons -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Sarabun', 'sans-serif'],
-            friendly: ['Mali', 'cursive'],
-          },
-          colors: {
-            pinkbrand: {
-              50: '#fdf2f8',
-              100: '#fce7f3',
-              200: '#fbcfe8',
-              300: '#f9a8d4',
-              400: '#f472b6',
-              500: '#ec4899',
-              600: '#db2777',
-              700: '#be185d',
-              800: '#9d174d',
-              900: '#831843',
-            }
-          },
-          keyframes: {
-            soundWave: {
-              '0%, 100%': { transform: 'scale(1)', opacity: '1' },
-              '50%': { transform: 'scale(1.25)', opacity: '0.85' },
-            },
-            wiggleEar: {
-              '0%, 100%': { transform: 'rotate(0deg)' },
-              '50%': { transform: 'rotate(-6deg)' }
-            }
-          },
-          animation: {
-            'sound-wave': 'soundWave 1.2s ease-in-out infinite',
-            'wiggle': 'wiggleEar 2s ease-in-out infinite',
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    * {
+    /* Reset พื้นฐานแบบ Standalone ไม่พึ่ง Tailwind CDN ป้องกันเว็บพังใน LINE / Messenger */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       -webkit-tap-highlight-color: transparent;
-      touch-action: pan-x pan-y pinch-zoom;
     }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.4;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
+
+    .app-container {
+      width: 100%;
+      max-width: 500px;
+      background-color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      position: relative;
+    }
+
+    /* Header: ยกเลิก sticky เพื่อไม่ให้บังหน้าจอ */
+    header {
+      background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+      color: #ffffff;
+      padding: 10px 14px;
+      position: relative;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      background: #ffffff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border: 1.5px solid #fbcfe8;
+    }
+
+    .brand-text h1 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .tag-kk {
+      background: rgba(255,255,255,0.25);
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .brand-text p {
+      font-size: 0.72rem;
+      color: #ffe4e6;
+      white-space: nowrap;
+    }
+
+    /* ปุ่มโทร: ล็อกความสูง-กว้างแน่นอน ไม่ให้กลายเป็นวงกลมยักษ์ */
+    .call-btn {
+      background-color: #fbbf24;
+      color: #451a03;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    /* แถบภาษา */
+    .lang-bar {
+      margin-top: 8px;
+      background: rgba(0,0,0,0.18);
+      border-radius: 10px;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+    }
+
+    .lang-btns {
+      display: flex;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: #ffffff;
+      color: #be123c;
+    }
+
+    /* เนื้อหาหลัก */
+    main {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .alert-card {
+      background: #fdf2f8;
+      border: 1px solid #fbcfe8;
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+    }
+
+    .alert-card strong {
+      display: block;
+      color: #9f1239;
+      font-size: 0.8rem;
+    }
+
+    .alert-card p {
+      color: #881337;
+      font-size: 0.7rem;
+    }
+
+    /* เมนูกรอง */
+    .filter-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
       scrollbar-width: none;
+      padding-bottom: 2px;
     }
-    .ripple-active {
-      box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+    .filter-scroll::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+      background: #f1f5f9;
+      color: #475569;
+      cursor: pointer;
+    }
+
+    .cat-btn.active {
+      background: #e11d48;
+      color: #ffffff;
+    }
+
+    /* เมนูบริการแบบเลื่อนนอน */
+    .service-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 4px 2px 8px 2px;
+    }
+    .service-scroll::-webkit-scrollbar { display: none; }
+
+    .service-chip {
+      flex: 0 0 auto;
+      min-width: 110px;
+      max-width: 130px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .service-chip.active {
+      border-color: #e11d48;
+      background: #fff1f2;
+    }
+
+    .service-chip .emoji {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .service-chip .title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #334155;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.2;
+    }
+
+    /* กล่องรายละเอียดเอกสาร */
+    .detail-box {
+      border: 1.5px solid #fecdd3;
+      border-radius: 16px;
+      padding: 12px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .detail-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+
+    .detail-head h2 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .badge-sub {
+      display: inline-block;
+      font-size: 0.65rem;
+      background: #ffe4e6;
+      color: #9f1239;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .summary-bar {
+      background: #fff1f2;
+      border-left: 3.5px solid #e11d48;
+      padding: 6px 10px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #881337;
+    }
+
+    .docs-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 10px;
+      padding: 6px 8px;
+    }
+
+    .doc-item .idx {
+      width: 22px;
+      height: 22px;
+      background: #e11d48;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .doc-item .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .doc-item .info strong {
+      font-size: 0.78rem;
+      display: block;
+      color: #1e293b;
+    }
+
+    .doc-item .info span {
+      font-size: 0.68rem;
+      color: #64748b;
+      display: block;
+    }
+
+    .tip-box {
+      background: #fefce8;
+      border: 1px solid #fef08a;
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 0.7rem;
+      color: #713f12;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 6px;
+      text-align: center;
+    }
+
+    .stat-card .label {
+      font-size: 0.65rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .stat-card .val {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 2px;
+    }
+
+    /* ส่วนควบคุมเสียง: ไม่ให้ลอยบังหน้าจอ (Inline Flow) */
+    .audio-section {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      border-radius: 14px;
+      padding: 10px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .play-audio-btn {
+      flex: 1;
+      border: none;
+      background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 3px 8px rgba(225, 29, 72, 0.3);
+    }
+
+    .play-audio-btn.speaking {
+      background: #dc2626;
       animation: ripplePink 1.4s infinite;
     }
-    @keyframes ripplePink {
-      0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
-      70% { box-shadow: 0 0 0 24px rgba(236, 72, 153, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
-    }
 
-    /* จัดการขอบ Safe Area */
-    header {
-      padding-top: max(0.75rem, env(safe-area-inset-top));
-      padding-left: max(0.75rem, env(safe-area-inset-left));
-      padding-right: max(0.75rem, env(safe-area-inset-right));
-    }
-    .safe-bottom {
-      padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
-      padding-left: max(0.75rem, env(safe-area-inset-left));
-      padding-right: max(0.75rem, env(safe-area-inset-right));
-    }
-
-    /* แก้ปัญหาโทรศัพท์แนวนอน (Landscape ที่ความสูงหน้าจอน้อยกว่า 550px) */
-    @media (orientation: landscape) and (max-height: 550px) {
-      /* ยกเลิกการตรึงหัวเว็บเพื่อไม่ให้บังหน้าจอ */
-      header {
-        position: relative !important;
-        top: auto !important;
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
-      }
-      /* ปรับปุ่มเสียงด้านล่างไม่ให้ลอยทับเนื้อหา */
-      .mobile-floating-bar {
-        position: relative !important;
-        bottom: auto !important;
-        box-shadow: none !important;
-        border-top: 1px solid #fbcfe8 !important;
-        padding: 0.75rem !important;
-      }
-      /* ลด padding ด้านล่างของ body */
-      .wrapper-container {
-        padding-bottom: 1rem !important;
-      }
+    .repeat-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid #fecdd3;
+      background: #ffffff;
+      color: #be123c;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      flex-shrink: 0;
     }
   </style>
 </head>
-<body class="bg-slate-100/80 text-slate-800 font-sans min-h-screen flex flex-col items-center justify-start antialiased">
+<body>
 
-  <!-- Wrapper ปรับขนาดอัตโนมัติตามแนวตั้ง/แนวนอน -->
-  <div class="wrapper-container w-full max-w-5xl bg-white min-h-screen shadow-xl flex flex-col justify-between relative pb-28 md:pb-8 border-x border-pink-100/80">
+  <div class="app-container">
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 text-white shadow-md sticky top-0 z-30 transition-all">
-      <div class="flex items-center justify-between mb-1.5 md:mb-3">
-        <div class="flex items-center space-x-2">
-          <!-- โลโก้ช้างน้อยสีชมพู (SVG) -->
-          <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-2xl p-1 shadow-md flex items-center justify-center flex-shrink-0 border-2 border-pink-200">
-            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="25" cy="46" rx="15" ry="17" fill="#f472b6" class="animate-wiggle origin-bottom-right" />
-              <ellipse cx="25" cy="46" rx="10" ry="12" fill="#fbcfe8" />
-              <ellipse cx="75" cy="46" rx="15" ry="17" fill="#f472b6" />
-              <ellipse cx="75" cy="46" rx="10" ry="12" fill="#fbcfe8" />
-              <ellipse cx="50" cy="52" rx="30" ry="27" fill="#f472b6" />
-              <ellipse cx="50" cy="56" rx="22" ry="18" fill="#fce7f3" />
-              <circle cx="34" cy="58" r="4.5" fill="#f43f5e" opacity="0.4" />
-              <circle cx="66" cy="58" r="4.5" fill="#f43f5e" opacity="0.4" />
-              <circle cx="38" cy="48" r="4.5" fill="#1e293b" />
-              <circle cx="36.5" cy="46.5" r="1.5" fill="#ffffff" />
-              <circle cx="62" cy="48" r="4.5" fill="#1e293b" />
-              <circle cx="60.5" cy="46.5" r="1.5" fill="#ffffff" />
-              <path d="M47 54 C47 68, 52 72, 57 71 C60 70, 60 65, 56 64 C52 63, 51 59, 51 54 Z" fill="#ec4899" />
-              <path d="M50 18 L53 23 L59 21 L56 26 L61 29 L55 31 L54 37 L50 33 L46 37 L45 31 L39 29 L44 26 L41 21 L47 23 Z" fill="#fbbf24" stroke="#d97706" stroke-width="1" />
-              <circle cx="50" cy="27" r="2.5" fill="#e11d48" />
+    <!-- ส่วนหัว: ไม่ล็อก Sticky -->
+    <header>
+      <div class="header-row">
+        <div class="brand-box">
+          <div class="logo-badge">
+            <svg viewBox="0 0 100 100" width="30" height="30" fill="none">
+              <ellipse cx="25" cy="46" rx="15" ry="17" fill="#f472b6"/>
+              <ellipse cx="25" cy="46" rx="10" ry="12" fill="#fbcfe8"/>
+              <ellipse cx="75" cy="46" rx="15" ry="17" fill="#f472b6"/>
+              <ellipse cx="75" cy="46" rx="10" ry="12" fill="#fbcfe8"/>
+              <ellipse cx="50" cy="52" rx="30" ry="27" fill="#f472b6"/>
+              <ellipse cx="50" cy="56" rx="22" ry="18" fill="#fce7f3"/>
+              <circle cx="34" cy="58" r="4.5" fill="#f43f5e" opacity="0.4"/>
+              <circle cx="66" cy="58" r="4.5" fill="#f43f5e" opacity="0.4"/>
+              <circle cx="38" cy="48" r="4.5" fill="#1e293b"/>
+              <circle cx="36.5" cy="46.5" r="1.5" fill="#ffffff"/>
+              <circle cx="62" cy="48" r="4.5" fill="#1e293b"/>
+              <circle cx="60.5" cy="46.5" r="1.5" fill="#ffffff"/>
+              <path d="M47 54 C47 68, 52 72, 57 71 C60 70, 60 65, 56 64 C52 63, 51 54 Z" fill="#ec4899"/>
+              <circle cx="50" cy="27" r="2.5" fill="#e11d48"/>
             </svg>
           </div>
-
-          <div>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <h1 id="ui-district-title" class="font-extrabold text-sm md:text-xl leading-tight">ที่ว่าการอำเภอสีชมพู</h1>
-              <span id="ui-province-tag" class="bg-white/20 text-white text-[9px] md:text-xs px-2 py-0.5 rounded-full font-bold">ขอนแก่น</span>
-            </div>
-            <p id="ui-subtitle" class="text-[11px] md:text-sm text-pink-100 font-medium">น้องช้างพาเพลิน แนะนำเอกสาร</p>
+          <div class="brand-text">
+            <h1>ที่ว่าการอำเภอสีชมพู <span class="tag-kk">ขอนแก่น</span></h1>
+            <p>น้องช้างพาเพลิน แนะนำเอกสาร</p>
           </div>
         </div>
 
-        <!-- ปุ่มโทรศัพท์ -->
-        <a href="tel:043399140" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold px-2.5 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm flex items-center gap-1 shadow active:scale-95 transition-transform" aria-label="โทรที่ว่าการอำเภอสีชมพู">
-          <i class="ph-fill ph-phone-call text-sm md:text-base animate-bounce"></i>
-          <span id="ui-call-btn">โทร 043-399-140</span>
+        <a href="tel:043399140" class="call-btn">
+          📞 043-399-140
         </a>
       </div>
 
-      <!-- แถบเลือกภาษา -->
-      <div class="bg-black/20 backdrop-blur-sm p-1 rounded-xl flex items-center justify-between text-xs md:text-sm font-medium">
-        <span class="pl-2 flex items-center gap-1 text-white/95 text-[11px] md:text-xs">
-          <i class="ph-bold ph-speaker-simple-high text-yellow-300"></i> <span id="ui-lang-label">เลือกภาษา:</span>
-        </span>
-        <div class="flex space-x-1">
-          <button id="lang-th" onclick="setLanguage('th')" class="px-2.5 py-0.5 md:py-1 rounded-lg text-xs font-bold transition-all bg-white text-pink-700 shadow">
-            ไทย
-          </button>
-          <button id="lang-is" onclick="setLanguage('is')" class="px-2.5 py-0.5 md:py-1 rounded-lg text-xs font-bold transition-all text-white/90 hover:bg-white/20">
-            อีสาน
-          </button>
-          <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-0.5 md:py-1 rounded-lg text-xs font-bold transition-all text-white/90 hover:bg-white/20">
-            EN
-          </button>
+      <!-- สลับภาษา -->
+      <div class="lang-bar">
+        <span>🔊 เลือกสำเนียงเสียง:</span>
+        <div class="lang-btns">
+          <button id="btn-th" class="lang-btn active" onclick="setLang('th')">ไทย</button>
+          <button id="btn-is" class="lang-btn" onclick="setLang('is')">อีสาน</button>
+          <button id="btn-en" class="lang-btn" onclick="setLang('en')">EN</button>
         </div>
       </div>
     </header>
 
-    <!-- Main Content Area: Responsive Grid -->
-    <main class="p-3 md:p-6 flex-1 grid grid-cols-1 md:grid-cols-12 gap-3.5 md:gap-6">
+    <!-- เนื้อหาหลัก -->
+    <main>
+      <div class="alert-card">
+        <span style="font-size:1.3rem;">🐘</span>
+        <div>
+          <strong>อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!</strong>
+          <p>แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง (ใช้นิ้วขยายหน้าจอได้)</p>
+        </div>
+      </div>
 
-      <!-- ฝั่งซ้าย: หมวดหมู่และเมนูบริการ -->
-      <div class="md:col-span-5 space-y-3">
-        
-        <!-- Helper Notice -->
-        <div class="bg-pink-100/70 border border-pink-300 rounded-2xl p-2 md:p-3 flex items-center gap-2.5 shadow-sm">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-pink-500 text-white flex items-center justify-center text-lg md:text-xl flex-shrink-0 shadow">
-            🐘
-          </div>
+      <!-- แท็บหมวดหมู่ -->
+      <div class="filter-scroll">
+        <button onclick="filterCat('all')" id="f-all" class="cat-btn active">ทั้งหมด</button>
+        <button onclick="filterCat('id')" id="f-id" class="cat-btn">บัตร & ชื่อ</button>
+        <button onclick="filterCat('family')" id="f-family" class="cat-btn">สมรส & บุตร</button>
+        <button onclick="filterCat('vital')" id="f-vital" class="cat-btn">เกิด & ตาย</button>
+        <button onclick="filterCat('civil')" id="f-civil" class="cat-btn">ทะเบียนบ้าน & ย้าย</button>
+      </div>
+
+      <!-- เมนูเลือกบริการแนวนอน -->
+      <div>
+        <p style="font-size:0.75rem; font-weight:700; color:#9f1239; margin-bottom:4px;">👇 เลื่อนซ้าย-ขวาเพื่อเลือกบริการ:</p>
+        <div class="service-scroll" id="service-list">
+          <!-- Render ผ่าน JavaScript -->
+        </div>
+      </div>
+
+      <!-- กล่องแสดงรายการเอกสาร -->
+      <div class="detail-box">
+        <div class="detail-head">
           <div>
-            <p id="ui-notice-title" class="text-xs md:text-sm font-extrabold text-pink-950 leading-tight">อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!</p>
-            <p id="ui-notice-desc" class="text-[11px] md:text-xs text-pink-800 leading-tight mt-0.5">แตะเลือกบริการ แล้วแตะปุ่มสีชมพูด้านล่างเพื่อฟังเสียง</p>
+            <span class="badge-sub" id="display-badge">งานทะเบียนราษฎรและบัตร</span>
+            <h2 id="display-title" style="margin-top:2px;">บัตรเดิมหมดอายุ</h2>
           </div>
+          <div id="display-emoji" style="font-size:1.8rem;">🪪</div>
         </div>
 
-        <!-- Category Filter Tabs -->
-        <div>
-          <div class="flex gap-1.5 overflow-x-auto no-scrollbar py-0.5" id="category-filters">
-            <button onclick="filterCategory('all')" id="filter-all" class="cat-pill px-3 py-1 rounded-full text-xs md:text-sm font-bold bg-pink-600 text-white shadow-sm flex-shrink-0">
-              ทั้งหมด
-            </button>
-            <button onclick="filterCategory('id')" id="filter-id" class="cat-pill px-3 py-1 rounded-full text-xs md:text-sm font-bold bg-pink-100 text-pink-800 flex-shrink-0">
-              บัตร & ชื่อ
-            </button>
-            <button onclick="filterCategory('family')" id="filter-family" class="cat-pill px-3 py-1 rounded-full text-xs md:text-sm font-bold bg-pink-100 text-pink-800 flex-shrink-0">
-              สมรส & บุตร
-            </button>
-            <button onclick="filterCategory('vital')" id="filter-vital" class="cat-pill px-3 py-1 rounded-full text-xs md:text-sm font-bold bg-pink-100 text-pink-800 flex-shrink-0">
-              เกิด & ตาย
-            </button>
-            <button onclick="filterCategory('civil')" id="filter-civil" class="cat-pill px-3 py-1 rounded-full text-xs md:text-sm font-bold bg-pink-100 text-pink-800 flex-shrink-0">
-              ทะเบียนบ้าน & ย้าย
-            </button>
-          </div>
+        <div class="summary-bar" id="display-summary">
+          ยื่นขอทำบัตรใหม่ได้ล่วงหน้า 60 วัน หรือภายใน 60 วันนับแต่วันหมดอายุ
         </div>
 
-        <!-- Service Selector Chips: จัดการความสูงเมื่อเป็นแนวนอน -->
         <div>
-          <p class="text-[11px] md:text-xs font-bold text-pink-900 uppercase tracking-wide mb-1.5 flex items-center justify-between">
-            <span class="flex items-center gap-1">
-              <i class="ph-bold ph-hand-tap text-pink-600"></i> <span id="ui-scroll-guide">เลือกบริการที่ต้องการ:</span>
-            </span>
-            <span id="ui-tap-hint" class="text-pink-600 text-[10px] md:text-xs font-semibold">แตะเพื่อเปิดดู</span>
+          <p style="font-size:0.75rem; font-weight:800; color:#334155; margin-bottom:6px;">
+            ✅ สิ่งที่ต้องถือติดตัวมาที่อำเภอสีชมพู:
           </p>
-
-          <div id="service-chips-container" class="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto no-scrollbar pb-1 pt-0.5 md:max-h-[480px]">
-            <!-- Injected by JavaScript -->
+          <div class="docs-container" id="docs-list">
+            <!-- Render รายการเอกสาร -->
           </div>
         </div>
 
-      </div>
-
-      <!-- ฝั่งขวา: รายละเอียดเอกสารและ Checklist -->
-      <div class="md:col-span-7 space-y-3">
-        
-        <section class="bg-white rounded-3xl border-2 border-pink-200 p-3.5 md:p-5 shadow-sm space-y-3">
-          
-          <!-- หัวข้อบริการ -->
-          <div class="flex items-start justify-between border-b border-pink-100 pb-2">
-            <div class="pr-2">
-              <span id="service-badge" class="bg-pink-100 text-pink-800 text-[10px] md:text-xs font-bold px-2 py-0.5 rounded-full inline-block">
-                งานทะเบียนราษฎรและบัตร
-              </span>
-              <h2 id="service-title" class="text-base md:text-xl font-black text-slate-900 mt-1 leading-snug">
-                บัตรเดิมหมดอายุ
-              </h2>
-            </div>
-            <div id="service-emoji" class="text-2xl md:text-4xl bg-pink-50 border border-pink-200 p-1.5 md:p-2.5 rounded-2xl flex-shrink-0">
-              🪪
-            </div>
-          </div>
-
-          <!-- กล่องสรุปย่อ -->
-          <div class="bg-pink-50 border-l-4 border-pink-500 p-2 md:p-3 rounded-r-xl">
-            <p id="service-summary" class="text-xs md:text-sm font-bold text-pink-950 leading-relaxed">
-              ยื่นขอทำบัตรใหม่ได้ล่วงหน้า 60 วัน หรือภายใน 60 วันนับแต่วันหมดอายุ
-            </p>
-          </div>
-
-          <!-- Checklist เอกสาร -->
-          <div>
-            <h3 class="text-xs md:text-sm font-extrabold text-slate-800 mb-1.5 flex items-center gap-1.5">
-              <i class="ph-fill ph-check-circle text-pink-600 text-base md:text-lg"></i>
-              <span id="ui-checklist-heading">สิ่งที่ต้องถือติดตัวมาที่อำเภอสีชมพู:</span>
-            </h3>
-
-            <div id="checklist-container" class="space-y-1.5 md:space-y-2">
-              <!-- Injected by JavaScript -->
-            </div>
-          </div>
-
-          <!-- กล่องคำแนะนำ/ค่าปรับ -->
-          <div id="service-tip-box" class="bg-amber-50 border border-amber-200 rounded-2xl p-2 md:p-2.5 flex items-start gap-2 text-amber-900 text-[11px] md:text-sm">
-            <i class="ph-fill ph-warning-circle text-base text-amber-600 flex-shrink-0 mt-0.5"></i>
-            <p id="service-tip" class="leading-relaxed">
-              หากพ้นกำหนด 60 วัน มีค่าปรับไม่เกิน 100 บาท
-            </p>
-          </div>
-
-          <!-- ข้อมูลระยะเวลาและค่าธรรมเนียม -->
-          <div class="grid grid-cols-2 gap-2 pt-1">
-            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-2 text-center">
-              <p id="ui-time-label" class="text-[10px] md:text-xs text-rose-700 font-bold">⏱️ ระยะเวลาดำเนินการ</p>
-              <p id="service-time" class="text-xs md:text-base font-extrabold text-rose-950 mt-0.5">ประมาณ 15 นาที</p>
-            </div>
-            <div class="bg-pink-50 border border-pink-200 rounded-2xl p-2 text-center">
-              <p id="ui-fee-label" class="text-[10px] md:text-xs text-pink-700 font-bold">💰 ค่าธรรมเนียม</p>
-              <p id="service-fee" class="text-xs md:text-base font-extrabold text-pink-950 mt-0.5">ฟรี ไม่มีค่าธรรมเนียม</p>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- Inline Audio Controller บนแท็บเล็ต/เดสก์ท็อป -->
-        <div class="hidden md:flex items-center gap-3 bg-pink-50/80 p-3 rounded-2xl border border-pink-200 shadow-sm">
-          <button id="voice-button-desktop" onclick="toggleVoiceSpeech()" class="flex-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 text-white rounded-2xl p-3 flex items-center justify-center gap-3 shadow-md active:scale-95 transition-all">
-            <i class="ph-fill ph-speaker-high text-2xl"></i>
-            <span class="font-extrabold text-base voice-maintext-sync">🔊 กดเพื่อฟังเสียงบรรยาย</span>
-          </button>
-          <button onclick="restartAudio()" title="ฟังใหม่อีกรอบ" class="bg-white hover:bg-pink-100 text-pink-700 p-3 rounded-2xl flex items-center justify-center aspect-square border border-pink-200 active:scale-95 transition-transform shadow-sm">
-            <i class="ph-bold ph-arrow-counter-clockwise text-2xl"></i>
-          </button>
+        <div class="tip-box">
+          <span>⚠️</span>
+          <p id="display-tip">หากพ้นกำหนด 60 วัน มีค่าปรับไม่เกิน 100 บาท</p>
         </div>
 
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="label">⏱️ ระยะเวลาดำเนินการ</div>
+            <div class="val" id="display-time">ประมาณ 15 นาที</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">💰 ค่าธรรมเนียม</div>
+            <div class="val" id="display-fee">ฟรี ไม่มีค่าธรรมเนียม</div>
+          </div>
+        </div>
       </div>
 
+      <!-- ปุ่มฟังเสียง: ไหลต่อจากเนื้อหา ไม่ลอยบังหน้าจอ -->
+      <div class="audio-section">
+        <button class="play-audio-btn" id="voice-btn" onclick="toggleAudio()">
+          <span id="voice-btn-icon">🔊</span>
+          <span id="voice-btn-text">กดเพื่อฟังเสียงบรรยาย</span>
+        </button>
+        <button class="repeat-btn" onclick="restartAudio()" title="ฟังใหม่อีกรอบ">
+          🔄
+        </button>
+      </div>
     </main>
-
-    <!-- Floating Bottom Voice Bar (สำหรับมือถือแนวตั้ง และปลดลอยเมื่อเป็นแนวนอน) -->
-    <div class="mobile-floating-bar md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-pink-200 p-2 z-40 shadow-2xl safe-bottom flex justify-center">
-      <div class="w-full max-w-md flex items-center gap-2">
-        <button id="voice-button" onclick="toggleVoiceSpeech()" class="flex-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 text-white rounded-2xl p-2.5 flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all relative overflow-hidden">
-          <div id="speaker-icon-wrap" class="bg-white/20 rounded-full p-1.5 flex items-center justify-center flex-shrink-0">
-            <i id="speaker-icon" class="ph-fill ph-speaker-high text-lg animate-bounce"></i>
-          </div>
-          <div class="text-left">
-            <div class="text-[9px] uppercase tracking-wider text-pink-100 font-bold" id="voice-subtext">
-              กดให้น้องช้างบรรยาย
-            </div>
-            <div class="text-xs font-black leading-tight flex items-center gap-1 voice-maintext-sync" id="voice-maintext">
-              <span>🔊 กดเพื่อฟังเสียง</span>
-            </div>
-          </div>
-          <div id="audio-wave-anim" class="hidden absolute right-2.5 flex items-end gap-0.5 h-3.5">
-            <span class="w-1 bg-white rounded-full animate-sound-wave" style="animation-delay: 0.1s; height: 60%;"></span>
-            <span class="w-1 bg-white rounded-full animate-sound-wave" style="animation-delay: 0.3s; height: 100%;"></span>
-            <span class="w-1 bg-white rounded-full animate-sound-wave" style="animation-delay: 0.2s; height: 80%;"></span>
-          </div>
-        </button>
-
-        <button onclick="restartAudio()" title="ฟังใหม่อีกรอบ" class="bg-pink-50 hover:bg-pink-100 text-pink-700 p-2 rounded-2xl flex items-center justify-center aspect-square border border-pink-200 active:scale-95 transition-transform shadow-sm">
-          <i class="ph-bold ph-arrow-counter-clockwise text-lg"></i>
-        </button>
-      </div>
-    </div>
 
   </div>
 
-  <!-- Multi-Language Logic & Comprehensive Service Data -->
   <script>
-    const uiTranslations = {
-      th: {
-        district: "ที่ว่าการอำเภอสีชมพู",
-        province: "ขอนแก่น",
-        subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
-        callBtn: "โทร 043-399-140",
-        langLabel: "เลือกภาษา:",
-        noticeTitle: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
-        noticeDesc: "แตะเลือกบริการ แล้วแตะปุ่มสีชมพูด้านล่างเพื่อฟังเสียง",
-        filterAll: "ทั้งหมด",
-        filterId: "บัตร & ชื่อ",
-        filterFamily: "สมรส & บุตร",
-        filterVital: "เกิด & ตาย",
-        filterCivil: "ทะเบียนบ้าน & ย้าย",
-        scrollGuide: "เลือกบริการที่ต้องการ:",
-        tapHint: "แตะเพื่อเปิดดู",
-        checklistHeading: "สิ่งที่ต้องถือติดตัวมาที่อำเภอสีชมพู:",
-        timeLabel: "⏱️ ระยะเวลาดำเนินการ",
-        feeLabel: "💰 ค่าธรรมเนียม",
-        voiceBtnPlay: "🔊 กดเพื่อฟังเสียงบรรยาย",
-        voiceBtnStop: "⏹️ กดเพื่อหยุดฟังเสียง",
-        voiceSubNormal: "กดให้น้องช้างบรรยายชัดๆ",
-        voiceSubSpeaking: "น้องช้างกำลังอ่านออกเสียง..."
-      },
-      is: {
-        district: "ที่ว่าการอำเภอสีชมพู",
-        province: "ขอนแก่น",
-        subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
-        callBtn: "โทร 043-399-140",
-        langLabel: "เลือกภาษา:",
-        noticeTitle: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
-        noticeDesc: "แตะเลือกบริการ แล้วแตะปุ่มสีชมพูด้านล่างเพื่อฟังเสียง",
-        filterAll: "ทั้งหมด",
-        filterId: "บัตร & ซื่อ",
-        filterFamily: "แต่งงาน & ลูก",
-        filterVital: "เกิด & ตาย",
-        filterCivil: "ทะเบียนบ้าน & ย้าย",
-        scrollGuide: "เลือกบริการที่ต้องการ:",
-        tapHint: "แตะเพื่อเบิ่งเอกสาร",
-        checklistHeading: "สิ่งที่ต้องถือติดโตมาอำเภอสีชมพู:",
-        timeLabel: "⏱️ ระยะเวลาดำเนินการ",
-        feeLabel: "💰 ค่าธรรมเนียม",
-        voiceBtnPlay: "🔊 กดเพื่อฟังเสียงเว้าสู่ฟัง",
-        voiceBtnStop: "⏹️ กดเพื่อหยุดฟังเสียง",
-        voiceSubNormal: "กดฟังน้องช้างเว้าภาษาอีสาน",
-        voiceSubSpeaking: "น้องช้างกำลังเว้าสู่ฟัง..."
-      },
-      en: {
-        district: "Si Chomphu District Office",
-        province: "Khon Kaen",
-        subtitle: "Document Preparation Voice Guide",
-        callBtn: "Call 043-399-140",
-        langLabel: "Language:",
-        noticeTitle: "Audio Assistance Available!",
-        noticeDesc: "Choose a service, then tap the pink audio button to listen.",
-        filterAll: "All Services",
-        filterId: "ID & Name",
-        filterFamily: "Family & Child",
-        filterVital: "Birth & Death",
-        filterCivil: "House & Address",
-        scrollGuide: "Select Service:",
-        tapHint: "Tap to view details",
-        checklistHeading: "Required Documents to Bring:",
-        timeLabel: "⏱️ Estimated Processing Time",
-        feeLabel: "💰 Official Fee",
-        voiceBtnPlay: "🔊 Listen to Voice Guide",
-        voiceBtnStop: "⏹️ Stop Audio Guide",
-        voiceSubNormal: "Listen to audio instructions",
-        voiceSubSpeaking: "Elephant guide is speaking..."
-      }
-    };
-
-    const services = [
+    const database = [
       {
         id: 'id_expired',
         cat: 'id',
         emoji: '🪪',
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียค่าธรรมเนียม', en: 'Free of charge' },
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'National ID Card Service' },
-        title: { th: 'บัตรเดิมหมดอายุ', is: 'บัตรเก่าหมดอายุ', en: 'ID Card Renewal (Expired)' },
-        summary: {
-          th: 'ยื่นทำบัตรใหม่ได้ล่วงหน้า 60 วัน หรือภายใน 60 วันนับแต่วันหมดอายุ',
-          is: 'ยื่นล่วงหน้าได้ 60 มื้อ หรือภายใน 60 มื้อนับแต่มื้อหมดอายุ',
-          en: 'Apply within 60 days before or after the card expiration date.'
-        },
-        tip: {
-          th: 'หากเกินกำหนด 60 วัน มีค่าปรับตามกฎหมายไม่เกิน 100 บาท',
-          is: 'ถ่ากาย 60 มื้อ มีค่าปรับบ่เกิน 100 บาทเด้อครับ',
-          en: 'A late renewal fine of up to 100 THB applies after 60 days.'
-        },
-        checklist: [
-          {
-            title: { th: 'บัตรประชาชนใบเดิม', is: 'บัตรประชาชนใบเดิม', en: 'Current Expired ID Card' },
-            desc: { th: 'นำบัตรเดิมที่หมดอายุมามอบคืนเจ้าหน้าที่', is: 'เอาบัตรเก่ามาคืนเจ้าหน้าที่', en: 'Bring original card to return to the registrar' },
-            tag: { th: 'ถือมาแลก', is: 'ถือมาแลก', en: 'Original Card' },
-            img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80',
-            required: true
-          },
-          {
-            title: { th: 'ตัวเจ้าของบัตร', is: 'โตเจ้าของบัตร', en: 'Applicant in Person' },
-            desc: { th: 'ต้องมาด้วยตนเองเพื่อถ่ายภาพและสแกนลายนิ้วมือ', is: 'ต้องมาเองเพราะต้องถ่ายฮูปและสแกนลายนิ้วมือ', en: 'Must attend personally for photo & biometric scan' },
-            tag: { th: 'ต้องมาเอง', is: 'ต้องมาเอง', en: 'Mandatory' },
-            img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
+        time: 'ประมาณ 15 นาที',
+        fee: 'ฟรี ไม่มีค่าธรรมเนียม',
+        badge: 'งานบัตรประจำตัวประชาชน',
+        title: 'บัตรเดิมหมดอายุ',
+        summary: 'ยื่นทำบัตรใหม่ได้ล่วงหน้า 60 วัน หรือภายใน 60 วันนับแต่วันหมดอายุ',
+        tip: 'หากเกินกำหนด 60 วัน มีค่าปรับตามกฎหมายไม่เกิน 100 บาท',
+        docs: [
+          { name: 'บัตรประชาชนใบเดิม', desc: 'นำบัตรเดิมที่หมดอายุมามอบคืนเจ้าหน้าที่' },
+          { name: 'ตัวเจ้าของบัตร', desc: 'ต้องมาด้วยตนเองเพื่อถ่ายภาพและสแกนลายนิ้วมือ' }
         ],
         speech: {
-          th: "การขอมีบัตรประจำตัวประชาชนใหม่ กรณีบัตรเดิมหมดอายุ สามารถยื่นขอทำบัตรใหม่ได้ล่วงหน้าหกสิบวันก่อนวันหมดอายุ หรือภายในหกสิบวันนับแต่วันหมดอายุครับ เตรียมเฉพาะบัตรประชาชนใบเดิมมาติดต่อได้เลยโดยไม่มีค่าธรรมเนียมครับ",
-          is: "ไผบัตรประชาชนหมดอายุ ให้ถือบัตรเก่าใบเดิมมาติดต่อได้โลดเด้อครับ ยื่นก่อนหมดอายุได้หกสิบมื้อ บ่อเสียค่าธรรมเนียมดอกครับ แต่ถ้ากายกำหนดหกสิบมื้อ สิมีค่าปรับบ่อเกินหนึ่งร้อยบาทเด้อ",
-          en: "To renew an expired Thai National ID Card, apply within 60 days before or after the expiration date. Simply bring your current ID card. There is no official fee."
+          th: "การขอมีบัตรใหม่ กรณีบัตรเดิมหมดอายุ สามารถยื่นขอทำบัตรใหม่ได้ล่วงหน้าหกสิบวัน หรือภายในหกสิบวันนับแต่วันหมดอายุครับ เตรียมเฉพาะบัตรประชาชนใบเดิมมาติดต่อได้เลย ไม่มีค่าธรรมเนียมครับ",
+          is: "ไผบัตรประชาชนหมดอายุ ให้ถือบัตรเก่าใบเดิมมาติดต่อได้โลดเด้อครับ ยื่นก่อนหมดอายุได้หกสิบมื้อ บ่อเสียค่าธรรมเนียมดอกครับ แต่ถ้ากายกำหนดสิมีค่าปรับบ่อเกินหนึ่งร้อยบาทเด้อ",
+          en: "To renew an expired Thai ID card, apply within 60 days before or after the expiration date. Bring your current ID card. There is no official fee."
         }
       },
       {
         id: 'id_lost',
         cat: 'id',
         emoji: '🔍',
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ค่าธรรมเนียม 100 บาท', is: 'ค่าธรรมเนียม 100 บาท', en: 'Fee: 100 THB' },
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'National ID Card Service' },
-        title: { th: 'บัตรสูญหายหรือถูกทำลาย', is: 'บัตรหายหรือถืกทำลาย', en: 'Lost / Destroyed ID Card' },
-        summary: {
-          th: 'ไม่ต้องแจ้งความที่สถานีตำรวจ ให้มายื่นคำขอที่อำเภอสีชมพูได้ทันทีภายใน 60 วัน',
-          is: 'บ่ต้องไปแจ้งความ ให้มาอำเภอสีชมพูได้โลดภายใน 60 มื้อ',
-          en: 'No police report required. Apply directly at the district office within 60 days.'
-        },
-        tip: {
-          th: 'หากไม่มีเอกสารที่มีรูปถ่าย ต้องพาเจ้าบ้าน หรือกำนันผู้ใหญ่บ้านมารับรองตัวตน',
-          is: 'ถ่าบ่มีเอกสารมีฮูปถ่าย ให้พาพ่อแม่ หรือผู้ใหญ่บ้านมารับรองเด้อ',
-          en: 'If lacking other photo IDs, a housemaster, parent, or village head must certify identity.'
-        },
-        checklist: [
-          {
-            title: { th: 'สมุดทะเบียนบ้านฉบับจริง', is: 'สมุดทะเบียนบ้านเล่มจริง', en: 'Original House Registration Book' },
-            desc: { th: 'เล่มสีน้ำเงินฉบับจริง เพื่อยืนยันตัวตน', is: 'เล่มสีน้ำเงินโตจริง', en: 'Blue house registration book to verify personal data' },
-            tag: { th: 'เล่มสีน้ำเงิน', is: 'เล่มสีน้ำเงิน', en: 'Blue Book' },
-            img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
-            required: true
-          },
-          {
-            title: { th: 'เอกสารราชการที่มีรูปถ่าย', is: 'เอกสารราชการมีฮูปถ่าย', en: 'Official Photo ID' },
-            desc: { th: 'เช่น ใบขับขี่ หรือหนังสือเดินทาง (ถ้ามี)', is: 'เช่น ใบขับขี่ หรือพาสปอร์ต', en: 'E.g., driving license or valid passport' },
-            tag: { th: 'ถ้ามี', is: 'ถ้ามี', en: 'Optional' },
-            img: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=200&auto=format&fit=crop&q=80',
-            required: false
-          }
+        time: 'ประมาณ 20 นาที',
+        fee: 'ค่าธรรมเนียม 100 บาท',
+        badge: 'งานบัตรประจำตัวประชาชน',
+        title: 'บัตรสูญหายหรือถูกทำลาย',
+        summary: 'ไม่ต้องแจ้งความที่สถานีตำรวจ ให้มายื่นคำขอที่อำเภอสีชมพูได้ทันทีภายใน 60 วัน',
+        tip: 'หากไม่มีเอกสารรูปถ่าย ต้องพาเจ้าบ้าน พ่อแม่ หรือกำนันผู้ใหญ่บ้านมารับรอง',
+        docs: [
+          { name: 'สมุดทะเบียนบ้านฉบับจริง', desc: 'เล่มสีน้ำเงินฉบับจริง เพื่อยืนยันตัวตน' },
+          { name: 'เอกสารราชการที่มีรูปถ่าย', desc: 'เช่น ใบขับขี่ หรือหนังสือเดินทาง (ถ้ามี)' }
         ],
         speech: {
-          th: "การขอมีบัตรใหม่ กรณีบัตรสูญหายหรือถูกทำลาย ต้องยื่นทำบัตรใหม่ภายในหกสิบวัน ไม่ต้องไปแจ้งความที่โรงพักครับ เตรียมทะเบียนบ้าน และเอกสารราชการที่มีรูปถ่าย หรือพาเจ้าบ้าน ผู้ปกครอง หรือกำนันผู้ใหญ่บ้านมารับรองตัวตน มีค่าธรรมเนียมหนึ่งร้อยบาทครับ",
-          is: "บัตรประชาชนหาย หรือถืกทำลาย บ่อต้องไปแจ้งความดอกครับพี่น้อง ให้ถือเล่มทะเบียนบ้าน และเอกสารที่มีรูปถ่าย เช่น ใบขับขี่ หรือพาพ่อแม่ กำนัน ผู้ใหญ่บ้าน มารับรองตัวตน มีค่าธรรมเนียมหนึ่งร้อยบาทเด้อครับ",
-          en: "For a lost or destroyed ID card, apply within 60 days. No police report is needed. Bring your blue house registration book and another photo ID or a certifying witness. The fee is 100 Baht."
+          th: "กรณีบัตรประชาชนหายหรือถูกทำลาย ต้องยื่นทำบัตรใหม่ภายในหกสิบวัน ไม่ต้องไปแจ้งความที่โรงพักครับ เตรียมทะเบียนบ้าน และเอกสารราชการที่มีรูปถ่าย หรือพาเจ้าบ้าน หรือผู้ใหญ่บ้านมารับรองตัวตน ค่าธรรมเนียมหนึ่งร้อยบาทครับ",
+          is: "บัตรประชาชนหาย หรือถืกทำลาย บ่อต้องไปแจ้งความดอกครับพี่น้อง ถือเล่มทะเบียนบ้าน และเอกสารมีรูปถ่าย หรือพาพ่อแม่ ผู้ใหญ่บ้าน มารับรอง มีค่าธรรมเนียมหนึ่งร้อยบาทเด้อครับ",
+          en: "For a lost ID card, apply within 60 days. No police report required. Bring your blue house registration book and another photo ID. The fee is 100 Baht."
         }
       },
       {
         id: 'id_damaged',
         cat: 'id',
         emoji: '💳',
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins' },
-        fee: { th: 'ค่าธรรมเนียม 100 บาท', is: 'ค่าธรรมเนียม 100 บาท', en: 'Fee: 100 THB' },
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'National ID Card Service' },
-        title: { th: 'บัตรชำรุดในสาระสำคัญ', is: 'บัตรชำรุดหักหรือเลือนราง', en: 'Damaged / Defaced ID Card' },
-        summary: {
-          th: 'บัตรหัก ชิปหลุด รูปถ่ายหรือข้อความเลือนรางจนไม่สามารถพิสูจน์ตัวตนได้ ยื่นใน 60 วัน',
-          is: 'บัตรหัก ชิปหลุด ฮูปหรือตัวหนังสือเลือนรางมองบ่เห็น ให้มายื่นใน 60 มื้อ',
-          en: 'Damaged card, broken chip, or defaced text/photo. Must apply within 60 days.'
-        },
-        tip: {
-          th: 'ต้องนำชิ้นส่วนบัตรเดิมที่ชำรุดมามอบให้เจ้าหน้าที่',
-          is: 'ต้องเอาเศษบัตรหรือบัตรที่ชำรุดมาคืนนำเด้อ',
-          en: 'You must surrender the damaged card or remaining fragments to the registrar.'
-        },
-        checklist: [
-          {
-            title: { th: 'บัตรเดิมที่ชำรุด', is: 'บัตรเดิมที่ชำรุด', en: 'Damaged ID Card' },
-            desc: { th: 'นำชิ้นส่วนบัตรหรือบัตรที่เลือนรางมามอบให้เจ้าหน้าที่', is: 'นำเศษบัตรที่หักหรือเลือนรางมาแสดง', en: 'Bring the damaged card or broken fragments' },
-            tag: { th: 'นำบัตรเดิมมา', is: 'นำบัตรเดิมมา', en: 'Original Card' },
-            img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80',
-            required: true
-          },
-          {
-            title: { th: 'สมุดทะเบียนบ้านฉบับจริง', is: 'สมุดทะเบียนบ้านเล่มจริง', en: 'Original House Book' },
-            desc: { th: 'เล่มสีน้ำเงินเพื่อตรวจสอบรายการบุคคล', is: 'เล่มสีน้ำเงินฉบับจริง', en: 'Blue house registration book to verify information' },
-            tag: { th: 'เล่มจริง', is: 'เล่มจริง', en: 'Original' },
-            img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
+        time: 'ประมาณ 15 นาที',
+        fee: 'ค่าธรรมเนียม 100 บาท',
+        badge: 'งานบัตรประจำตัวประชาชน',
+        title: 'บัตรชำรุดในสาระสำคัญ',
+        summary: 'บัตรหัก ชิปหลุด รูปถ่ายหรือข้อความเลือนรางจนมองไม่ชัดเจน',
+        tip: 'ต้องนำชิ้นส่วนบัตรเดิมที่ชำรุดมามอบให้เจ้าหน้าที่',
+        docs: [
+          { name: 'บัตรเดิมที่ชำรุด', desc: 'นำชิ้นส่วนบัตรหรือบัตรที่เลือนรางมามอบให้เจ้าหน้าที่' },
+          { name: 'สมุดทะเบียนบ้านฉบับจริง', desc: 'เล่มสีน้ำเงินฉบับจริง เพื่อตรวจสอบข้อมูล' }
         ],
         speech: {
-          th: "การขอมีบัตรใหม่ กรณีบัตรชำรุดในสาระสำคัญ เช่น บัตรหัก ชิปหลุด รูปถ่ายหรือตัวหนังสือลบเลือนจนมองไม่ชัด ให้ยื่นทำใหม่ภายในหกสิบวัน เตรียมบัตรเดิมที่ชำรุดและทะเบียนบ้านมาติดต่อ มีค่าธรรมเนียมหนึ่งร้อยบาทครับ",
-          is: "บัตรชำรุด บัตรหัก หรือฮูปเลือนรางมองบ่อเห็น ให้เอาบัตรที่ชำรุดกับเล่มทะเบียนบ้านมานำเด้อครับ ยื่นภายในหกสิบมื้อ มีค่าธรรมเนียมหนึ่งร้อยบาทครับ",
-          en: "For a damaged or defaced ID card where text, photo, or smart chip is unreadable, apply within 60 days. Bring the damaged card and house book. The fee is 100 Baht."
+          th: "กรณีบัตรชำรุด เช่น บัตรหัก ชิปหลุด รูปหรือตัวหนังสือลบเลือน ให้ยื่นทำใหม่ภายในหกสิบวัน เตรียมบัตรเดิมที่ชำรุดและทะเบียนบ้านมาติดต่อ ค่าธรรมเนียมหนึ่งร้อยบาทครับ",
+          is: "บัตรชำรุด บัตรหัก หรือฮูปเลือนรางมองบ่อเห็น ให้เอาบัตรที่ชำรุดกับเล่มทะเบียนบ้านมานำเด้อ มีค่าธรรมเนียมหนึ่งร้อยบาทครับ",
+          en: "For a damaged ID card where text, photo, or chip is unreadable, bring the damaged card and house book. The fee is 100 Baht."
         }
       },
       {
-        id: 'id_check_record',
+        id: 'id_check',
         cat: 'id',
         emoji: '📋',
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins' },
-        fee: { th: 'ค่าธรรมเนียม 10 บาท/ฉบับ', is: 'ค่าธรรมเนียม 10 บาท/ฉบับ', en: 'Fee: 10 THB / copy' },
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'Record Verification' },
-        title: { th: 'ขอตรวจหลักฐาน / ข้อมูลบัตร', is: 'ขอตรวจคัดข้อมูลบัตร', en: 'Verify / Extract ID Record' },
-        summary: {
-          th: 'ขอคัดสำเนาหรือตรวจดูรายการข้อมูลเกี่ยวกับบัตรประจำตัวประชาชนของตนเอง',
-          is: 'ขอคัดสำเนาหรือตรวจเบิ่งข้อมูลบัตรประชาชนของเจ้าของ',
-          en: 'Request certified copies or inspection of personal ID card database records.'
-        },
-        tip: {
-          th: 'เจ้าของข้อมูลต้องมาเอง หากมอบอำนาจต้องมีหนังสือมอบอำนาจถูกต้องตามกฎหมาย',
-          is: 'เจ้าโตต้องมาเอง ถ่ามอบอำนาจต้องมีหนังสือมอบอำนาจมาพร้อม',
-          en: 'Must appear in person, or present a legal Power of Attorney with authorized IDs.'
-        },
-        checklist: [
-          {
-            title: { th: 'บัตรประชาชนของผู้ยื่นคำขอ', is: 'บัตรประชาชนของผู้ขอ', en: 'Applicant’s National ID Card' },
-            desc: { th: 'บัตรประชาชนตัวจริงที่ยังไม่หมดอายุ', is: 'บัตรประชาชนตัวจริง', en: 'Valid original ID card' },
-            tag: { th: 'ตัวจริง', is: 'ตัวจริง', en: 'Original' },
-            img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
+        time: 'ประมาณ 15 นาที',
+        fee: '10 บาท / ฉบับ',
+        badge: 'งานบัตรประจำตัวประชาชน',
+        title: 'ขอตรวจหลักฐาน / คัดข้อมูลบัตร',
+        summary: 'ขอคัดสำเนาหรือตรวจดูรายการข้อมูลเกี่ยวกับบัตรประชาชนของตนเอง',
+        tip: 'เจ้าของข้อมูลต้องมาเอง หากมอบอำนาจต้องมีหนังสือมอบอำนาจถูกต้องตามกฎหมาย',
+        docs: [
+          { name: 'บัตรประชาชนตัวจริง', desc: 'บัตรประจำตัวประชาชนของผู้ขอยื่นคำขอ' }
         ],
         speech: {
-          th: "การขอตรวจหลักฐาน รายการ หรือข้อมูลเกี่ยวกับบัตรประจำตัวประชาชน เจ้าของข้อมูลต้องนำบัตรประชาชนตัวจริงมายื่น หากมอบอำนาจต้องมีหนังสือมอบอำนาจและบัตรประชาชนผู้รับมอบอำนาจมาด้วย มีค่าธรรมเนียมฉบับละสิบบาทครับ",
-          is: "การขอตรวจเบิ่งหลักฐาน หรือคัดสำเนาข้อมูลบัตรประชาชน เจ้าโตต้องถือบัตรประชาชนมาเองเด้อครับ ถ้าบ่อว่างให้เฮ็ดหนังสือมอบอำนาจมานำ มีค่าธรรมเนียมฉบับละสิบบาทครับผม",
-          en: "To verify or request a certified extract of your National ID card record, bring your original ID card. The fee is 10 Baht per copy."
+          th: "การขอตรวจหลักฐาน รายการ หรือข้อมูลเกี่ยวกับบัตรประชาชน เจ้าของข้อมูลต้องนำบัตรประชาชนตัวจริงมายื่น ค่าธรรมเนียมฉบับละสิบบาทครับ",
+          is: "การขอตรวจเบิ่งข้อมูลบัตรประชาชน เจ้าโตต้องถือบัตรประชาชนมาเองเด้อครับ มีค่าธรรมเนียมฉบับละสิบบาทครับผม",
+          en: "To verify or request a certified copy of your ID record, bring your original ID card. The fee is 10 Baht per copy."
         }
       },
       {
-        id: 'child_legit',
-        cat: 'family',
-        emoji: '👨‍👧',
-        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Family Registration' },
-        title: { th: 'ทะเบียนรับรองบุตร', is: 'การรับรองลูก', en: 'Legitimation of Child' },
-        summary: {
-          th: 'บิดา มารดา และบุตร ต้องเดินทางมาแสดงตนพร้อมกันทั้งสามคนต่อหน้านายทะเบียน',
-          is: 'พ่อ แม่ และลูก ต้องจูงแขนกันมาพร้อมหน้ากันทั้งสามคนเด้อ',
-          en: 'Father, mother, and child must appear together before the registrar.'
-        },
-        tip: {
-          th: 'หากเด็กยังไม่สามารถสื่อสารหรือให้ความยินยอมได้ ต้องใช้คำสั่งศาล',
-          is: 'ถ่าเด็กน้อยยังเว้าบ่รู้ความ ต้องมีคำสั่งศาลประกอบนำเด้อ',
-          en: 'If the child is too young to express consent, a court judgment is required.'
-        },
-        checklist: [
-          {
-            title: { th: 'สูติบัตรของบุตร (ใบเกิด)', is: 'ใบเกิดลูก', en: 'Child’s Birth Certificate' },
-            desc: { th: 'ใบสูติบัตรฉบับจริงของลูก', is: 'ใบเกิดตัวจริงของลูก', en: 'Original official birth certificate' },
-            tag: { th: 'ตัวจริง', is: 'ตัวจริง', en: 'Original' },
-            img: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=200&auto=format&fit=crop&q=80',
-            required: true
-          },
-          {
-            title: { th: 'บัตรประชาชนและทะเบียนบ้าน', is: 'บัตรประชาชนและทะเบียนบ้าน', en: 'IDs & House Books' },
-            desc: { th: 'เอกสารตัวจริงของทั้งพ่อ แม่ และลูก', is: 'เอกสารตัวจริงของพ่อแม่ลูก', en: 'Original IDs and house books of father, mother, and child' },
-            tag: { th: 'ครบชุด', is: 'ครบชุด', en: 'Complete Set' },
-            img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
-        ],
-        speech: {
-          th: "การจดทะเบียนรับรองบุตร ที่ว่าการอำเภอสีชมพู เพื่อให้บุตรเป็นบุตรชอบด้วยกฎหมายของบิดา บิดา มารดา และบุตร ต้องเดินทางมาพร้อมกันทั้งสามคนครับ เอกสารที่ต้องใช้คือ สูติบัตรตัวจริงของลูก บัตรประชาชนและสมุดทะเบียนบ้านของพ่อ แม่ และลูก และพาพยานบุคคลมาสองคนครับ",
-          is: "การจดทะเบียนรับรองบุตร เพื่อให้ลูกเป็นลูกที่ถูกต้องตามกฎหมายของพ่อ พ่อ แม่ และลูก ต้องจูงแขนกันมาพร้อมกันทั้งสามคนเด้อ เอกสารที่ต้องถือมา มีใบเกิดตัวจริงของลูก บัตรประชาชนกับสมุดทะเบียนบ้านของทั้งพ่อแม่ลูก และพาพยานมานำสองคน มาเฮ็ดอยู่ที่อำเภอสีชมพูบ่เสียเงินครับผม",
-          en: "To legitimize a child, the biological father, mother, and child must appear together before the registrar with the birth certificate, IDs, house books, and two adult witnesses."
-        }
-      },
-      {
-        id: 'adoption_reg',
-        cat: 'family',
-        emoji: '🧸',
-        time: { th: 'ประมาณ 40 นาที', is: 'ประมาณ 40 นาที', en: 'Approx. 40 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Adoption Registration' },
-        title: { th: 'ทะเบียนรับบุตรบุญธรรม', is: 'การรับลูกบุญธรรม', en: 'Child Adoption Registration' },
-        summary: {
-          th: 'ผู้รับต้องมีอายุไม่ต่ำกว่า 25 ปี และแก่กว่าเด็กอย่างน้อย 15 ปี ต้องผ่านการอนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด',
-          is: 'ผู้รับต้องอายุ 25 ปีขึ้นไป และเฒ่ากว่าเด็ก 15 ปี ต้องมีใบอนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด',
-          en: 'Adopter must be at least 25 years old and 15 years older than the child, approved by the Provincial Social Development Office.'
-        },
-        tip: {
-          th: 'ต้องมีหนังสืออนุมัติรับเด็กเป็นบุตรบุญธรรมจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัดมาแสดง',
-          is: 'ต้องมีหนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัดขอนแก่นมาก่อนเด้อ',
-          en: 'Must present official adoption approval issued by the Provincial Social Development and Human Security Office.'
-        },
-        checklist: [
-          {
-            title: { th: 'หนังสืออนุมัติจากสำนักงานพัฒนาสังคมฯ', is: 'หนังสืออนุมัติจากสำนักงานพัฒนาสังคมฯ', en: 'Provincial Social Development Approval' },
-            desc: { th: 'หนังสือแจ้งผลการอนุมัติรับเด็กเป็นบุตรบุญธรรมฉบับจริง', is: 'หนังสืออนุมัติรับเด็กฉบับจริง', en: 'Official certified approval from Provincial Social Development Office' },
-            tag: { th: 'สำคัญที่สุด', is: 'สำคัญที่สุด', en: 'Crucial' },
-            img: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=200&auto=format&fit=crop&q=80',
-            required: true
-          },
-          {
-            title: { th: 'บัตรประชาชนและทะเบียนบ้าน', is: 'บัตรประชาชนและทะเบียนบ้าน', en: 'IDs & House Books' },
-            desc: { th: 'ของผู้รับบุตรบุญธรรม และบุตรบุญธรรม (พร้อมคู่สมรสถ้ามี)', is: 'ของทั้งสองฝ่าย', en: 'Original IDs and house books of adopter and adoptee' },
-            tag: { th: 'ทุกฝ่าย', is: 'ทุกฝ่าย', en: 'All Parties' },
-            img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
-        ],
-        speech: {
-          th: "การจดทะเบียนรับบุตรบุญธรรม ณ ที่ว่าการอำเภอสีชมพู ผู้รับต้องมีอายุยี่สิบห้าปีขึ้นไป และแก่กว่าเด็กอย่างน้อยสิบห้าปี เอกสารสำคัญคือ หนังสืออนุมัติการรับเด็กเป็นบุตรบุญธรรมจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด พร้อมบัตรประชาชนและทะเบียนบ้านของทุกฝ่าย และพยานบุคคลสองคนครับ",
-          is: "การจดทะเบียนรับบุตรบุญธรรม ผู้รับต้องมีอายุยี่สิบห้าปีขึ้นไป และเฒ่ากว่าเด็กน้อยอย่างน้อยสิบห้าปีเด้อ สิ่งสำคัญที่สุดคือ ต้องมีหนังสืออนุมัติรับเด็กจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัดขอนแก่นมาก่อน แล้วถือบัตรประชาชน สมุดทะเบียนบ้านของทั้งสองฝ่าย และพาพยานมานำสองคน มาจดทะเบียนอยู่ที่อำเภอสีชมพูได้เลยครับ",
-          en: "To register child adoption, the adopter must be at least 25 years old and 15 years older than the adoptee. Bring the adoption approval notice from the Provincial Social Development and Human Security Office, IDs, house registration books, and two witnesses."
-        }
-      },
-      {
-        id: 'adoption_cancel',
-        cat: 'family',
-        emoji: '📄',
-        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Dissolution of Adoption' },
-        title: { th: 'ทะเบียนเลิกรับบุตรบุญธรรม', is: 'การเลิกรับลูกบุญธรรม', en: 'Dissolution of Adoption' },
-        summary: {
-          th: 'การเลิกรับบุตรบุญธรรมโดยความยินยอม ทั้งสองฝ่ายต้องมาแสดงตนพร้อมกันต่อนายทะเบียน',
-          is: 'ทั้งสองฝ่ายต้องตกลงยินยอมพร้อมใจกันมาเซ็นต่อหน้านายทะเบียน',
-          en: 'Dissolution by mutual consent requires both adopter and adult adoptee to appear in person.'
-        },
-        tip: {
-          th: 'หากบุตรบุญธรรมยังไม่บรรลุนิติภาวะ จะต้องได้รับความยินยอมจากบิดามารดาเดิม หรือต้องมีคำพิพากษาศาล',
-          is: 'ถ่าลูกบุญธรรมยังบ่ทันฮอดซาวปี ต้องให้พ่อแม่เดิมยินยอม หรือมีคำสั่งศาล',
-          en: 'If the adoptee is a minor, consent of original biological parents or a court judgment is required.'
-        },
-        checklist: [
-          {
-            title: { th: 'หนังสือสำคัญรับบุตรบุญธรรมเดิม', is: 'ใบรับบุตรบุญธรรมเดิม', en: 'Original Adoption Certificate' },
-            desc: { th: 'ใบทะเบียนรับบุตรบุญธรรมเดิมฉบับจริง เพื่อนำมาสลักหลังยกเลิก', is: 'ใบรับบุตรบุญธรรมโตจริง', en: 'Original adoption certificate to be endorsed and cancelled' },
-            tag: { th: 'ฉบับเดิม', is: 'ฉบับเดิม', en: 'Original' },
-            img: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
-        ],
-        speech: {
-          th: "การจดทะเบียนเลิกรับบุตรบุญธรรม ที่ว่าการอำเภอสีชมพู ทั้งสองฝ่ายต้องมาตกลงยินยอมเลิกรับกันต่อหน้านายทะเบียน เอกสารที่ต้องนำมาคือ หนังสือสำคัญการรับบุตรบุญธรรมฉบับเดิม บัตรประชาชนและสมุดทะเบียนบ้านของทั้งสองฝ่าย พร้อมพยานบุคคลสองคนครับ",
-          is: "การจดทะเบียนเลิกรับบุตรบุญธรรม อยู่ที่ว่าการอำเภอสีชมพู ทั้งสองฝ่ายต้องตกลงยินยอมพร้อมใจกันมาเซ็นต่อหน้านายทะเบียน เอกสารที่ต้องถือมา มีใบสำคัญการรับบุตรบุญธรรมใบเดิม บัตรประชาชนและสมุดทะเบียนบ้านของทั้งสองคน พร้อมพาพยานมานำสองคนเด้อครับ",
-          en: "For dissolution of adoption by mutual agreement, both adopter and adoptee must appear before the registrar with the original adoption certificate, ID cards, house books, and two adult witnesses."
-        }
-      },
-      {
-        id: 'id_first',
+        id: 'id_7years',
         cat: 'id',
         emoji: '🧒',
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ฟรี (ภายใน 60 วัน)', is: 'บ่เสียเงิน (ภายใน 60 มื้อ)', en: 'Free of charge' },
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'First ID Card' },
-        title: { th: 'ทำบัตรครั้งแรก (ครบ 7 ปี)', is: 'ทำบัตรเทื่อแรก (ครบ 7 ปี)', en: 'First ID Card (Age 7+)' },
-        summary: {
-          th: 'เด็กสัญชาติไทยอายุครบ 7 ปีบริบูรณ์ ต้องทำบัตรภายใน 60 วัน',
-          is: 'เด็กน้อยอายุครบ 7 ปี ต้องมาเฮ็ดบัตรภายใน 60 มื้อเด้อ',
-          en: 'Thai citizens turning 7 years old must apply for an ID card within 60 days.'
-        },
-        tip: {
-          th: 'ผู้ปกครอง (บิดา มารดา หรือเจ้าบ้าน) ต้องเดินทางมาด้วยตนเอง',
-          is: 'พ่อ แม่ หรือเจ้าบ้าน ต้องพาเด็กน้อยมานำเด้อครับ',
-          en: 'A legal parent or housemaster must accompany the child in person.'
-        },
-        checklist: [
-          {
-            title: { th: 'สูติบัตร (ใบเกิดฉบับจริง)', is: 'ใบเกิดตัวจริง', en: 'Original Birth Certificate' },
-            desc: { th: 'หลักฐานการเกิดระบุเลขประจำตัว 13 หลัก', is: 'ใบเกิดฉบับจริงที่มีเลข 13 หลัก', en: 'Original birth certificate showing the 13-digit ID number' },
-            tag: { th: 'สำคัญที่สุด', is: 'สำคัญที่สุด', en: 'Crucial' },
-            img: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
+        time: 'ประมาณ 20 นาที',
+        fee: 'ฟรี ภายใน 60 วัน',
+        badge: 'งานบัตรประจำตัวประชาชน',
+        title: 'ทำบัตรครั้งแรก (ครบ 7 ปี)',
+        summary: 'เด็กสัญชาติไทยอายุครบ 7 ปีบริบูรณ์ ต้องทำบัตรภายใน 60 วัน',
+        tip: 'ผู้ปกครอง (บิดา มารดา หรือเจ้าบ้าน) ต้องเดินทางมาด้วยตนเอง',
+        docs: [
+          { name: 'สูติบัตร (ใบเกิดฉบับจริง)', desc: 'เอกสารสำคัญที่สุดระบุเลขประจำตัว 13 หลัก' },
+          { name: 'สมุดทะเบียนบ้านฉบับเจ้าบ้าน', desc: 'เล่มที่มีชื่อเด็กอาศัยอยู่' }
         ],
         speech: {
-          th: "การทำบัตรประชาชนครั้งแรกเมื่ออายุครบ 7 ปีบริบูรณ์ ต้องยื่นภายใน 60 วัน เตรียมสูติบัตร ทะเบียนบ้าน และบัตรประชาชนของผู้ปกครองมาติดต่อ ไม่มีค่าธรรมเนียมครับ",
-          is: "ลูกหลานอายุครบ 7 ปีบริบูรณ์ ต้องพามาเฮ็ดบัตรประชาชนภายใน 60 มื้อเด้อ เอาใบเกิด ทะเบียนบ้าน กับบัตรพ่อแม่มาพร้อม บ่อเสียค่าธรรมเนียมดอกครับ",
-          en: "For a child's first National ID card upon turning 7 years old, please apply within 60 days. Bring the original birth certificate, house book, and parent ID. This service is free."
-        }
-      },
-      {
-        id: 'name_first',
-        cat: 'id',
-        emoji: '🏷️',
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ค่าธรรมเนียม 50 บาท', is: 'ค่าธรรมเนียม 50 บาท', en: 'Fee: 50 THB' },
-        badge: { th: 'งานทะเบียนชื่อบุคคล', is: 'งานทะเบียนชื่อบุคคล', en: 'Legal Name Change' },
-        title: { th: 'การเปลี่ยนชื่อตัว (ชื่อจริง)', is: 'การเปลี่ยนซื่อจริง', en: 'First Name Change' },
-        summary: {
-          th: 'ผู้ยื่นคำขอต้องมีชื่ออยู่ในทะเบียนบ้านอำเภอสีชมพู',
-          is: 'โตผู้ขอต้องมีสำเนาทะเบียนบ้านอยู่อำเภอสีชมพูเด้อ',
-          en: 'The applicant must currently reside in Si Chomphu district registry.'
-        },
-        tip: {
-          th: 'ชื่อใหม่ต้องมีความหมายสุภาพ ไม่หยาบคาย และถูกต้องตามพจนานุกรม',
-          is: 'ซื่อใหม่ต้องมีความหมายดี มีความหมายสุภาพตามพจนานุกรม',
-          en: 'The proposed name must possess a polite meaning and adhere to Thai naming conventions.'
-        },
-        checklist: [
-          {
-            title: { th: 'สมุดทะเบียนบ้านฉบับจริง', is: 'สมุดทะเบียนบ้านตัวจริง', en: 'Original House Book' },
-            desc: { th: 'เล่มสีน้ำเงินของอำเภอสีชมพู', is: 'เล่มสีน้ำเงินอำเภอสีชมพู', en: 'Original blue house book where your name appears' },
-            tag: { th: 'เล่มจริง', is: 'เล่มจริง', en: 'Original' },
-            img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
-        ],
-        speech: {
-          th: "การเปลี่ยนชื่อตัว ณ ที่ว่าการอำเภอสีชมพู ผู้ขอต้องมีชื่อในทะเบียนบ้านอำเภอสีชมพูครับ เอกสารที่ต้องนำมา มีสมุดทะเบียนบ้านตัวจริง บัตรประจำตัวประชาชนตัวจริง และใบสำคัญการเปลี่ยนชื่อเดิมถ้ามีครับ มีค่าธรรมเนียมห้าสิบบาทครับ",
-          is: "พี่น้องสิมาเปลี่ยนชื่อโต หรือชื่อจริง อยู่ว่าการอำเภอสีชมพู ฟังเด้อครับ โตผู้ขอต้องมีสำเนาทะเบียนบ้านอยู่อำเภอสีชมพู เอกสารที่ต้องถือมา มีสมุดทะเบียนบ้านเล่มสีน้ำเงินตัวจริง บัตรประชาชน และใบเปลี่ยนชื่อเดิมถ่าเคยเปลี่ยนมา มีค่าธรรมเนียมห้าสิบบาทเด้อครับ",
-          en: "To change your first name, you must be registered in Si Chomphu District. Bring your original house registration book and current ID card. The official fee is 50 Baht."
-        }
-      },
-      {
-        id: 'birth_hosp',
-        cat: 'vital',
-        emoji: '🏥',
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าใช้จ่าย', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        badge: { th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', en: 'Civil Registration' },
-        title: { th: 'การแจ้งเกิด (เกิด รพ.)', is: 'การแจ้งเกิด (เกิด รพ.)', en: 'Birth Registration (Hospital)' },
-        summary: {
-          th: 'ต้องมาแจ้งต่อนายทะเบียนภายใน 15 วัน นับจากวันคลอด',
-          is: 'ต้องมาแจ้งเกิดภายใน 15 มื้อ นับจากมื้อคลอดเด้อ',
-          en: 'Must be notified to the registrar within 15 days of birth.'
-        },
-        tip: {
-          th: 'แจ้งเกินกำหนด 15 วัน มีโทษปรับตามกฎหมายไม่เกิน 1,000 บาท',
-          is: 'ถ่ากาย 15 มื้อ สิมีค่าปรับตามกฎหมายบ่เกิน 1,000 บาทเด้อ',
-          en: 'Late notification exceeding 15 days carries a fine of up to 1,000 THB.'
-        },
-        checklist: [
-          {
-            title: { th: 'หนังสือรับรองการเกิด (ทร.1/1)', is: 'ใบรับรองการเกิด (ทร.1/1)', en: 'Hospital Birth Notice (Thor Ror 1/1)' },
-            desc: { th: 'เอกสารที่โรงพยาบาลออกให้หลังคลอด', is: 'เอกสารที่หมอโรงพยาบาลออกให้', en: 'Official document issued by the hospital attending doctor' },
-            tag: { th: 'ต้องใช้ตัวจริง', is: 'ต้องใช้ตัวจริง', en: 'Original' },
-            img: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
-        ],
-        speech: {
-          th: "การแจ้งเกิดกรณีคลอดที่โรงพยาบาล ต้องแจ้งภายในสิบห้าวันนับจากวันคลอดนะครับ สิ่งที่ต้องนำมา คือหนังสือรับรองการเกิด ทร.1/1 จากโรงพยาบาล บัตรประชาชนของพ่อและแม่ และสมุดทะเบียนบ้านที่จะนำชื่อเด็กเข้าครับ บริการฟรีครับ",
-          is: "คลอดลูกอยู่งานโรงพยาบาล ต้องมาแจ้งเกิดภายใน 15 มื้อเด้อครับ เอกสารสำคัญคือใบ ทร.1/1 ที่หมอออกให้ มาพร้อมบัตรประชาชนพ่อแม่ และเล่มทะเบียนบ้านสีน้ำเงินเด้อครับ",
-          en: "To register a birth occurring in a hospital, report within 15 days. Bring the Thor Ror 1/1 form from the hospital, both parents' ID cards or passports, and the house registration book. The service is free."
+          th: "การทำบัตรประชาชนครั้งแรกเมื่ออายุครบเจ็ดปีบริบูรณ์ ต้องยื่นภายในหกสิบวัน เตรียมสูติบัตร ทะเบียนบ้าน และบัตรประชาชนของผู้ปกครองมาติดต่อ ไม่มีค่าธรรมเนียมครับ",
+          is: "ลูกหลานอายุครบเจ็ดปีบริบูรณ์ ต้องพามาเฮ็ดบัตรประชาชนภายในหกสิบมื้อเด้อ เอาใบเกิด ทะเบียนบ้าน กับบัตรพ่อแม่มาพร้อม บ่อเสียค่าธรรมเนียมดอกครับ",
+          en: "For a child's first ID card at age 7, apply within 60 days. Bring original birth certificate, house book, and parent's ID. This service is free."
         }
       },
       {
         id: 'marriage',
         cat: 'family',
         emoji: '💍',
-        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins' },
-        fee: { th: 'ฟรี ในเวลาราชการ', is: 'บ่เสียเงินในเวลาราชการ', en: 'Free (Office hours)' },
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Family Registration' },
-        title: { th: 'การจดทะเบียนสมรส', is: 'การจดทะเบียนแต่งงาน', en: 'Marriage Registration' },
-        summary: {
-          th: 'คู่สมรสต้องเดินทางมาแสดงตนพร้อมกันทั้งสองฝ่ายต่อหน้านายทะเบียน',
-          is: 'คู่บ่าวสาวต้องจูงแขนกันมาพร้อมหน้ากันทั้งสองคนเด้อ',
-          en: 'Both partners must appear in person before the district registrar.'
-        },
-        tip: {
-          th: 'ต้องพาพยานบรรลุนิติภาวะ (อายุ 20 ปีขึ้นไป) มาด้วย 2 คน',
-          is: 'ต้องพาพยานอายุ 20 ปีขึ้นไปมานำ 2 คน พร้อมบัตรประชาชนเด้อ',
-          en: 'You must bring two adult witnesses (age 20+) with valid IDs.'
-        },
-        checklist: [
-          {
-            title: { th: 'บัตรประชาชนทั้ง 2 ฝ่าย', is: 'บัตรประชาชนทั้งสองคน', en: 'Both Partners’ ID Cards' },
-            desc: { th: 'ตัวจริงที่ยังไม่หมดอายุ (หรือพาสปอร์ตกรณีชาวต่างชาติ)', is: 'ตัวจริงที่ยังบ่หมดอายุ', en: 'Original valid IDs, or passports with embassy affirmations' },
-            tag: { th: 'ทั้งคู่', is: 'ทั้งคู่', en: 'Both' },
-            img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
+        time: 'ประมาณ 30 นาที',
+        fee: 'ฟรี ในเวลาราชการ',
+        badge: 'งานทะเบียนครอบครัว',
+        title: 'การจดทะเบียนสมรส',
+        summary: 'คู่สมรสต้องเดินทางมาแสดงตนพร้อมกันทั้งสองฝ่ายต่อหน้านายทะเบียน',
+        tip: 'ต้องพาพยานบรรลุนิติภาวะ (อายุ 20 ปีขึ้นไป) มาด้วย 2 คน',
+        docs: [
+          { name: 'บัตรประชาชนทั้ง 2 ฝ่าย', desc: 'ตัวจริงที่ยังไม่หมดอายุ' },
+          { name: 'พยานบุคคล 2 คน', desc: 'พยานอายุ 20 ปีขึ้นไป พร้อมบัตรประชาชนตัวจริง' }
         ],
         speech: {
-          th: "ยินดีด้วยครับสำหรับการเริ่มต้นชีวิตคู่ ที่ว่าการอำเภอสีชมพู เอกสารที่ต้องเตรียมมาจดทะเบียนสมรส มีบัตรประชาชนตัวจริงของทั้งคู่ สมุดทะเบียนบ้านเล่มสีน้ำเงินของทั้งสองฝ่าย และต้องพาพยานที่อายุครบยี่สิบปีขึ้นไปมาด้วยสองคน พร้อมบัตรประชาชนครับ",
-          is: "ยินดีนำเด้อครับคู่บ่าวสาวสิมาจดทะเบียนสมรส เอกสารที่ต้องถือมาที่อำเภอสีชมพู มีบัตรประชาชนโตจริงของทั้งสองคน สมุดทะเบียนบ้านเล่มสีน้ำเงินของทั้งสองฝ่าย และให้พาพยานมานำสองคนเด้อ อายุซาวปีขึ้นไป มีบัตรประชาชนพร้อม ทั้งสองคนต้องจูงแขนกันมาพร้อมหน้ากันเด้อครับผม",
-          en: "Congratulations on your marriage! To register a marriage at Si Chomphu District Office, both partners must be present with their valid IDs or passports, house registration books, and two adult witnesses."
+          th: "ยินดีด้วยครับสำหรับการเริ่มต้นชีวิตคู่ เตรียมบัตรประชาชนตัวจริงของทั้งคู่ ทะเบียนบ้าน และพาพยานที่อายุครบยี่สิบปีขึ้นไปมาด้วยสองคน พร้อมบัตรประชาชนครับ",
+          is: "ยินดีนำเด้อครับคู่บ่าวสาวสิมาจดทะเบียนสมรส ถือบัตรประชาชนโตจริงทั้งสองคน เล่มทะเบียนบ้าน และพาพยานมานำสองคนเด้อครับ",
+          en: "To register a marriage, both partners must appear with valid IDs, house books, and two adult witnesses."
+        }
+      },
+      {
+        id: 'divorce',
+        cat: 'family',
+        emoji: '💔',
+        time: 'ประมาณ 30 นาที',
+        fee: 'ฟรี ในเวลาราชการ',
+        badge: 'งานทะเบียนครอบครัว',
+        title: 'การจดทะเบียนหย่า',
+        summary: 'การหย่าโดยความยินยอม ทั้งสองฝ่ายต้องเดินทางมาลงชื่อพร้อมกัน',
+        tip: 'ต้องนำทะเบียนสมรสฉบับจริงทั้งสองฉบับมาคืน และมีพยาน 2 คน',
+        docs: [
+          { name: 'ใบสำคัญการสมรส 2 ฉบับ', desc: 'ทะเบียนสมรสฉบับจริงทั้งสองฉบับ' },
+          { name: 'พยานบุคคล 2 คน', desc: 'พร้อมบัตรประชาชนตัวจริง' }
+        ],
+        speech: {
+          th: "การจดทะเบียนหย่า ทั้งสองฝ่ายต้องมาด้วยความยินยอมพร้อมกัน นำทะเบียนสมรสทั้งสองฉบับ บัตรประชาชน และพยานสองคนมาติดต่อครับ",
+          is: "การจดทะเบียนหย่า ทั้งสองคนต้องยินยอมพร้อมใจกันมาเด้อ เอาใบสมรสทั้งสองใบ บัตรประชาชน และพาพยานมานำสองคนครับ",
+          en: "For mutual divorce, both spouses must attend with both original marriage certificates, IDs, and two witnesses."
+        }
+      },
+      {
+        id: 'child_legit',
+        cat: 'family',
+        emoji: '👨‍👧',
+        time: 'ประมาณ 30 นาที',
+        fee: 'ฟรี ไม่มีค่าธรรมเนียม',
+        badge: 'งานทะเบียนครอบครัว',
+        title: 'ทะเบียนรับรองบุตร',
+        summary: 'บิดา มารดา และบุตร ต้องเดินทางมาแสดงตนพร้อมกันทั้งสามคน',
+        tip: 'หากเด็กยังเล็กสื่อสารไม่ได้ ต้องใช้คำพิพากษาศาล',
+        docs: [
+          { name: 'สูติบัตรของบุตร (ใบเกิด)', desc: 'ใบสูติบัตรฉบับจริงของลูก' },
+          { name: 'บัตรประชาชนพ่อ แม่ และลูก', desc: 'ตัวจริงของทุกฝ่าย' }
+        ],
+        speech: {
+          th: "การจดทะเบียนรับรองบุตร บิดา มารดา และบุตร ต้องเดินทางมาพร้อมกันทั้งสามคน เตรียมสูติบัตรลูก บัตรประชาชน และพยานสองคนครับ",
+          is: "การจดทะเบียนรับรองบุตร พ่อ แม่ และลูก ต้องจูงแขนกันมาพร้อมกันทั้งสามคนเด้อ เอาใบเกิดลูก บัตรประชาชน และพาพยานมานำสองคนครับ",
+          en: "To legitimize a child, father, mother, and child must appear together with the birth certificate and IDs."
+        }
+      },
+      {
+        id: 'adoption_reg',
+        cat: 'family',
+        emoji: '🧸',
+        time: 'ประมาณ 40 นาที',
+        fee: 'ฟรี ไม่มีค่าธรรมเนียม',
+        badge: 'งานทะเบียนครอบครัว',
+        title: 'ทะเบียนรับบุตรบุญธรรม',
+        summary: 'ผู้รับต้องอายุ 25 ปีขึ้นไป และแก่กว่าเด็ก 15 ปี ได้รับอนุมัติจาก พมจ.',
+        tip: 'ต้องมีหนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด',
+        docs: [
+          { name: 'หนังสืออนุมัติจากสำนักงานพัฒนาสังคมฯ', desc: 'หนังสือแจ้งผลการอนุมัติรับเด็กเป็นบุตรบุญธรรมฉบับจริง' },
+          { name: 'บัตรประชาชนและทะเบียนบ้าน', desc: 'ของผู้รับบุตรบุญธรรมและบุตรบุญธรรม' }
+        ],
+        speech: {
+          th: "การจดทะเบียนรับบุตรบุญธรรม เอกสารสำคัญที่สุดคือ หนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด พร้อมบัตรประชาชนและทะเบียนบ้านของทุกฝ่ายครับ",
+          is: "การรับลูกบุญธรรม ต้องมีหนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัดขอนแก่นมาก่อนเด้อ แล้วถือบัตรประชาชนกับทะเบียนบ้านมาครับ",
+          en: "To register child adoption, bring the official approval notice from the Provincial Social Development Office, IDs, and house books."
+        }
+      },
+      {
+        id: 'birth_hosp',
+        cat: 'vital',
+        emoji: '🏥',
+        time: 'ประมาณ 20 นาที',
+        fee: 'ฟรี ไม่มีค่าใช้จ่าย',
+        badge: 'งานทะเบียนราษฎร',
+        title: 'การแจ้งเกิด (เกิด รพ.)',
+        summary: 'ต้องมาแจ้งต่อนายทะเบียนภายใน 15 วัน นับจากวันคลอด',
+        tip: 'แจ้งเกิน 15 วัน มีโทษปรับตามกฎหมายไม่เกิน 1,000 บาท',
+        docs: [
+          { name: 'หนังสือรับรองเกิด (ทร.1/1)', desc: 'เอกสารที่ทางโรงพยาบาลออกให้หลังคลอด' },
+          { name: 'สมุดทะเบียนบ้านฉบับเจ้าบ้าน', desc: 'เล่มที่จะเพิ่มชื่อเด็กเข้าไป' }
+        ],
+        speech: {
+          th: "การแจ้งเกิดคลอดที่โรงพยาบาล ต้องแจ้งภายในสิบห้าวัน นำหนังสือรับรองการเกิด ทร.1/1 จากโรงพยาบาล บัตรประชาชนพ่อแม่ และทะเบียนบ้านมาติดต่อครับ บริการฟรีครับ",
+          is: "คลอดลูกอยู่งานโรงพยาบาล ต้องมาแจ้งเกิดภายใน 15 มื้อเด้อ เอาใบ ทร.1/1 ที่หมอออกให้ มาพร้อมบัตรประชาชนพ่อแม่ และเล่มทะเบียนบ้านครับ",
+          en: "To register a birth, report within 15 days with the Thor Ror 1/1 hospital certificate, parent IDs, and house book."
+        }
+      },
+      {
+        id: 'death_home',
+        cat: 'vital',
+        emoji: '🕯️',
+        time: 'ประมาณ 20 นาที',
+        fee: 'ฟรี ไม่มีค่าใช้จ่าย',
+        badge: 'งานทะเบียนราษฎร',
+        title: 'การแจ้งตาย (ตายในบ้าน)',
+        summary: 'ต้องแจ้งต่อนายทะเบียนภายใน 24 ชั่วโมง นับแต่เวลาตาย',
+        tip: 'เจ้าบ้านหรือผู้พบศพเป็นผู้แจ้ง หากเกิน 24 ชม. มีค่าปรับ',
+        docs: [
+          { name: 'หนังสือรับรองการตาย', desc: 'จากผู้ใหญ่บ้าน หรือแพทย์ผู้ตรวจศพ' },
+          { name: 'บัตรประชาชนและทะเบียนบ้านผู้ตาย', desc: 'เอกสารตัวจริงเพื่อจำหน่ายชื่อ' }
+        ],
+        speech: {
+          th: "การแจ้งตายในบ้าน ต้องแจ้งภายในยี่สิบสี่ชั่วโมง นำหนังสือรับรองการตาย บัตรประชาชนและทะเบียนบ้านของผู้ตาย และบัตรของผู้แจ้งมาติดต่อครับ",
+          is: "แจ้งคนตายในบ้าน ต้องมาแจ้งภายในซาวสี่ชั่วโมงเด้อ เอาหนังสือรับรองการตาย บัตรประชาชนกับทะเบียนบ้านคนตาย และบัตรผู้แจ้งมานำครับ",
+          en: "To report a death at home, notify within 24 hours. Bring the death certificate, the deceased's ID and house book, and the informant's ID."
         }
       },
       {
         id: 'move_dest',
         cat: 'civil',
         emoji: '🏡',
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ค่าธรรมเนียม 20 บาท', is: 'ค่าธรรมเนียม 20 บาท', en: 'Fee: 20 THB' },
-        badge: { th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', en: 'Civil Address Transfer' },
-        title: { th: 'การย้ายที่อยู่ปลายทาง', is: 'การย้ายปลายทาง', en: 'Destination Address Move-In' },
-        summary: {
-          th: 'ย้ายเข้าบ้านใหม่ได้โดยตรงที่อำเภอปลายทาง โดยไม่ต้องกลับไปแจ้งย้ายออกจากอำเภอเดิม',
-          is: 'ย้ายเข้าบ้านใหม่ได้เลย บ่ต้องเมื่ออำเภอเดิมดอกครับ',
-          en: 'Move into a new household directly at the destination without returning to the previous district.'
-        },
-        tip: {
-          th: 'เจ้าบ้านของบ้านหลังที่จะย้ายเข้า ต้องเดินทางมาให้ความยินยอมด้วยตนเอง',
-          is: 'เจ้าบ้านหลังใหม่ต้องมาเซ็นยินยอมต่อหน้านายทะเบียนนำเด้อ',
-          en: 'The housemaster of the destination house must accompany you in person to consent.'
-        },
-        checklist: [
-          {
-            title: { th: 'สมุดทะเบียนบ้านหลังที่จะย้ายเข้า', is: 'สมุดทะเบียนบ้านหลังใหม่', en: 'Destination House Book' },
-            desc: { th: 'เล่มสีน้ำเงินฉบับจริงของบ้านปลายทาง', is: 'เล่มสีน้ำเงินโตจริงของบ้านใหม่', en: 'Original blue house book of the destination property' },
-            tag: { th: 'เล่มปลายทาง', is: 'เล่มปลายทาง', en: 'Destination Book' },
-            img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
-            required: true
-          }
+        time: 'ประมาณ 20 นาที',
+        fee: 'ค่าธรรมเนียม 20 บาท',
+        badge: 'งานทะเบียนราษฎร',
+        title: 'การย้ายที่อยู่ปลายทาง',
+        summary: 'ย้ายเข้าบ้านใหม่ได้โดยตรง ไม่ต้องกลับไปอำเภอเดิม',
+        tip: 'เจ้าบ้านของบ้านหลังที่จะย้ายเข้า ต้องเดินทางมาเซ็นยินยอมด้วยตนเอง',
+        docs: [
+          { name: 'สมุดทะเบียนบ้านหลังใหม่', desc: 'เล่มสีน้ำเงินตัวจริงของบ้านที่จะย้ายเข้า' },
+          { name: 'บัตรประชาชนเจ้าบ้านใหม่', desc: 'เจ้าบ้านต้องมาเซ็นยินยอมต่อนายทะเบียน' }
         ],
         speech: {
-          th: "การแจ้งย้ายที่อยู่ปลายทาง สะดวกมากครับไม่ต้องกลับไปอำเภอเดิม ให้เตรียมทะเบียนบ้านหลังที่จะย้ายเข้า บัตรประชาชนของผู้ย้าย และเจ้าบ้านปลายทางต้องเดินทางมาเซ็นยินยอมด้วยตนเองครับ มีค่าธรรมเนียมยี่สิบบาทครับ",
-          is: "ย้ายปลายทาง สะดวกหลายบ่ต้องเมื่ออำเภอเดิมดอกครับพี่น้อง ให้พาเจ้าบ้านหลังใหม่ถือเล่มทะเบียนบ้านกับบัตรประชาชนมายืนยันนำโลด มีค่าธรรมเนียม 20 บาทครับ",
-          en: "Destination move-in is very convenient. You do not need to go back to your previous district. Bring the destination blue house book, applicant ID, and have the new housemaster attend to sign consent. The fee is 20 Baht."
+          th: "การย้ายปลายทาง สะดวกมากครับไม่ต้องกลับไปอำเภอเดิม เตรียมทะเบียนบ้านหลังที่จะย้ายเข้า บัตรประชาชนผู้ย้าย และพาเจ้าบ้านใหม่มาเซ็นยินยอมครับ ค่าธรรมเนียมยี่สิบบาทครับ",
+          is: "ย้ายปลายทาง บ่ต้องเมื่ออำเภอเดิมดอกครับ ให้พาเจ้าบ้านหลังใหม่ถือเล่มทะเบียนบ้านกับบัตรประชาชนมายืนยันนำโลด ค่าธรรมเนียม 20 บาทครับ",
+          en: "Destination move-in requires the destination house book, applicant ID, and the new housemaster present to sign consent. Fee is 20 Baht."
         }
       }
     ];
 
-    let currentServiceId = 'id_expired';
+    let currentId = 'id_expired';
     let currentCategory = 'all';
     let currentLang = 'th';
     let isSpeaking = false;
@@ -853,268 +814,138 @@
     let currentUtterance = null;
 
     window.onload = function() {
-      applyUITranslations();
-      buildServiceChips();
-      renderService(currentServiceId);
-      updateLanguageUI();
+      renderServices();
+      loadDetail(currentId);
     };
 
-    function setLanguage(lang) {
-      if (isSpeaking) {
-        stopSpeech();
-      }
+    function setLang(lang) {
+      if (isSpeaking) stopAudio();
       currentLang = lang;
-      applyUITranslations();
-      buildServiceChips();
-      renderService(currentServiceId);
-      updateLanguageUI();
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + lang).classList.add('active');
     }
 
-    function applyUITranslations() {
-      const t = uiTranslations[currentLang];
-      document.getElementById('ui-district-title').innerText = t.district;
-      document.getElementById('ui-province-tag').innerText = t.province;
-      document.getElementById('ui-subtitle').innerText = t.subtitle;
-      document.getElementById('ui-call-btn').innerText = t.callBtn;
-      document.getElementById('ui-lang-label').innerText = t.langLabel;
-      document.getElementById('ui-notice-title').innerText = t.noticeTitle;
-      document.getElementById('ui-notice-desc').innerText = t.noticeDesc;
-      
-      document.getElementById('filter-all').innerText = t.filterAll;
-      document.getElementById('filter-id').innerText = t.filterId;
-      document.getElementById('filter-family').innerText = t.filterFamily;
-      document.getElementById('filter-vital').innerText = t.filterVital;
-      document.getElementById('filter-civil').innerText = t.filterCivil;
-      
-      document.getElementById('ui-scroll-guide').innerText = t.scrollGuide;
-      document.getElementById('ui-tap-hint').innerText = t.tapHint;
-      document.getElementById('ui-checklist-heading').innerText = t.checklistHeading;
-      document.getElementById('ui-time-label').innerText = t.timeLabel;
-      document.getElementById('ui-fee-label').innerText = t.feeLabel;
-    }
-
-    function updateLanguageUI() {
-      const btnTh = document.getElementById('lang-th');
-      const btnIs = document.getElementById('lang-is');
-      const btnEn = document.getElementById('lang-en');
-
-      [btnTh, btnIs, btnEn].forEach(b => {
-        b.className = "px-2.5 py-0.5 md:py-1 rounded-lg text-xs md:text-sm font-bold transition-all text-white/90 hover:bg-white/20";
-      });
-
-      if (currentLang === 'th') {
-        btnTh.className = "px-2.5 py-0.5 md:py-1 rounded-lg text-xs md:text-sm font-bold transition-all bg-white text-pink-700 shadow";
-      } else if (currentLang === 'is') {
-        btnIs.className = "px-2.5 py-0.5 md:py-1 rounded-lg text-xs md:text-sm font-bold transition-all bg-amber-400 text-amber-950 shadow";
-      } else if (currentLang === 'en') {
-        btnEn.className = "px-2.5 py-0.5 md:py-1 rounded-lg text-xs md:text-sm font-bold transition-all bg-cyan-400 text-slate-900 shadow";
-      }
-    }
-
-    function filterCategory(cat) {
+    function filterCat(cat) {
       currentCategory = cat;
-      document.querySelectorAll('.cat-pill').forEach(btn => {
-        btn.classList.remove('bg-pink-600', 'text-white');
-        btn.classList.add('bg-pink-100', 'text-pink-800');
-      });
-      const activeBtn = document.getElementById(`filter-${cat}`);
-      if (activeBtn) {
-        activeBtn.classList.remove('bg-pink-100', 'text-pink-800');
-        activeBtn.classList.add('bg-pink-600', 'text-white');
-      }
-      buildServiceChips();
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('f-' + cat).classList.add('active');
+      renderServices();
     }
 
-    function buildServiceChips() {
-      const container = document.getElementById('service-chips-container');
+    function renderServices() {
+      const container = document.getElementById('service-list');
       container.innerHTML = '';
 
       const filtered = currentCategory === 'all' 
-        ? services 
-        : services.filter(s => s.cat === currentCategory);
+        ? database 
+        : database.filter(item => item.cat === currentCategory);
 
       filtered.forEach(s => {
-        const isSelected = s.id === currentServiceId;
-        const btn = document.createElement('button');
-        btn.id = `chip-${s.id}`;
-        btn.onclick = () => selectService(s.id);
-        
-        btn.className = `flex-shrink-0 flex items-center gap-2 px-3 py-1.5 md:py-2.5 rounded-2xl border-2 transition-all active:scale-95 text-left md:w-full ${
-          isSelected 
-            ? 'border-pink-500 bg-pink-100 text-pink-900 shadow-sm font-bold' 
-            : 'border-pink-200 bg-white text-slate-700 hover:bg-pink-50'
-        }`;
-        
-        const titleText = (s.title[currentLang] || s.title.th);
-        btn.innerHTML = `
-          <span class="text-lg md:text-2xl">${s.emoji}</span>
-          <span class="text-xs md:text-sm leading-tight line-clamp-2">${titleText}</span>
+        const chip = document.createElement('div');
+        chip.className = `service-chip ${s.id === currentId ? 'active' : ''}`;
+        chip.onclick = () => selectService(s.id);
+        chip.innerHTML = `
+          <div class="emoji">${s.emoji}</div>
+          <div class="title">${s.title}</div>
         `;
-        container.appendChild(btn);
+        container.appendChild(chip);
       });
     }
 
-    function selectService(serviceId) {
-      if (isSpeaking) {
-        stopSpeech();
-      }
-      currentServiceId = serviceId;
-      buildServiceChips();
-      renderService(serviceId);
+    function selectService(id) {
+      if (isSpeaking) stopAudio();
+      currentId = id;
+      document.querySelectorAll('.service-chip').forEach((c, idx) => {
+        const item = database[idx];
+        if (item && item.id === id) c.classList.add('active');
+        else c.classList.remove('active');
+      });
+      loadDetail(id);
     }
 
-    function renderService(serviceId) {
-      const data = services.find(s => s.id === serviceId);
+    function loadDetail(id) {
+      const data = database.find(i => i.id === id);
       if (!data) return;
 
-      document.getElementById('service-badge').innerText = data.badge[currentLang] || data.badge.th;
-      document.getElementById('service-title').innerText = data.title[currentLang] || data.title.th;
-      document.getElementById('service-emoji').innerText = data.emoji;
-      document.getElementById('service-summary').innerText = data.summary[currentLang] || data.summary.th;
-      document.getElementById('service-tip').innerText = data.tip[currentLang] || data.tip.th;
-      document.getElementById('service-time').innerText = data.time[currentLang] || data.time.th;
-      document.getElementById('service-fee').innerText = data.fee[currentLang] || data.fee.th;
+      document.getElementById('display-badge').innerText = data.badge;
+      document.getElementById('display-title').innerText = data.title;
+      document.getElementById('display-emoji').innerText = data.emoji;
+      document.getElementById('display-summary').innerText = data.summary;
+      document.getElementById('display-tip').innerText = data.tip;
+      document.getElementById('display-time').innerText = data.time;
+      document.getElementById('display-fee').innerText = data.fee;
 
-      const checklistContainer = document.getElementById('checklist-container');
-      checklistContainer.innerHTML = '';
-
-      data.checklist.forEach((item, index) => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'flex items-center gap-2.5 bg-pink-50/50 border border-pink-100 rounded-2xl p-2 hover:bg-pink-100/50 transition-colors';
-        
-        const title = item.title[currentLang] || item.title.th;
-        const desc = item.desc[currentLang] || item.desc.th;
-        const tag = item.tag[currentLang] || item.tag.th;
-
-        itemEl.innerHTML = `
-          <div class="w-11 h-11 md:w-14 md:h-14 rounded-xl overflow-hidden bg-slate-200 flex-shrink-0 border border-pink-200 relative shadow-inner">
-            <img src="${item.img}" alt="${title}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/120x120/be185d/ffffff?text=Doc'">
-            <span class="absolute top-1 left-1 bg-pink-900/80 text-white text-[9px] font-bold px-1.5 rounded-full">${index + 1}</span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <h4 class="font-bold text-slate-900 text-xs md:text-sm leading-tight">${title}</h4>
-              <span class="text-[9px] md:text-[10px] font-bold px-1.5 py-0.2 rounded-full ${item.required ? 'bg-pink-200 text-pink-900' : 'bg-slate-200 text-slate-700'}">
-                ${tag}
-              </span>
-            </div>
-            <p class="text-[11px] md:text-xs text-slate-600 mt-0.5 leading-tight">${desc}</p>
-          </div>
-          <div class="text-pink-600 pr-1">
-            <i class="ph-fill ph-check-circle text-lg md:text-2xl"></i>
+      const docsBox = document.getElementById('docs-list');
+      docsBox.innerHTML = '';
+      data.docs.forEach((doc, idx) => {
+        const item = document.createElement('div');
+        item.className = 'doc-item';
+        item.innerHTML = `
+          <div class="idx">${idx + 1}</div>
+          <div class="info">
+            <strong>${doc.name}</strong>
+            <span>${doc.desc}</span>
           </div>
         `;
-        checklistContainer.appendChild(itemEl);
+        docsBox.appendChild(item);
       });
-
-      resetButtonUI();
     }
 
-    function toggleVoiceSpeech() {
-      if (isSpeaking) {
-        stopSpeech();
-      } else {
-        playSpeech();
-      }
+    function toggleAudio() {
+      if (isSpeaking) stopAudio();
+      else playAudio();
     }
 
-    function playSpeech() {
-      const data = services.find(s => s.id === currentServiceId);
-      if (!data) return;
-      const textToSpeak = data.speech[currentLang] || data.speech.th;
-
-      if (!('speechSynthesis' in window)) return;
+    function playAudio() {
+      const data = database.find(i => i.id === currentId);
+      if (!data || !('speechSynthesis' in window)) return;
 
       synth.cancel();
+      const text = data.speech[currentLang] || data.speech.th;
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      currentUtterance.lang = currentLang === 'en' ? 'en-US' : 'th-TH';
+      currentUtterance.rate = 0.95;
 
-      currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
-      
-      if (currentLang === 'en') {
-        currentUtterance.lang = 'en-US';
-        currentUtterance.rate = 0.95;
-      } else {
-        currentUtterance.lang = 'th-TH';
-        currentUtterance.rate = 0.95;
-      }
-
-      currentUtterance.onstart = function() {
+      currentUtterance.onstart = () => {
         isSpeaking = true;
-        setButtonSpeakingUI(true);
+        setBtnState(true);
       };
-
-      currentUtterance.onend = function() {
+      currentUtterance.onend = () => {
         isSpeaking = false;
-        setButtonSpeakingUI(false);
+        setBtnState(false);
       };
-
-      currentUtterance.onerror = function() {
+      currentUtterance.onerror = () => {
         isSpeaking = false;
-        setButtonSpeakingUI(false);
+        setBtnState(false);
       };
 
       synth.speak(currentUtterance);
     }
 
-    function stopSpeech() {
-      if (synth) {
-        synth.cancel();
-      }
+    function stopAudio() {
+      if (synth) synth.cancel();
       isSpeaking = false;
-      setButtonSpeakingUI(false);
+      setBtnState(false);
     }
 
     function restartAudio() {
-      stopSpeech();
-      playSpeech();
+      stopAudio();
+      playAudio();
     }
 
-    function setButtonSpeakingUI(active) {
-      const t = uiTranslations[currentLang];
-      const btn = document.getElementById('voice-button');
-      const btnDesktop = document.getElementById('voice-button-desktop');
-      const subText = document.getElementById('voice-subtext');
-      const speakerIcon = document.getElementById('speaker-icon');
-      const audioWave = document.getElementById('audio-wave-anim');
-
-      document.querySelectorAll('.voice-maintext-sync').forEach(el => {
-        el.innerHTML = `<span>${active ? t.voiceBtnStop : t.voiceBtnPlay}</span>`;
-      });
-
-      if (active) {
-        if (btn) {
-          btn.classList.add('ripple-active', 'from-rose-600', 'to-red-600');
-          btn.classList.remove('from-pink-500', 'via-rose-500', 'to-pink-600');
-        }
-        if (btnDesktop) {
-          btnDesktop.classList.add('from-rose-600', 'to-red-600');
-          btnDesktop.classList.remove('from-pink-500', 'via-rose-500', 'to-pink-600');
-        }
-        if (subText) subText.innerText = t.voiceSubSpeaking;
-        if (speakerIcon) speakerIcon.className = "ph-fill ph-waveform text-base animate-pulse";
-        if (audioWave) audioWave.classList.remove('hidden');
+    function setBtnState(speaking) {
+      const btn = document.getElementById('voice-btn');
+      const icon = document.getElementById('voice-btn-icon');
+      const text = document.getElementById('voice-btn-text');
+      if (speaking) {
+        btn.classList.add('speaking');
+        icon.innerText = '⏹️';
+        text.innerText = 'กดเพื่อหยุดฟังเสียง';
       } else {
-        if (btn) {
-          btn.classList.remove('ripple-active', 'from-rose-600', 'to-red-600');
-          btn.classList.add('from-pink-500', 'via-rose-500', 'to-pink-600');
-        }
-        if (btnDesktop) {
-          btnDesktop.classList.remove('from-rose-600', 'to-red-600');
-          btnDesktop.classList.add('from-pink-500', 'via-rose-500', 'to-pink-600');
-        }
-        if (subText) subText.innerText = t.voiceSubNormal;
-        if (speakerIcon) speakerIcon.className = "ph-fill ph-speaker-high text-lg animate-bounce";
-        if (audioWave) audioWave.classList.add('hidden');
+        btn.classList.remove('speaking');
+        icon.innerText = '🔊';
+        text.innerText = 'กดเพื่อฟังเสียงบรรยาย';
       }
-    }
-
-    function resetButtonUI() {
-      setButtonSpeakingUI(false);
-    }
-
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = function() {
-        window.speechSynthesis.getVoices();
-      };
     }
   </script>
 </body>
