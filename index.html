@@ -670,7 +670,8 @@
           </div>
           <div class="brand-text">
             <h1 id="ui-district">ที่ว่าการอำเภอสีชมพู <span class="tag-kk" id="ui-province">ขอนแก่น</span></h1>
-            <p id="ui-subtitle">น้องช้างพาเพลิน แนะนำเอกสาร</p>
+            <!-- อัปเดตชื่อ ช้างชมพู -->
+            <p id="ui-subtitle">ช้างชมพู นำทางเตรียมเอกสาร</p>
           </div>
         </div>
 
@@ -718,7 +719,8 @@
         <div class="alert-card">
           <span style="font-size:1.2rem;">🐘</span>
           <div>
-            <strong id="ui-notice-head">อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!</strong>
+            <!-- อัปเดตชื่อ น้องช้างชมพู -->
+            <strong id="ui-notice-head">อ่านหนังสือไม่ออก น้องช้างชมพูช่วยอ่านให้ฟังเด้อ!</strong>
             <p id="ui-notice-body">แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง</p>
           </div>
         </div>
@@ -830,15 +832,13 @@
       window.location.href = chromeIntent;
     }
 
-    // ฟังก์ชันคำนวณเวลาเปิด-ปิดทำการแบบสด
     function updateOfficeStatus() {
       const now = new Date();
-      const day = now.getDay(); // 0 = อาทิตย์, 1-5 = จันทร์-ศุกร์, 6 = เสาร์
+      const day = now.getDay();
       const hour = now.getHours();
       const minute = now.getMinutes();
       const timeVal = hour * 60 + minute;
 
-      // จันทร์ - ศุกร์ (8:30 - 16:30 น.)
       const isOpen = (day >= 1 && day <= 5) && (timeVal >= 8 * 60 + 30 && timeVal <= 16 * 60 + 30);
       const dot = document.getElementById('status-dot');
       const text = document.getElementById('status-text');
@@ -862,17 +862,17 @@
       }
     }
 
-    // รองรับ UI 5 ภาษา
+    // อัปเดตพจนานุกรม UI ด้วยชื่อ "ช้างชมพู"
     const i18n = {
       th: {
         district: "ที่ว่าการอำเภอสีชมพู",
         province: "ขอนแก่น",
-        subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
+        subtitle: "ช้างชมพู นำทางเตรียมเอกสาร",
         call: "📞 043-399-140",
         map: "📍 แผนที่",
         searchPlaceholder: "พิมพ์ค้นหาบริการ เช่น บัตร, สมรส...",
         langTitle: "🔊 ภาษา:",
-        noticeHead: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
+        noticeHead: "อ่านหนังสือไม่ออก น้องช้างชมพูช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
         all: "ทั้งหมด",
         catId: "บัตร & ชื่อ",
@@ -890,12 +890,12 @@
       is: {
         district: "ที่ว่าการอำเภอสีชมพู",
         province: "ขอนแก่น",
-        subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
+        subtitle: "ช้างชมพู นำทางเตรียมเอกสาร",
         call: "📞 043-399-140",
         map: "📍 แผนที่",
         searchPlaceholder: "ค้นหาบริการ เช่น เฮ็ดบัตร, แต่งงาน...",
         langTitle: "🔊 ภาษา:",
-        noticeHead: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
+        noticeHead: "อ่านหนังสือไม่ออก น้องช้างชมพูช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
         all: "ทั้งหมด",
         catId: "บัตร & ซื่อ",
@@ -913,7 +913,7 @@
       en: {
         district: "Si Chomphu District Office",
         province: "Khon Kaen",
-        subtitle: "Document Preparation Voice Guide",
+        subtitle: "Chang Chomphu Voice Guide",
         call: "📞 043-399-140",
         map: "📍 Maps",
         searchPlaceholder: "Search service e.g. ID, Marriage...",
@@ -936,7 +936,7 @@
       de: {
         district: "Bezirksamt Si Chomphu",
         province: "Khon Kaen",
-        subtitle: "Sprachführer für Dokumente",
+        subtitle: "Chang Chomphu Sprachführer",
         call: "📞 043-399-140",
         map: "📍 Karte",
         searchPlaceholder: "Dienst suchen z.B. Ausweis, Ehe...",
@@ -959,7 +959,7 @@
       fr: {
         district: "Bureau de District de Si Chomphu",
         province: "Khon Kaen",
-        subtitle: "Guide Vocal des Démarches",
+        subtitle: "Chang Chomphu Guide Vocal",
         call: "📞 043-399-140",
         map: "📍 Plan",
         searchPlaceholder: "Rechercher e.g. Carte, Mariage...",
@@ -1008,7 +1008,7 @@
           de: 'Nach 60 Tagen fällt eine Säumnisgebühr von bis zu 100 THB an.',
           fr: 'Une amende de retard jusqu’à 100 THB s’applique après 60 jours.'
         },
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins', de: 'Ca. 15 Minuten', fr: 'Environ 15 min' },
+        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins', de: 'Ca. 15 Minuten', fr: 'Environ 20 min' },
         fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียค่าธรรมเนียม', en: 'Free of charge', de: 'Kostenlos', fr: 'Gratuit' },
         docs: {
           th: [
@@ -1033,11 +1033,11 @@
           ]
         },
         speech: {
-          th: "การขอมีบัตรใหม่ กรณีบัตรเดิมหมดอายุ สามารถยื่นขอทำบัตรใหม่ได้ล่วงหน้าหกสิบวัน หรือภายในหกสิบวันนับแต่วันหมดอายุครับ เตรียมเฉพาะบัตรประชาชนใบเดิมมาติดต่อได้เลย ไม่มีค่าธรรมเนียมครับ",
-          is: "ไผบัตรประชาชนหมดอายุ ให้ถือบัตรเก่าใบเดิมมาติดต่อได้โลดเด้อครับ ยื่นก่อนหมดอายุได้หกสิบมื้อ บ่อเสียค่าธรรมเนียมดอกครับ แต่ถ้ากายกำหนดสิมีค่าปรับบ่อเกินหนึ่งร้อยบาทเด้อ",
-          en: "To renew an expired Thai ID card, apply within 60 days before or after the expiration date. Bring your current ID card. There is no official fee.",
-          de: "Um einen abgelaufenen thailändischen Personalausweis zu erneuern, beantragen Sie ihn innerhalb von 60 Tagen. Bringen Sie Ihren alten Ausweis mit. Dieser Service ist gebührenfrei.",
-          fr: "Pour renouveler une carte d'identité expirée, présentez-vous dans les 60 jours avec votre ancienne carte. La démarche est totalement gratuite."
+          th: "น้องช้างชมพูขอแนะนำ การขอมีบัตรใหม่กรณีบัตรเดิมหมดอายุ สามารถยื่นขอทำบัตรใหม่ได้ล่วงหน้าหกสิบวัน หรือภายในหกสิบวันนับแต่วันหมดอายุครับ เตรียมเฉพาะบัตรประชาชนใบเดิมมาติดต่อได้เลย ไม่มีค่าธรรมเนียมครับ",
+          is: "น้องช้างชมพูบอกเด้อ ไผบัตรประชาชนหมดอายุ ให้ถือบัตรเก่าใบเดิมมาติดต่อได้โลดเด้อครับ ยื่นก่อนหมดอายุได้หกสิบมื้อ บ่อเสียค่าธรรมเนียมดอกครับ แต่ถ้ากายกำหนดสิมีค่าปรับบ่อเกินหนึ่งร้อยบาทเด้อ",
+          en: "Chang Chomphu guide: To renew an expired Thai ID card, apply within 60 days before or after the expiration date. Bring your current ID card. There is no official fee.",
+          de: "Chang Chomphu informiert: Um einen abgelaufenen Personalausweis zu erneuern, beantragen Sie ihn innerhalb von 60 Tagen. Bringen Sie Ihren alten Ausweis mit. Dieser Service ist gebührenfrei.",
+          fr: "Guide Chang Chomphu : Pour renouveler une carte d'identité expirée, présentez-vous dans les 60 jours avec votre ancienne carte. La démarche est totalement gratuite."
         }
       },
       {
@@ -1091,11 +1091,11 @@
           ]
         },
         speech: {
-          th: "กรณีบัตรประชาชนหายหรือถูกทำลาย ต้องยื่นทำบัตรใหม่ภายในหกสิบวัน ไม่ต้องไปแจ้งความที่โรงพักครับ เตรียมทะเบียนบ้าน และเอกสารราชการที่มีรูปถ่าย หรือพาเจ้าบ้าน หรือผู้ใหญ่บ้านมารับรองตัวตน ค่าธรรมเนียมหนึ่งร้อยบาทครับ",
-          is: "บัตรประชาชนหาย หรือถืกทำลาย บ่อต้องไปแจ้งความดอกครับพี่น้อง ถือเล่มทะเบียนบ้าน และเอกสารมีรูปถ่าย หรือพาพ่อแม่ ผู้ใหญ่บ้าน มารับรอง มีค่าธรรมเนียมหนึ่งร้อยบาทเด้อครับ",
-          en: "For a lost ID card, apply within 60 days. No police report required. Bring your blue house registration book and another photo ID. The fee is 100 Baht.",
-          de: "Bei Verlust des Ausweises ist keine polizeiliche Meldung nötig. Bitte bringen Sie das blaue Hausbuch und einen Ausweis mit Foto mit. Die Gebühr beträgt 100 Baht.",
-          fr: "En cas de perte de carte d'identité, présentez-vous avec votre livret de maison bleu et une pièce avec photo. Les frais sont de 100 Baht."
+          th: "น้องช้างชมพูขอแนะนำ กรณีบัตรประชาชนหายหรือถูกทำลาย ต้องยื่นทำบัตรใหม่ภายในหกสิบวัน ไม่ต้องไปแจ้งความที่โรงพักครับ เตรียมทะเบียนบ้าน และเอกสารราชการที่มีรูปถ่าย หรือพาเจ้าบ้าน หรือผู้ใหญ่บ้านมารับรองตัวตน ค่าธรรมเนียมหนึ่งร้อยบาทครับ",
+          is: "น้องช้างชมพูบอกเด้อ บัตรประชาชนหาย หรือถืกทำลาย บ่อต้องไปแจ้งความดอกครับ ถือเล่มทะเบียนบ้าน และเอกสารมีรูปถ่าย หรือพาพ่อแม่ ผู้ใหญ่บ้าน มารับรอง มีค่าธรรมเนียมหนึ่งร้อยบาทเด้อครับ",
+          en: "Chang Chomphu guide: For a lost ID card, apply within 60 days. No police report required. Bring your blue house registration book and another photo ID. The fee is 100 Baht.",
+          de: "Chang Chomphu informiert: Bei Verlust des Ausweises ist keine polizeiliche Meldung nötig. Bitte bringen Sie das blaue Hausbuch und einen Ausweis mit Foto mit. Die Gebühr beträgt 100 Baht.",
+          fr: "Guide Chang Chomphu : En cas de perte de carte d'identité, présentez-vous avec votre livret de maison bleu et une pièce avec photo. Les frais sont de 100 Baht."
         }
       },
       {
@@ -1149,11 +1149,11 @@
           ]
         },
         speech: {
-          th: "ยินดีด้วยครับสำหรับการเริ่มต้นชีวิตคู่ เตรียมบัตรประชาชนตัวจริงของทั้งคู่ ทะเบียนบ้าน และพาพยานที่อายุครบยี่สิบปีขึ้นไปมาด้วยสองคน พร้อมบัตรประชาชนครับ",
-          is: "ยินดีนำเด้อครับคู่บ่าวสาวสิมาจดทะเบียนสมรส ถือบัตรประชาชนโตจริงทั้งสองคน เล่มทะเบียนบ้าน และพาพยานมานำสองคนเด้อครับ",
-          en: "To register a marriage, both partners must appear with valid IDs, house books, and two adult witnesses.",
-          de: "Für die Eheschließung müssen beide Partner persönlich anwesend sein. Bringen Sie Ausweise, Hausbücher und zwei volljährige Zeugen mit.",
-          fr: "Pour enregistrer un mariage, les deux époux doivent être présents avec leurs pièces d'identité, livrets de domicile et deux témoins majeurs."
+          th: "น้องช้างชมพูขอแสดงความยินดีด้วยครับสำหรับการเริ่มต้นชีวิตคู่ เตรียมบัตรประชาชนตัวจริงของทั้งคู่ ทะเบียนบ้าน และพาพยานที่อายุครบยี่สิบปีขึ้นไปมาด้วยสองคน พร้อมบัตรประชาชนครับ",
+          is: "น้องช้างชมพูยินดีนำเด้อครับคู่บ่าวสาวสิมาจดทะเบียนสมรส ถือบัตรประชาชนโตจริงทั้งสองคน เล่มทะเบียนบ้าน และพาพยานมานำสองคนเด้อครับ",
+          en: "Chang Chomphu guide: Congratulations on your marriage! Both partners must appear with valid IDs, house books, and two adult witnesses.",
+          de: "Chang Chomphu gratuliert: Für die Eheschließung müssen beide Partner persönlich anwesend sein. Bringen Sie Ausweise, Hausbücher und zwei volljährige Zeugen mit.",
+          fr: "Guide Chang Chomphu : Félicitations ! Pour enregistrer un mariage, les deux époux doivent être présents avec leurs pièces d'identité, livrets de domicile et deux témoins majeurs."
         }
       },
       {
@@ -1207,11 +1207,11 @@
           ]
         },
         speech: {
-          th: "การแจ้งเกิดคลอดที่โรงพยาบาล ต้องแจ้งภายในสิบห้าวัน นำหนังสือรับรองการเกิด ทร.1/1 จากโรงพยาบาล บัตรประชาชนพ่อแม่ และทะเบียนบ้านมาติดต่อครับ บริการฟรีครับ",
-          is: "คลอดลูกอยู่งานโรงพยาบาล ต้องมาแจ้งเกิดภายใน 15 มื้อเด้อ เอาใบ ทร.1/1 ที่หมอออกให้ มาพร้อมบัตรประชาชนพ่อแม่ และเล่มทะเบียนบ้านครับ",
-          en: "To register a birth, report within 15 days with the Thor Ror 1/1 hospital certificate, parent IDs, and house book.",
-          de: "Die Geburt muss innerhalb von 15 Tagen gemeldet werden. Bringen Sie die Tor Ror 1/1-Bescheinigung des Krankenhauses und die Ausweise der Eltern mit.",
-          fr: "Déclarez la naissance dans les 15 jours avec le certificat hospitalier Thor Ror 1/1, les pièces d'identité des parents et le livret de maison."
+          th: "น้องช้างชมพูขอแนะนำ การแจ้งเกิดคลอดที่โรงพยาบาล ต้องแจ้งภายในสิบห้าวัน นำหนังสือรับรองการเกิด ทร.1/1 จากโรงพยาบาล บัตรประชาชนพ่อแม่ และทะเบียนบ้านมาติดต่อครับ บริการฟรีครับ",
+          is: "น้องช้างชมพูบอกเด้อ คลอดลูกอยู่งานโรงพยาบาล ต้องมาแจ้งเกิดภายใน 15 มื้อ เอาใบ ทร.1/1 ที่หมอออกให้ มาพร้อมบัตรประชาชนพ่อแม่ และเล่มทะเบียนบ้านครับ",
+          en: "Chang Chomphu guide: To register a birth, report within 15 days with the Thor Ror 1/1 hospital certificate, parent IDs, and house book.",
+          de: "Chang Chomphu informiert: Die Geburt muss innerhalb von 15 Tagen gemeldet werden. Bringen Sie die Tor Ror 1/1-Bescheinigung des Krankenhauses und die Ausweise der Eltern mit.",
+          fr: "Guide Chang Chomphu : Déclarez la naissance dans les 15 jours avec le certificat hospitalier Thor Ror 1/1, les pièces d'identité des parents et le livret de maison."
         }
       },
       {
@@ -1265,11 +1265,11 @@
           ]
         },
         speech: {
-          th: "การย้ายปลายทาง สะดวกมากครับไม่ต้องกลับไปอำเภอเดิม เตรียมทะเบียนบ้านหลังที่จะย้ายเข้า บัตรประชาชนผู้ย้าย และพาเจ้าบ้านใหม่มาเซ็นยินยอมครับ ค่าธรรมเนียมยี่สิบบาทครับ",
-          is: "ย้ายปลายทาง บ่ต้องเมื่ออำเภอเดิมดอกครับ ให้พาเจ้าบ้านหลังใหม่ถือเล่มทะเบียนบ้านกับบัตรประชาชนมายืนยันนำโลด ค่าธรรมเนียม 20 บาทครับ",
-          en: "Destination move-in requires the destination house book, applicant ID, and the new housemaster present to sign consent. Fee is 20 Baht.",
-          de: "Die Ummeldung am Zielort ist sehr bequem. Bringen Sie das neue Hausbuch und Ihren Ausweis mit. Der neue Hausvorstand muss zur Zustimmung anwesend sein.",
-          fr: "L'emménagement direct est simple. Munissez-vous du livret de la nouvelle maison et de votre pièce d'identité. Le chef de maison doit être présent."
+          th: "น้องช้างชมพูขอแนะนำ การย้ายปลายทาง สะดวกมากครับไม่ต้องกลับไปอำเภอเดิม เตรียมทะเบียนบ้านหลังที่จะย้ายเข้า บัตรประชาชนผู้ย้าย และพาเจ้าบ้านใหม่มาเซ็นยินยอมครับ ค่าธรรมเนียมยี่สิบบาทครับ",
+          is: "น้องช้างชมพูบอกเด้อ ย้ายปลายทาง บ่ต้องเมื่ออำเภอเดิมดอกครับ ให้พาเจ้าบ้านหลังใหม่ถือเล่มทะเบียนบ้านกับบัตรประชาชนมายืนยันนำโลด ค่าธรรมเนียม 20 บาทครับ",
+          en: "Chang Chomphu guide: Destination move-in requires the destination house book, applicant ID, and the new housemaster present to sign consent. Fee is 20 Baht.",
+          de: "Chang Chomphu informiert: Die Ummeldung am Zielort ist sehr bequem. Bringen Sie das neue Hausbuch und Ihren Ausweis mit. Der neue Hausvorstand muss zur Zustimmung anwesend sein.",
+          fr: "Guide Chang Chomphu : L'emménagement direct est simple. Munissez-vous du livret de la nouvelle maison et de votre pièce d'identité. Le chef de maison doit être présent."
         }
       }
     ];
@@ -1287,7 +1287,7 @@
       setupEventListeners();
       applyLanguageTexts();
       updateOfficeStatus();
-      setInterval(updateOfficeStatus, 60000); // อัปเดตสถานะเปิดทำการทุก 1 นาที
+      setInterval(updateOfficeStatus, 60000);
       renderServices();
       loadDetail(currentId);
     });
@@ -1390,7 +1390,6 @@
         ? database 
         : database.filter(item => item.cat === currentCategory);
 
-      // กรองผ่านกล่องค้นหาด่วน (Search Filter)
       if (searchQuery) {
         filtered = filtered.filter(item => {
           const title = (item.title[currentLang] || item.title.th).toLowerCase();
