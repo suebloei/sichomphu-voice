@@ -5,40 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   <title>เสียงนำทางเตรียมเอกสาร - ที่ว่าการอำเภอสีชมพู จ.ขอนแก่น</title>
   
-  <!-- สคริปต์ตรวจจับ: ยกเว้น iPad/iOS และดีดออกไป Chrome เฉพาะ Android ใน LINE/Messenger -->
-  <script>
-    (function() {
-      var ua = navigator.userAgent || navigator.vendor || window.opera;
-      var isLine = ua.indexOf('Line') > -1 || ua.indexOf('LINE') > -1;
-      var isFb = ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('Messenger') > -1;
-      
-      // ตรวจสอบว่าเป็น Android หรือไม่
-      var isAndroid = /android/i.test(ua);
-      // ตรวจสอบอุปกรณ์ Apple (iPad / iPhone / iPod)
-      var isApple = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-      // ถ้าเป็น iPad หรือ iPhone ให้ผ่านไปเลย ไม่ต้อง Redirect เพราะ WebKit เล่นเสียงได้ปกติ
-      if (isApple) {
-        return;
-      }
-
-      // ถ้าเป็น Android และเปิดใน LINE
-      if (isAndroid && isLine) {
-        if (window.location.href.indexOf('openExternalBrowser=1') === -1) {
-          var sep = window.location.href.indexOf('?') > -1 ? '&' : '?';
-          window.location.href = window.location.href + sep + 'openExternalBrowser=1';
-        }
-        return;
-      }
-
-      // ถ้าเป็น Android และเปิดใน Facebook / Messenger
-      if (isAndroid && isFb) {
-        var cleanUrl = window.location.href.replace(/^https?:\/\//, '');
-        window.location.href = 'intent://' + cleanUrl + '#Intent;scheme=https;package=com.android.chrome;end';
-      }
-    })();
-  </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -71,6 +37,32 @@
       flex-direction: column;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       position: relative;
+    }
+
+    /* แถบเตือนสำหรับเปิดใน LINE / Messenger เพื่อบังคับเปิด Chrome/Safari */
+    #inapp-warning-bar {
+      display: none;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    #inapp-warning-bar a {
+      background: #ffffff;
+      color: #b45309;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
 
     /* Header */
@@ -492,9 +484,7 @@
       width: 100%;
     }
 
-    /* ==========================================================================
-       RESPONSIVE LANDSCAPE
-       ========================================================================== */
+    /* Responsive */
     @media (orientation: landscape) and (min-height: 520px) {
       .app-container {
         max-width: 900px;
@@ -558,6 +548,12 @@
 <body ontouchstart="">
 
   <div class="app-container">
+
+    <!-- แถบแจ้งเตือนดัก In-App Browser สำหรับ LINE / Messenger -->
+    <div id="inapp-warning-bar">
+      📢 หากกดแล้วไม่มีเสียงพูด กรุณาเปิดด้วยเบราว์เซอร์หลักของเครื่อง<br>
+      <a href="javascript:void(0)" onclick="openExternalBrowser()">👉 แตะที่นี่เพื่อเปิดใน Chrome / Safari</a>
+    </div>
 
     <!-- Header -->
     <header>
@@ -687,7 +683,7 @@
 
     </main>
 
-    <!-- Footer: ผู้พัฒนา จบในบรรทัดเดียว -->
+    <!-- Footer: ผู้พัฒนา จบในบรรทัดเดียว (อัปเดตเป็น Khamsmile) -->
     <footer>
       <span class="developer-text" id="ui-developer">
         พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น
@@ -697,6 +693,35 @@
   </div>
 
   <script>
+    // ตรวจจับ In-App Browser เพื่อแสดงแถบเตือน
+    function checkInApp() {
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+      var isLine = ua.indexOf('Line') > -1 || ua.indexOf('LINE') > -1;
+      var isFb = ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('Messenger') > -1;
+      var isApple = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      // ถ้าเป็น In-App บน Android (ซึ่งบล็อก Speech API แน่นอน) ให้เปิดแถบเตือน
+      if (!isApple && (isLine || isFb)) {
+        var warningBar = document.getElementById('inapp-warning-bar');
+        if (warningBar) warningBar.style.display = 'block';
+      }
+    }
+
+    // คำสั่งเปิด External Browser
+    function openExternalBrowser() {
+      var url = window.location.href;
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+      var isLine = ua.indexOf('Line') > -1 || ua.indexOf('LINE') > -1;
+      
+      if (isLine) {
+        var sep = url.indexOf('?') > -1 ? '&' : '?';
+        window.location.href = url + sep + 'openExternalBrowser=1';
+      } else {
+        var cleanUrl = url.replace(/^https?:\/\//, '');
+        window.location.href = 'intent://' + cleanUrl + '#Intent;scheme=https;package=com.android.chrome;end';
+      }
+    }
+
     const i18n = {
       th: {
         district: "ที่ว่าการอำเภอสีชมพู",
@@ -1227,6 +1252,7 @@
     let currentUtterance = null;
 
     document.addEventListener('DOMContentLoaded', function() {
+      checkInApp();
       setupEventListeners();
       applyLanguageTexts();
       renderServices();
@@ -1386,7 +1412,10 @@
 
     function playAudio() {
       const data = database.find(i => i.id === currentId);
-      if (!data || !('speechSynthesis' in window)) return;
+      if (!data || !('speechSynthesis' in window)) {
+        alert('อุปกรณ์หรือแอปนี้ไม่รองรับระบบสังเคราะห์เสียง กรุณาแตะเปิดด้วยเบราว์เซอร์ Chrome หรือ Safari ครับ');
+        return;
+      }
 
       synth.cancel();
       const text = data.speech[currentLang] || data.speech.th;
