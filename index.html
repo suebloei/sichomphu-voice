@@ -39,7 +39,7 @@
       position: relative;
     }
 
-    /* กล่องแจ้งเตือนพิเศษสำหรับ Facebook / Messenger */
+    /* กล่องเตือน In-App Browser */
     #messenger-guide-box {
       display: none;
       background: #fef3c7;
@@ -151,22 +151,26 @@
       cursor: pointer;
     }
 
-    /* แถบสลับภาษา */
+    /* แถบสลับภาษาแบบเลื่อนได้ (Scrollable Multi-language Tabs) */
     .lang-bar {
       margin-top: 6px;
       background: rgba(0,0,0,0.18);
       border-radius: 8px;
-      padding: 2px 6px;
+      padding: 3px 6px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.72rem;
+      gap: 6px;
     }
 
     .lang-btns {
       display: flex;
-      gap: 3px;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 2px 0;
     }
+    .lang-btns::-webkit-scrollbar { display: none; }
 
     .lang-btn {
       border: none;
@@ -177,7 +181,9 @@
       padding: 3px 8px;
       border-radius: 6px;
       cursor: pointer;
+      white-space: nowrap;
       -webkit-appearance: none;
+      flex-shrink: 0;
     }
 
     .lang-btn.active {
@@ -529,11 +535,6 @@
       .lang-bar {
         margin-top: 4px;
         padding: 2px 4px;
-        font-size: 0.68rem;
-      }
-      .lang-btn {
-        padding: 2px 6px;
-        font-size: 0.68rem;
       }
       main {
         display: flex;
@@ -558,7 +559,7 @@
 
   <div class="app-container">
 
-    <!-- แถบเตือนแนะนำวิธีเปิดภายนอกสำหรับ Messenger / Facebook -->
+    <!-- แถบเตือนแนะนำวิธีเปิดภายนอกสำหรับ Messenger -->
     <div id="messenger-guide-box">
       <strong>⚠️ กำลังเปิดใน Messenger (เสียงอาจไม่ดัง)</strong>
       โปรดแตะจุด 3 จุด (⋮ หรือ ⋯) ที่มุมบนขวาหน้าจอ แล้วเลือก <b>"เปิดใน Chrome"</b> หรือ <b>"เปิดในเบราว์เซอร์ระบบ"</b><br>
@@ -598,13 +599,15 @@
         </a>
       </div>
 
-      <!-- แถบสลับภาษา -->
+      <!-- แถบสลับ 5 ภาษา (ไทย, อีสาน, EN, DE/สวิส, FR) -->
       <div class="lang-bar">
-        <span id="ui-lang-title">🔊 เลือกสำเนียงเสียง:</span>
+        <span id="ui-lang-title">🔊 ภาษา:</span>
         <div class="lang-btns">
           <button type="button" id="btn-th" class="lang-btn active" data-lang="th">ไทย</button>
           <button type="button" id="btn-is" class="lang-btn" data-lang="is">อีสาน</button>
           <button type="button" id="btn-en" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" id="btn-de" class="lang-btn" data-lang="de">DE 🇩🇪🇨🇭</button>
+          <button type="button" id="btn-fr" class="lang-btn" data-lang="fr">FR 🇫🇷</button>
         </div>
       </div>
     </header>
@@ -693,7 +696,7 @@
 
     </main>
 
-    <!-- Footer: ผู้พัฒนา จบในบรรทัดเดียว (อัปเดตเป็น Khamsmile) -->
+    <!-- Footer: ผู้พัฒนา -->
     <footer>
       <span class="developer-text" id="ui-developer">
         พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น
@@ -703,14 +706,12 @@
   </div>
 
   <script>
-    // ตรวจจับ In-App Browser ของ Messenger / Facebook
     function checkInApp() {
       var ua = navigator.userAgent || navigator.vendor || window.opera;
       var isLine = ua.indexOf('Line') > -1 || ua.indexOf('LINE') > -1;
       var isFb = ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('Messenger') > -1;
       var isApple = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-      // ถ้าเป็น LINE บน Android ให้รีไดเรกต์ด้วย openExternalBrowser ทันที
       if (!isApple && isLine) {
         if (window.location.href.indexOf('openExternalBrowser=1') === -1) {
           var sep = window.location.href.indexOf('?') > -1 ? '&' : '?';
@@ -719,28 +720,26 @@
         return;
       }
 
-      // ถ้าเปิดใน Facebook / Messenger บน Android ให้แสดงกล่องคำแนะนำ
       if (!isApple && isFb) {
         var box = document.getElementById('messenger-guide-box');
         if (box) box.style.display = 'block';
       }
     }
 
-    // คำสั่งเปิด External Browser ด้วยเทคนิค Intent พิเศษ
     function openExternalBrowser() {
       var url = window.location.href.split('?')[0];
-      // Intent พิเศษที่ใช้แพ็กเกจ Chrome โดยตรง
       var chromeIntent = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end';
       window.location.href = chromeIntent;
     }
 
+    // รองรับ UI 5 ภาษา
     const i18n = {
       th: {
         district: "ที่ว่าการอำเภอสีชมพู",
         province: "ขอนแก่น",
         subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
         call: "📞 043-399-140",
-        langTitle: "🔊 เลือกสำเนียงเสียง:",
+        langTitle: "🔊 ภาษา:",
         noticeHead: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
         all: "ทั้งหมด",
@@ -761,7 +760,7 @@
         province: "ขอนแก่น",
         subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
         call: "📞 043-399-140",
-        langTitle: "🔊 เลือกสำเนียงเสียง:",
+        langTitle: "🔊 ภาษา:",
         noticeHead: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
         all: "ทั้งหมด",
@@ -782,7 +781,7 @@
         province: "Khon Kaen",
         subtitle: "Document Preparation Voice Guide",
         call: "📞 043-399-140",
-        langTitle: "🔊 Select Language:",
+        langTitle: "🔊 Language:",
         noticeHead: "Audio Assistance Available!",
         noticeBody: "Tap a service, then tap the audio button below to listen.",
         all: "All",
@@ -797,6 +796,48 @@
         btnPlay: "Listen to Voice Guide",
         btnStop: "Stop Audio Guide",
         developer: "Developed by Mr.Noppakhun Suebloei and Mr.Panya Khamsmile, Sichomphusuksa School, Khon Kaen Provincial Administrative Organization"
+      },
+      de: {
+        district: "Bezirksamt Si Chomphu",
+        province: "Khon Kaen",
+        subtitle: "Sprachführer für Dokumente",
+        call: "📞 043-399-140",
+        langTitle: "🔊 Sprache:",
+        noticeHead: "Audio-Hilfe verfügbar!",
+        noticeBody: "Dienst auswählen und unten auf Audio tippen.",
+        all: "Alle",
+        catId: "Ausweis & Name",
+        catFamily: "Ehe & Kind",
+        catVital: "Geburt & Tod",
+        catCivil: "Wohnsitz & Umzug",
+        scrollHint: "👇 Dienst auswählen:",
+        docHeading: "✅ Erforderliche Dokumente:",
+        timeLabel: "⏱️ Bearbeitungszeit",
+        feeLabel: "💰 Gebühr",
+        btnPlay: "Audio anhören",
+        btnStop: "Audio stoppen",
+        developer: "Entwickelt von Mr.Noppakhun Suebloei und Mr.Panya Khamsmile, Sichomphusuksa Schule"
+      },
+      fr: {
+        district: "Bureau de District de Si Chomphu",
+        province: "Khon Kaen",
+        subtitle: "Guide Vocal des Démarches",
+        call: "📞 043-399-140",
+        langTitle: "🔊 Langue:",
+        noticeHead: "Assistance Vocale Disponible!",
+        noticeBody: "Sélectionnez un service et appuyez sur Audio ci-dessous.",
+        all: "Tous",
+        catId: "Identité & Nom",
+        catFamily: "Mariage & Enfant",
+        catVital: "Naissance & Décès",
+        catCivil: "Domicile & Adresse",
+        scrollHint: "👇 Choisissez un service:",
+        docHeading: "✅ Documents à fournir:",
+        timeLabel: "⏱️ Durée estimée",
+        feeLabel: "💰 Frais officiels",
+        btnPlay: "Écouter le guide",
+        btnStop: "Arrêter l'audio",
+        developer: "Développé par Mr.Noppakhun Suebloei et Mr.Panya Khamsmile, École de Sichomphusuksa"
       }
     };
 
@@ -805,20 +846,30 @@
         id: 'id_expired',
         cat: 'id',
         emoji: '🪪',
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'National ID Card Service' },
-        title: { th: 'บัตรเดิมหมดอายุ', is: 'บัตรเก่าหมดอายุ', en: 'ID Card Renewal (Expired)' },
+        badge: { 
+          th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', 
+          en: 'National ID Card Service', de: 'Personalausweis-Service', fr: "Carte Nationale d'Identité" 
+        },
+        title: { 
+          th: 'บัตรเดิมหมดอายุ', is: 'บัตรเก่าหมดอายุ', 
+          en: 'ID Card Renewal (Expired)', de: 'Personalausweis Verlängerung', fr: "Renouvellement de Carte d'Identité" 
+        },
         summary: {
           th: 'ยื่นทำบัตรใหม่ได้ล่วงหน้า 60 วัน หรือภายใน 60 วันนับแต่วันหมดอายุ',
           is: 'ยื่นล่วงหน้าได้ 60 มื้อ หรือภายใน 60 มื้อนับแต่มื้อหมดอายุ',
-          en: 'Apply within 60 days before or after the card expiration date.'
+          en: 'Apply within 60 days before or after the card expiration date.',
+          de: 'Erneuerung 60 Tage vor oder nach Ablauf möglich.',
+          fr: 'Renouvellement possible 60 jours avant ou après expiration.'
         },
         tip: {
           th: 'หากเกินกำหนด 60 วัน มีค่าปรับตามกฎหมายไม่เกิน 100 บาท',
           is: 'ถ่ากาย 60 มื้อ มีค่าปรับบ่เกิน 100 บาทเด้อครับ',
-          en: 'A late renewal fine of up to 100 THB applies after 60 days.'
+          en: 'A late renewal fine of up to 100 THB applies after 60 days.',
+          de: 'Nach 60 Tagen fällt eine Säumnisgebühr von bis zu 100 THB an.',
+          fr: 'Une amende de retard jusqu’à 100 THB s’applique après 60 jours.'
         },
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียค่าธรรมเนียม', en: 'Free of charge' },
+        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins', de: 'Ca. 15 Minuten', fr: 'Environ 15 min' },
+        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียค่าธรรมเนียม', en: 'Free of charge', de: 'Kostenlos', fr: 'Gratuit' },
         docs: {
           th: [
             { name: 'บัตรประชาชนใบเดิม', desc: 'นำบัตรเดิมที่หมดอายุมามอบคืนเจ้าหน้าที่' },
@@ -831,32 +882,52 @@
           en: [
             { name: 'Current Expired ID Card', desc: 'Bring original card to return to the registrar' },
             { name: 'Applicant in Person', desc: 'Must attend personally for photo and biometric scan' }
+          ],
+          de: [
+            { name: 'Bisheriger Personalausweis', desc: 'Den abgelaufenen Ausweis zur Rückgabe mitbringen' },
+            { name: 'Persönliches Erscheinen', desc: 'Für Foto- und Fingerabdruckerfassung erforderlich' }
+          ],
+          fr: [
+            { name: "Ancienne carte d'identité", desc: 'Apportez la carte expirée pour restitution' },
+            { name: 'Présence du demandeur', desc: 'Obligatoire pour prise de photo et empreintes' }
           ]
         },
         speech: {
           th: "การขอมีบัตรใหม่ กรณีบัตรเดิมหมดอายุ สามารถยื่นขอทำบัตรใหม่ได้ล่วงหน้าหกสิบวัน หรือภายในหกสิบวันนับแต่วันหมดอายุครับ เตรียมเฉพาะบัตรประชาชนใบเดิมมาติดต่อได้เลย ไม่มีค่าธรรมเนียมครับ",
           is: "ไผบัตรประชาชนหมดอายุ ให้ถือบัตรเก่าใบเดิมมาติดต่อได้โลดเด้อครับ ยื่นก่อนหมดอายุได้หกสิบมื้อ บ่อเสียค่าธรรมเนียมดอกครับ แต่ถ้ากายกำหนดสิมีค่าปรับบ่อเกินหนึ่งร้อยบาทเด้อ",
-          en: "To renew an expired Thai ID card, apply within 60 days before or after the expiration date. Bring your current ID card. There is no official fee."
+          en: "To renew an expired Thai ID card, apply within 60 days before or after the expiration date. Bring your current ID card. There is no official fee.",
+          de: "Um einen abgelaufenen thailändischen Personalausweis zu erneuern, beantragen Sie ihn innerhalb von 60 Tagen. Bringen Sie Ihren alten Ausweis mit. Dieser Service ist gebührenfrei.",
+          fr: "Pour renouveler une carte d'identité expirée, présentez-vous dans les 60 jours avec votre ancienne carte. La démarche est totalement gratuite."
         }
       },
       {
         id: 'id_lost',
         cat: 'id',
         emoji: '🔍',
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'National ID Card Service' },
-        title: { th: 'บัตรสูญหายหรือถูกทำลาย', is: 'บัตรหายหรือถืกทำลาย', en: 'Lost / Destroyed ID Card' },
+        badge: { 
+          th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', 
+          en: 'National ID Card Service', de: 'Personalausweis-Service', fr: "Carte Nationale d'Identité" 
+        },
+        title: { 
+          th: 'บัตรสูญหายหรือถูกทำลาย', is: 'บัตรหายหรือถืกทำลาย', 
+          en: 'Lost / Destroyed ID Card', de: 'Verlorener Personalausweis', fr: "Carte Perdue ou Détruite" 
+        },
         summary: {
           th: 'ไม่ต้องแจ้งความที่สถานีตำรวจ ให้มายื่นคำขอที่อำเภอสีชมพูได้ทันทีภายใน 60 วัน',
           is: 'บ่ต้องไปแจ้งความ ให้มาอำเภอสีชมพูได้โลดภายใน 60 มื้อ',
-          en: 'No police report required. Apply directly at the district office within 60 days.'
+          en: 'No police report required. Apply directly at the district office within 60 days.',
+          de: 'Kein Polizeibericht erforderlich. Direkt im Bezirksamt beantragen.',
+          fr: 'Déclaration de police non requise. Démarche directe au bureau de district.'
         },
         tip: {
           th: 'หากไม่มีเอกสารรูปถ่าย ต้องพาเจ้าบ้าน พ่อแม่ หรือกำนันผู้ใหญ่บ้านมารับรอง',
           is: 'ถ่าบ่มีเอกสารมีฮูปถ่าย ให้พาพ่อแม่ หรือผู้ใหญ่บ้านมารับรองเด้อ',
-          en: 'If lacking other photo IDs, a housemaster, parent, or village head must certify identity.'
+          en: 'If lacking other photo IDs, a housemaster, parent, or village head must certify identity.',
+          de: 'Ohne Lichtbildausweis muss der Hausvorstand oder Dorfvorsteher bürgen.',
+          fr: "En l'absence de pièce d'identité avec photo, un témoin légal doit certifier votre identité."
         },
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ค่าธรรมเนียม 100 บาท', is: 'ค่าธรรมเนียม 100 บาท', en: 'Fee: 100 THB' },
+        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins', de: 'Ca. 20 Minuten', fr: 'Environ 20 min' },
+        fee: { th: 'ค่าธรรมเนียม 100 บาท', is: 'ค่าธรรมเนียม 100 บาท', en: 'Fee: 100 THB', de: 'Gebühr: 100 THB', fr: 'Frais: 100 THB' },
         docs: {
           th: [
             { name: 'สมุดทะเบียนบ้านฉบับจริง', desc: 'เล่มสีน้ำเงินฉบับจริง เพื่อยืนยันตัวตน' },
@@ -869,146 +940,55 @@
           en: [
             { name: 'Original House Book', desc: 'Blue house registration book to verify personal data' },
             { name: 'Official Photo ID', desc: 'E.g., driving license or valid passport' }
+          ],
+          de: [
+            { name: 'Original-Hausregisterbuch', desc: 'Blaues Buch (Tabien Baan) zur Identitätsprüfung' },
+            { name: 'Amtlicher Lichtbildausweis', desc: 'Z.B. Führerschein oder Reisepass' }
+          ],
+          fr: [
+            { name: 'Livret de famille / Domicile', desc: 'Carnet bleu officiel pour vérifier les données' },
+            { name: 'Pièce avec photo', desc: 'Ex. permis de conduire ou passeport' }
           ]
         },
         speech: {
           th: "กรณีบัตรประชาชนหายหรือถูกทำลาย ต้องยื่นทำบัตรใหม่ภายในหกสิบวัน ไม่ต้องไปแจ้งความที่โรงพักครับ เตรียมทะเบียนบ้าน และเอกสารราชการที่มีรูปถ่าย หรือพาเจ้าบ้าน หรือผู้ใหญ่บ้านมารับรองตัวตน ค่าธรรมเนียมหนึ่งร้อยบาทครับ",
           is: "บัตรประชาชนหาย หรือถืกทำลาย บ่อต้องไปแจ้งความดอกครับพี่น้อง ถือเล่มทะเบียนบ้าน และเอกสารมีรูปถ่าย หรือพาพ่อแม่ ผู้ใหญ่บ้าน มารับรอง มีค่าธรรมเนียมหนึ่งร้อยบาทเด้อครับ",
-          en: "For a lost ID card, apply within 60 days. No police report required. Bring your blue house registration book and another photo ID. The fee is 100 Baht."
-        }
-      },
-      {
-        id: 'id_damaged',
-        cat: 'id',
-        emoji: '💳',
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'National ID Card Service' },
-        title: { th: 'บัตรชำรุดในสาระสำคัญ', is: 'บัตรชำรุดหักหรือเลือนราง', en: 'Damaged / Defaced ID Card' },
-        summary: {
-          th: 'บัตรหัก ชิปหลุด รูปถ่ายหรือข้อความเลือนรางจนมองไม่ชัดเจน',
-          is: 'บัตรหัก ชิปหลุด ฮูปหรือตัวหนังสือเลือนรางมองบ่เห็น',
-          en: 'Damaged card, broken chip, or defaced text/photo. Must apply within 60 days.'
-        },
-        tip: {
-          th: 'ต้องนำชิ้นส่วนบัตรเดิมที่ชำรุดมามอบให้เจ้าหน้าที่',
-          is: 'ต้องเอาเศษบัตรหรือบัตรที่ชำรุดมาคืนนำเด้อ',
-          en: 'You must surrender the damaged card or remaining fragments to the registrar.'
-        },
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins' },
-        fee: { th: 'ค่าธรรมเนียม 100 บาท', is: 'ค่าธรรมเนียม 100 บาท', en: 'Fee: 100 THB' },
-        docs: {
-          th: [
-            { name: 'บัตรเดิมที่ชำรุด', desc: 'นำชิ้นส่วนบัตรหรือบัตรที่เลือนรางมามอบให้เจ้าหน้าที่' },
-            { name: 'สมุดทะเบียนบ้านฉบับจริง', desc: 'เล่มสีน้ำเงินฉบับจริง เพื่อตรวจสอบข้อมูล' }
-          ],
-          is: [
-            { name: 'บัตรเดิมที่ชำรุด', desc: 'นำชิ้นส่วนบัตรหรือบัตรที่เลือนรางมาแสดง' },
-            { name: 'สมุดทะเบียนบ้านเล่มจริง', desc: 'เล่มสีน้ำเงินฉบับจริง' }
-          ],
-          en: [
-            { name: 'Damaged ID Card', desc: 'Bring the damaged card or broken fragments' },
-            { name: 'Original House Book', desc: 'Blue house registration book to verify information' }
-          ]
-        },
-        speech: {
-          th: "กรณีบัตรชำรุด เช่น บัตรหัก ชิปหลุด รูปหรือตัวหนังสือลบเลือน ให้ยื่นทำใหม่ภายในหกสิบวัน เตรียมบัตรเดิมที่ชำรุดและทะเบียนบ้านมาติดต่อ ค่าธรรมเนียมหนึ่งร้อยบาทครับ",
-          is: "บัตรชำรุด บัตรหัก หรือฮูปเลือนรางมองบ่อเห็น ให้เอาบัตรที่ชำรุดกับเล่มทะเบียนบ้านมานำเด้อ มีค่าธรรมเนียมหนึ่งร้อยบาทครับ",
-          en: "For a damaged ID card where text, photo, or chip is unreadable, bring the damaged card and house book. The fee is 100 Baht."
-        }
-      },
-      {
-        id: 'id_check',
-        cat: 'id',
-        emoji: '📋',
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'Record Verification' },
-        title: { th: 'ขอตรวจหลักฐาน / คัดข้อมูลบัตร', is: 'ขอตรวจคัดข้อมูลบัตร', en: 'Verify / Extract ID Record' },
-        summary: {
-          th: 'ขอคัดสำเนาหรือตรวจดูรายการข้อมูลเกี่ยวกับบัตรประชาชนของตนเอง',
-          is: 'ขอคัดสำเนาหรือตรวจเบิ่งข้อมูลบัตรประชาชนของเจ้าของ',
-          en: 'Request certified copies or inspection of personal ID card database records.'
-        },
-        tip: {
-          th: 'เจ้าของข้อมูลต้องมาเอง หากมอบอำนาจต้องมีหนังสือมอบอำนาจถูกต้องตามกฎหมาย',
-          is: 'เจ้าโตต้องมาเอง ถ่ามอบอำนาจต้องมีหนังสือมอบอำนาจมาพร้อม',
-          en: 'Must appear in person, or present a legal Power of Attorney with authorized IDs.'
-        },
-        time: { th: 'ประมาณ 15 นาที', is: 'ประมาณ 15 นาที', en: 'Approx. 15 mins' },
-        fee: { th: '10 บาท / ฉบับ', is: '10 บาท / ฉบับ', en: 'Fee: 10 THB / copy' },
-        docs: {
-          th: [
-            { name: 'บัตรประชาชนตัวจริง', desc: 'บัตรประจำตัวประชาชนของผู้ขอยื่นคำขอ' }
-          ],
-          is: [
-            { name: 'บัตรประชาชนตัวจริง', desc: 'บัตรประจำตัวประชาชนของเจ้าของ' }
-          ],
-          en: [
-            { name: 'Applicant’s ID Card', desc: 'Valid original ID card' }
-          ]
-        },
-        speech: {
-          th: "การขอตรวจหลักฐาน รายการ หรือข้อมูลเกี่ยวกับบัตรประชาชน เจ้าของข้อมูลต้องนำบัตรประชาชนตัวจริงมายื่น ค่าธรรมเนียมฉบับละสิบบาทครับ",
-          is: "การขอตรวจเบิ่งข้อมูลบัตรประชาชน เจ้าโตต้องถือบัตรประชาชนมาเองเด้อครับ มีค่าธรรมเนียมฉบับละสิบบาทครับผม",
-          en: "To verify or request a certified copy of your ID record, bring your original ID card. The fee is 10 Baht per copy."
-        }
-      },
-      {
-        id: 'id_7years',
-        cat: 'id',
-        emoji: '🧒',
-        badge: { th: 'งานบัตรประจำตัวประชาชน', is: 'งานบัตรประชาชน', en: 'First ID Card' },
-        title: { th: 'ทำบัตรครั้งแรก (ครบ 7 ปี)', is: 'ทำบัตรเทื่อแรก (ครบ 7 ปี)', en: 'First ID Card (Age 7+)' },
-        summary: {
-          th: 'เด็กสัญชาติไทยอายุครบ 7 ปีบริบูรณ์ ต้องทำบัตรภายใน 60 วัน',
-          is: 'เด็กน้อยอายุครบ 7 ปี ต้องมาเฮ็ดบัตรภายใน 60 มื้อเด้อ',
-          en: 'Thai citizens turning 7 years old must apply for an ID card within 60 days.'
-        },
-        tip: {
-          th: 'ผู้ปกครอง (บิดา มารดา หรือเจ้าบ้าน) ต้องเดินทางมาด้วยตนเอง',
-          is: 'พ่อ แม่ หรือเจ้าบ้าน ต้องพาเด็กน้อยมานำเด้อครับ',
-          en: 'A legal parent or housemaster must accompany the child in person.'
-        },
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ฟรี ภายใน 60 วัน', is: 'บ่เสียเงิน ภายใน 60 มื้อ', en: 'Free of charge' },
-        docs: {
-          th: [
-            { name: 'สูติบัตร (ใบเกิดฉบับจริง)', desc: 'เอกสารสำคัญที่สุดระบุเลขประจำตัว 13 หลัก' },
-            { name: 'สมุดทะเบียนบ้านฉบับเจ้าบ้าน', desc: 'เล่มที่มีชื่อเด็กอาศัยอยู่' }
-          ],
-          is: [
-            { name: 'ใบเกิดตัวจริง', desc: 'เอกสารสำคัญมีเลขประจำตัว 13 หลัก' },
-            { name: 'สมุดทะเบียนบ้านเล่มสีน้ำเงิน', desc: 'เล่มที่มีชื่อเด็กน้อยอยู่' }
-          ],
-          en: [
-            { name: 'Original Birth Certificate', desc: 'Original birth certificate showing the 13-digit ID' },
-            { name: 'House Registration Book', desc: 'The blue house book where the child is listed' }
-          ]
-        },
-        speech: {
-          th: "การทำบัตรประชาชนครั้งแรกเมื่ออายุครบเจ็ดปีบริบูรณ์ ต้องยื่นภายในหกสิบวัน เตรียมสูติบัตร ทะเบียนบ้าน และบัตรประชาชนของผู้ปกครองมาติดต่อ ไม่มีค่าธรรมเนียมครับ",
-          is: "ลูกหลานอายุครบเจ็ดปีบริบูรณ์ ต้องพามาเฮ็ดบัตรประชาชนภายในหกสิบมื้อเด้อ เอาใบเกิด ทะเบียนบ้าน กับบัตรพ่อแม่มาพร้อม บ่อเสียค่าธรรมเนียมดอกครับ",
-          en: "For a child's first ID card at age 7, apply within 60 days. Bring original birth certificate, house book, and parent's ID. This service is free."
+          en: "For a lost ID card, apply within 60 days. No police report required. Bring your blue house registration book and another photo ID. The fee is 100 Baht.",
+          de: "Bei Verlust des Ausweises ist keine polizeiliche Meldung nötig. Bitte bringen Sie das blaue Hausbuch und einen Ausweis mit Foto mit. Die Gebühr beträgt 100 Baht.",
+          fr: "En cas de perte de carte d'identité, présentez-vous avec votre livret de maison bleu et une pièce avec photo. Les frais sont de 100 Baht."
         }
       },
       {
         id: 'marriage',
         cat: 'family',
         emoji: '💍',
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Family Registration' },
-        title: { th: 'การจดทะเบียนสมรส', is: 'การจดทะเบียนแต่งงาน', en: 'Marriage Registration' },
+        badge: { 
+          th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', 
+          en: 'Family Registration', de: 'Standesamt / Familie', fr: 'État Civil & Famille' 
+        },
+        title: { 
+          th: 'การจดทะเบียนสมรส', is: 'การจดทะเบียนแต่งงาน', 
+          en: 'Marriage Registration', de: 'Eheschließung', fr: 'Enregistrement de Mariage' 
+        },
         summary: {
           th: 'คู่สมรสต้องเดินทางมาแสดงตนพร้อมกันทั้งสองฝ่ายต่อหน้านายทะเบียน',
           is: 'คู่บ่าวสาวต้องจูงแขนกันมาพร้อมหน้ากันทั้งสองคนเด้อ',
-          en: 'Both partners must appear in person before the district registrar.'
+          en: 'Both partners must appear in person before the district registrar.',
+          de: 'Beide Partner müssen persönlich beim Standesamt anwesend sein.',
+          fr: 'Les deux époux doivent se présenter personnellement devant l’officier.'
         },
         tip: {
           th: 'ต้องพาพยานบรรลุนิติภาวะ (อายุ 20 ปีขึ้นไป) มาด้วย 2 คน',
           is: 'ต้องพาพยานอายุ 20 ปีขึ้นไปมานำ 2 คน พร้อมบัตรประชาชนเด้อ',
-          en: 'You must bring two adult witnesses (age 20+) with valid IDs.'
+          en: 'You must bring two adult witnesses (age 20+) with valid IDs.',
+          de: 'Zwei volljährige Zeugen (ab 20 Jahren) mit Ausweis sind erforderlich.',
+          fr: 'Deux témoins majeurs (20 ans et plus) avec pièces d’identité sont requis.'
         },
-        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins' },
-        fee: { th: 'ฟรี ในเวลาราชการ', is: 'บ่เสียเงินในเวลาราชการ', en: 'Free (Office hours)' },
+        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins', de: 'Ca. 30 Minuten', fr: 'Environ 30 min' },
+        fee: { th: 'ฟรี ในเวลาราชการ', is: 'บ่เสียเงินในเวลาราชการ', en: 'Free (Office hours)', de: 'Kostenlos', fr: 'Gratuit' },
         docs: {
           th: [
-            { name: 'บัตรประชาชนทั้ง 2 ฝ่าย', desc: 'ตัวจริงที่ยังไม่หมดอายุ' },
+            { name: 'บัตรประชาชนทั้ง 2 ฝ่าย', desc: 'ตัวจริงที่ยังไม่หมดอายุ (หรือหนังสือเดินทาง)' },
             { name: 'พยานบุคคล 2 คน', desc: 'พยานอายุ 20 ปีขึ้นไป พร้อมบัตรประชาชนตัวจริง' }
           ],
           is: [
@@ -1016,148 +996,54 @@
             { name: 'พยานบุคคล 2 คน', desc: 'พยานอายุ 20 ปีขึ้นไป พร้อมบัตรประชาชนตัวจริง' }
           ],
           en: [
-            { name: 'Both Partners’ ID Cards', desc: 'Original valid IDs' },
+            { name: 'Both Partners’ ID Cards', desc: 'Original valid IDs or Passports' },
             { name: '2 Adult Witnesses', desc: 'Witnesses aged 20 or over with valid original IDs' }
+          ],
+          de: [
+            { name: 'Ausweise beider Partner', desc: 'Gültiger Personalausweis oder Reisepass' },
+            { name: '2 erwachsene Zeugen', desc: 'Zeugen ab 20 Jahren mit gültigem Ausweis' }
+          ],
+          fr: [
+            { name: 'Pièces des deux conjoints', desc: "Cartes d'identité ou passeports en cours de validité" },
+            { name: '2 témoins majeurs', desc: "Témoins âgés d'au moins 20 ans avec pièce d'identité" }
           ]
         },
         speech: {
           th: "ยินดีด้วยครับสำหรับการเริ่มต้นชีวิตคู่ เตรียมบัตรประชาชนตัวจริงของทั้งคู่ ทะเบียนบ้าน และพาพยานที่อายุครบยี่สิบปีขึ้นไปมาด้วยสองคน พร้อมบัตรประชาชนครับ",
           is: "ยินดีนำเด้อครับคู่บ่าวสาวสิมาจดทะเบียนสมรส ถือบัตรประชาชนโตจริงทั้งสองคน เล่มทะเบียนบ้าน และพาพยานมานำสองคนเด้อครับ",
-          en: "To register a marriage, both partners must appear with valid IDs, house books, and two adult witnesses."
-        }
-      },
-      {
-        id: 'divorce',
-        cat: 'family',
-        emoji: '💔',
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Family Registration' },
-        title: { th: 'การจดทะเบียนหย่า', is: 'การจดทะเบียนหย่า', en: 'Divorce Registration' },
-        summary: {
-          th: 'การหย่าโดยความยินยอม ทั้งสองฝ่ายต้องเดินทางมาลงชื่อพร้อมกัน',
-          is: 'ทั้งสองคนต้องยินยอมพร้อมใจกันมาเซ็นชื่อพร้อมกันเด้อ',
-          en: 'Uncontested divorce requires mutual consent and personal appearance of both spouses.'
-        },
-        tip: {
-          th: 'ต้องนำทะเบียนสมรสฉบับจริงทั้งสองฉบับมาคืน และมีพยาน 2 คน',
-          is: 'เอาใบสมรสโตจริงทั้งสองใบมาคืน และพาพยานมานำสองคน',
-          en: 'Bring both original marriage certificates and two adult witnesses.'
-        },
-        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins' },
-        fee: { th: 'ฟรี ในเวลาราชการ', is: 'บ่เสียเงินในเวลาราชการ', en: 'Free of charge' },
-        docs: {
-          th: [
-            { name: 'ใบสำคัญการสมรส 2 ฉบับ', desc: 'ทะเบียนสมรสฉบับจริงทั้งสองฉบับ' },
-            { name: 'พยานบุคคล 2 คน', desc: 'พร้อมบัตรประชาชนตัวจริง' }
-          ],
-          is: [
-            { name: 'ใบสมรสตัวจริง 2 ใบ', desc: 'ทะเบียนสมรสฉบับจริงทั้งสองใบ' },
-            { name: 'พยาน 2 คน', desc: 'พร้อมบัตรประชาชนตัวจริง' }
-          ],
-          en: [
-            { name: 'Both Marriage Certificates', desc: 'Both original official marriage certificates' },
-            { name: '2 Adult Witnesses', desc: 'Witnesses aged 20 or over with valid original IDs' }
-          ]
-        },
-        speech: {
-          th: "การจดทะเบียนหย่า ทั้งสองฝ่ายต้องมาด้วยความยินยอมพร้อมกัน นำทะเบียนสมรสทั้งสองฉบับ บัตรประชาชน และพยานสองคนมาติดต่อครับ",
-          is: "การจดทะเบียนหย่า ทั้งสองคนต้องยินยอมพร้อมใจกันมาเด้อ เอาใบสมรสทั้งสองใบ บัตรประชาชน และพาพยานมานำสองคนครับ",
-          en: "For mutual divorce, both spouses must attend with both original marriage certificates, IDs, and two witnesses."
-        }
-      },
-      {
-        id: 'child_legit',
-        cat: 'family',
-        emoji: '👨‍👧',
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Family Registration' },
-        title: { th: 'ทะเบียนรับรองบุตร', is: 'การรับรองลูก', en: 'Legitimation of Child' },
-        summary: {
-          th: 'บิดา มารดา และบุตร ต้องเดินทางมาแสดงตนพร้อมกันทั้งสามคน',
-          is: 'พ่อ แม่ และลูก ต้องจูงแขนกันมาพร้อมหน้ากันทั้งสามคนเด้อ',
-          en: 'Father, mother, and child must appear together before the registrar.'
-        },
-        tip: {
-          th: 'หากเด็กยังเล็กสื่อสารไม่ได้ ต้องใช้คำพิพากษาศาล',
-          is: 'ถ่าเด็กน้อยยังเว้าบ่รู้ความ ต้องมีคำสั่งศาลประกอบนำเด้อ',
-          en: 'If the child is too young to express consent, a court judgment is required.'
-        },
-        time: { th: 'ประมาณ 30 นาที', is: 'ประมาณ 30 นาที', en: 'Approx. 30 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        docs: {
-          th: [
-            { name: 'สูติบัตรของบุตร (ใบเกิด)', desc: 'ใบสูติบัตรฉบับจริงของลูก' },
-            { name: 'บัตรประชาชนพ่อ แม่ และลูก', desc: 'ตัวจริงของทุกฝ่าย' }
-          ],
-          is: [
-            { name: 'ใบเกิดลูก', desc: 'ใบเกิดตัวจริงของลูก' },
-            { name: 'บัตรประชาชนพ่อ แม่ และลูก', desc: 'ตัวจริงของทุกฝ่าย' }
-          ],
-          en: [
-            { name: 'Child’s Birth Certificate', desc: 'Original official birth certificate' },
-            { name: 'IDs & House Books', desc: 'Original documents of father, mother, and child' }
-          ]
-        },
-        speech: {
-          th: "การจดทะเบียนรับรองบุตร บิดา มารดา และบุตร ต้องเดินทางมาพร้อมกันทั้งสามคน เตรียมสูติบัตรลูก บัตรประชาชน และพยานสองคนครับ",
-          is: "การจดทะเบียนรับรองบุตร พ่อ แม่ และลูก ต้องจูงแขนกันมาพร้อมกันทั้งสามคนเด้อ เอาใบเกิดลูก บัตรประชาชน และพาพยานมานำสองคนครับ",
-          en: "To legitimize a child, father, mother, and child must appear together with the birth certificate and IDs."
-        }
-      },
-      {
-        id: 'adoption_reg',
-        cat: 'family',
-        emoji: '🧸',
-        badge: { th: 'งานทะเบียนครอบครัว', is: 'งานทะเบียนครอบครัว', en: 'Adoption Registration' },
-        title: { th: 'ทะเบียนรับบุตรบุญธรรม', is: 'การรับลูกบุญธรรม', en: 'Child Adoption Registration' },
-        summary: {
-          th: 'ผู้รับต้องอายุ 25 ปีขึ้นไป และแก่กว่าเด็ก 15 ปี ได้รับอนุมัติจากสำนักงานพัฒนาสังคมฯ',
-          is: 'ผู้รับต้องอายุ 25 ปีขึ้นไป และเฒ่ากว่าเด็ก 15 ปี ต้องมีใบอนุมัติจาก พมจ.',
-          en: 'Adopter must be at least 25 years old and 15 years older than the child, approved by the Provincial Social Development Office.'
-        },
-        tip: {
-          th: 'ต้องมีหนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด',
-          is: 'ต้องมีหนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัดขอนแก่นมาก่อนเด้อ',
-          en: 'Must present official adoption approval issued by the Provincial Social Development Office.'
-        },
-        time: { th: 'ประมาณ 40 นาที', is: 'ประมาณ 40 นาที', en: 'Approx. 40 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าธรรมเนียม', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        docs: {
-          th: [
-            { name: 'หนังสืออนุมัติจากสำนักงานพัฒนาสังคมฯ', desc: 'หนังสือแจ้งผลการอนุมัติรับเด็กเป็นบุตรบุญธรรมฉบับจริง' },
-            { name: 'บัตรประชาชนและทะเบียนบ้าน', desc: 'ของผู้รับบุตรบุญธรรมและบุตรบุญธรรม' }
-          ],
-          is: [
-            { name: 'หนังสืออนุมัติจากสำนักงานพัฒนาสังคมฯ', desc: 'หนังสืออนุมัติรับเด็กฉบับจริง' },
-            { name: 'บัตรประชาชนและทะเบียนบ้าน', desc: 'ของทั้งสองฝ่าย' }
-          ],
-          en: [
-            { name: 'Social Development Approval', desc: 'Official certified approval from Provincial Social Development Office' },
-            { name: 'IDs & House Books', desc: 'Original IDs and house books of adopter and adoptee' }
-          ]
-        },
-        speech: {
-          th: "การจดทะเบียนรับบุตรบุญธรรม เอกสารสำคัญที่สุดคือ หนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัด พร้อมบัตรประชาชนและทะเบียนบ้านของทุกฝ่ายครับ",
-          is: "การรับลูกบุญธรรม ต้องมีหนังสืออนุมัติจากสำนักงานพัฒนาสังคมและความมั่นคงของมนุษย์จังหวัดขอนแก่นมาก่อนเด้อ แล้วถือบัตรประชาชนกับทะเบียนบ้านมาครับ",
-          en: "To register child adoption, bring the official approval notice from the Provincial Social Development Office, IDs, and house books."
+          en: "To register a marriage, both partners must appear with valid IDs, house books, and two adult witnesses.",
+          de: "Für die Eheschließung müssen beide Partner persönlich anwesend sein. Bringen Sie Ausweise, Hausbücher und zwei volljährige Zeugen mit.",
+          fr: "Pour enregistrer un mariage, les deux époux doivent être présents avec leurs pièces d'identité, livrets de domicile et deux témoins majeurs."
         }
       },
       {
         id: 'birth_hosp',
         cat: 'vital',
         emoji: '🏥',
-        badge: { th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', en: 'Civil Registration' },
-        title: { th: 'การแจ้งเกิด (เกิด รพ.)', is: 'การแจ้งเกิด (เกิด รพ.)', en: 'Birth Registration (Hospital)' },
+        badge: { 
+          th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', 
+          en: 'Civil Registration', de: 'Geburtenregister', fr: 'État Civil' 
+        },
+        title: { 
+          th: 'การแจ้งเกิด (เกิด รพ.)', is: 'การแจ้งเกิด (เกิด รพ.)', 
+          en: 'Birth Registration (Hospital)', de: 'Geburtsanmeldung (Krankenhaus)', fr: 'Déclaration de Naissance' 
+        },
         summary: {
           th: 'ต้องมาแจ้งต่อนายทะเบียนภายใน 15 วัน นับจากวันคลอด',
           is: 'ต้องมาแจ้งเกิดภายใน 15 มื้อ นับจากมื้อคลอดเด้อ',
-          en: 'Must be notified to the registrar within 15 days of birth.'
+          en: 'Must be notified to the registrar within 15 days of birth.',
+          de: 'Muss innerhalb von 15 Tagen nach der Geburt gemeldet werden.',
+          fr: 'Doit être déclarée dans les 15 jours suivant la naissance.'
         },
         tip: {
           th: 'แจ้งเกิน 15 วัน มีโทษปรับตามกฎหมายไม่เกิน 1,000 บาท',
           is: 'ถ่ากาย 15 มื้อ สิมีค่าปรับตามกฎหมายบ่เกิน 1,000 บาทเด้อ',
-          en: 'Late notification exceeding 15 days carries a fine of up to 1,000 THB.'
+          en: 'Late notification exceeding 15 days carries a fine of up to 1,000 THB.',
+          de: 'Bei Verspätung über 15 Tage droht eine Strafe von bis zu 1.000 THB.',
+          fr: 'Tout retard au-delà de 15 jours est passible d’une amende jusqu’à 1 000 THB.'
         },
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าใช้จ่าย', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
+        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins', de: 'Ca. 20 Minuten', fr: 'Environ 20 min' },
+        fee: { th: 'ฟรี ไม่มีค่าใช้จ่าย', is: 'บ่เสียเงินจักบาท', en: 'Free of charge', de: 'Kostenlos', fr: 'Gratuit' },
         docs: {
           th: [
             { name: 'หนังสือรับรองเกิด (ทร.1/1)', desc: 'เอกสารที่ทางโรงพยาบาลออกให้หลังคลอด' },
@@ -1170,70 +1056,52 @@
           en: [
             { name: 'Hospital Birth Notice (Thor Ror 1/1)', desc: 'Official document issued by hospital attending doctor' },
             { name: 'House Registration Book', desc: 'The blue house book where the child will be added' }
+          ],
+          de: [
+            { name: 'Geburtsbescheinigung (Tor Ror 1/1)', desc: 'Vom Krankenhaus ausgestellte Bescheinigung' },
+            { name: 'Hausregisterbuch', desc: 'Blaues Buch, in das das Kind eingetragen wird' }
+          ],
+          fr: [
+            { name: 'Certificat de naissance (Thor Ror 1/1)', desc: 'Document officiel délivré par l’hôpital' },
+            { name: 'Livret de domicile', desc: 'Carnet bleu pour l’inscription de l’enfant' }
           ]
         },
         speech: {
           th: "การแจ้งเกิดคลอดที่โรงพยาบาล ต้องแจ้งภายในสิบห้าวัน นำหนังสือรับรองการเกิด ทร.1/1 จากโรงพยาบาล บัตรประชาชนพ่อแม่ และทะเบียนบ้านมาติดต่อครับ บริการฟรีครับ",
           is: "คลอดลูกอยู่งานโรงพยาบาล ต้องมาแจ้งเกิดภายใน 15 มื้อเด้อ เอาใบ ทร.1/1 ที่หมอออกให้ มาพร้อมบัตรประชาชนพ่อแม่ และเล่มทะเบียนบ้านครับ",
-          en: "To register a birth, report within 15 days with the Thor Ror 1/1 hospital certificate, parent IDs, and house book."
-        }
-      },
-      {
-        id: 'death_home',
-        cat: 'vital',
-        emoji: '🕯️',
-        badge: { th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', en: 'Death Registration' },
-        title: { th: 'การแจ้งตาย (ตายในบ้าน)', is: 'การแจ้งตาย (ในบ้าน)', en: 'Death Registration (At Home)' },
-        summary: {
-          th: 'ต้องแจ้งต่อนายทะเบียนภายใน 24 ชั่วโมง นับแต่เวลาตาย',
-          is: 'ต้องมาแจ้งภายใน 24 ชั่วโมง นับแต่มื้อเสียชีวิตเด้อ',
-          en: 'Must be reported within 24 hours of death.'
-        },
-        tip: {
-          th: 'เจ้าบ้านหรือผู้พบศพเป็นผู้แจ้ง หากเกิน 24 ชม. มีค่าปรับ',
-          is: 'ถ่าบ่แจ้งภายใน 24 ชม. มีค่าปรับบ่เกิน 1,000 บาทเด้อครับ',
-          en: 'Late registration past 24 hours is punishable by a fine up to 1,000 THB.'
-        },
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ฟรี ไม่มีค่าใช้จ่าย', is: 'บ่เสียเงินจักบาท', en: 'Free of charge' },
-        docs: {
-          th: [
-            { name: 'หนังสือรับรองการตาย', desc: 'จากผู้ใหญ่บ้าน หรือแพทย์ผู้ตรวจศพ' },
-            { name: 'บัตรประชาชนและทะเบียนบ้านผู้ตาย', desc: 'เอกสารตัวจริงเพื่อจำหน่ายชื่อ' }
-          ],
-          is: [
-            { name: 'ใบรับรองการตายจากหมอ/ผู้ใหญ่บ้าน', desc: 'หนังสือรับรองการตายตัวจริง' },
-            { name: 'บัตรประชาชนและทะเบียนบ้านผู้ตาย', desc: 'เพื่อให้นายทะเบียนจำหน่ายชื่อออก' }
-          ],
-          en: [
-            { name: 'Death Notice Certificate', desc: 'Official certification of natural death' },
-            { name: 'Deceased’s ID & House Book', desc: 'Original documents to cancel registration status' }
-          ]
-        },
-        speech: {
-          th: "การแจ้งตายในบ้าน ต้องแจ้งภายในยี่สิบสี่ชั่วโมง นำหนังสือรับรองการตาย บัตรประชาชนและทะเบียนบ้านของผู้ตาย และบัตรของผู้แจ้งมาติดต่อครับ",
-          is: "แจ้งคนตายในบ้าน ต้องมาแจ้งภายในซาวสี่ชั่วโมงเด้อ เอาหนังสือรับรองการตาย บัตรประชาชนกับทะเบียนบ้านคนตาย และบัตรผู้แจ้งมานำครับ",
-          en: "To report a death at home, notify within 24 hours. Bring the death certificate, the deceased's ID and house book, and the informant's ID."
+          en: "To register a birth, report within 15 days with the Thor Ror 1/1 hospital certificate, parent IDs, and house book.",
+          de: "Die Geburt muss innerhalb von 15 Tagen gemeldet werden. Bringen Sie die Tor Ror 1/1-Bescheinigung des Krankenhauses und die Ausweise der Eltern mit.",
+          fr: "Déclarez la naissance dans les 15 jours avec le certificat hospitalier Thor Ror 1/1, les pièces d'identité des parents et le livret de maison."
         }
       },
       {
         id: 'move_dest',
         cat: 'civil',
         emoji: '🏡',
-        badge: { th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', en: 'Civil Address Transfer' },
-        title: { th: 'การย้ายที่อยู่ปลายทาง', is: 'การย้ายปลายทาง', en: 'Destination Address Move-In' },
+        badge: { 
+          th: 'งานทะเบียนราษฎร', is: 'งานทะเบียนราษฎร', 
+          en: 'Civil Address Transfer', de: 'Meldewesen / Wohnsitz', fr: 'Changement de Domicile' 
+        },
+        title: { 
+          th: 'การย้ายที่อยู่ปลายทาง', is: 'การย้ายปลายทาง', 
+          en: 'Destination Address Move-In', de: 'Wohnsitz-Ummeldung am Zielort', fr: "Déclaration d'Emménagement" 
+        },
         summary: {
           th: 'ย้ายเข้าบ้านใหม่ได้โดยตรง ไม่ต้องกลับไปอำเภอเดิม',
           is: 'ย้ายเข้าบ้านใหม่ได้เลย บ่ต้องเมื่ออำเภอเดิมดอกครับ',
-          en: 'Move into a new household directly at the destination without returning to the previous district.'
+          en: 'Move into a new household directly at the destination without returning to previous district.',
+          de: 'Direkte Ummeldung am neuen Wohnort ohne Rückkehr zum alten Bezirk.',
+          fr: 'Emménagement direct à destination sans repasser par l’ancien district.'
         },
         tip: {
           th: 'เจ้าบ้านของบ้านหลังที่จะย้ายเข้า ต้องเดินทางมาเซ็นยินยอมด้วยตนเอง',
           is: 'เจ้าบ้านหลังใหม่ต้องมาเซ็นยินยอมต่อหน้านายทะเบียนนำเด้อ',
-          en: 'The housemaster of the destination house must accompany you in person to consent.'
+          en: 'The housemaster of the destination house must accompany you in person to consent.',
+          de: 'Der Hausvorstand der neuen Wohnung muss zur Zustimmung persönlich anwesend sein.',
+          fr: 'Le propriétaire du nouveau domicile doit se présenter pour signer son accord.'
         },
-        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins' },
-        fee: { th: 'ค่าธรรมเนียม 20 บาท', is: 'ค่าธรรมเนียม 20 บาท', en: 'Fee: 20 THB' },
+        time: { th: 'ประมาณ 20 นาที', is: 'ประมาณ 20 นาที', en: 'Approx. 20 mins', de: 'Ca. 20 Minuten', fr: 'Environ 20 min' },
+        fee: { th: 'ค่าธรรมเนียม 20 บาท', is: 'ค่าธรรมเนียม 20 บาท', en: 'Fee: 20 THB', de: 'Gebühr: 20 THB', fr: 'Frais: 20 THB' },
         docs: {
           th: [
             { name: 'สมุดทะเบียนบ้านหลังใหม่', desc: 'เล่มสีน้ำเงินตัวจริงของบ้านที่จะย้ายเข้า' },
@@ -1246,12 +1114,22 @@
           en: [
             { name: 'Destination House Book', desc: 'Original blue house book of the destination property' },
             { name: 'New Housemaster’s ID', desc: 'Housemaster must attend to provide official consent' }
+          ],
+          de: [
+            { name: 'Neues Hausregisterbuch', desc: 'Original-Hausbuch der neuen Adresse' },
+            { name: 'Ausweis des neuen Hausvorstands', desc: 'Hausvorstand muss persönlich zur Genehmigung erscheinen' }
+          ],
+          fr: [
+            { name: 'Livret du nouveau domicile', desc: 'Carnet bleu original du lieu d’emménagement' },
+            { name: 'Pièce du chef de maison', desc: 'Le chef de maison doit être présent pour signer l’accord' }
           ]
         },
         speech: {
           th: "การย้ายปลายทาง สะดวกมากครับไม่ต้องกลับไปอำเภอเดิม เตรียมทะเบียนบ้านหลังที่จะย้ายเข้า บัตรประชาชนผู้ย้าย และพาเจ้าบ้านใหม่มาเซ็นยินยอมครับ ค่าธรรมเนียมยี่สิบบาทครับ",
           is: "ย้ายปลายทาง บ่ต้องเมื่ออำเภอเดิมดอกครับ ให้พาเจ้าบ้านหลังใหม่ถือเล่มทะเบียนบ้านกับบัตรประชาชนมายืนยันนำโลด ค่าธรรมเนียม 20 บาทครับ",
-          en: "Destination move-in requires the destination house book, applicant ID, and the new housemaster present to sign consent. Fee is 20 Baht."
+          en: "Destination move-in requires the destination house book, applicant ID, and the new housemaster present to sign consent. Fee is 20 Baht.",
+          de: "Die Ummeldung am Zielort ist sehr bequem. Bringen Sie das neue Hausbuch und Ihren Ausweis mit. Der neue Hausvorstand muss zur Zustimmung anwesend sein.",
+          fr: "L'emménagement direct est simple. Munissez-vous du livret de la nouvelle maison et de votre pièce d'identité. Le chef de maison doit être présent."
         }
       }
     ];
@@ -1319,7 +1197,7 @@
     }
 
     function applyLanguageTexts() {
-      const t = i18n[currentLang];
+      const t = i18n[currentLang] || i18n.th;
       document.getElementById('ui-district').childNodes[0].nodeValue = t.district + ' ';
       document.getElementById('ui-province').innerText = t.province;
       document.getElementById('ui-subtitle').innerText = t.subtitle;
@@ -1425,14 +1303,25 @@
     function playAudio() {
       const data = database.find(i => i.id === currentId);
       if (!data || !('speechSynthesis' in window)) {
-        alert('เบราว์เซอร์นี้ไม่รองรับระบบสังเคราะห์เสียง กรุณาแตะเปิดด้วย Chrome หรือ Safari ครับ');
+        alert('เบราว์เซอร์นี้ไม่รองรับระบบสังเคราะห์เสียง');
         return;
       }
 
       synth.cancel();
       const text = data.speech[currentLang] || data.speech.th;
       currentUtterance = new SpeechSynthesisUtterance(text);
-      currentUtterance.lang = currentLang === 'en' ? 'en-US' : 'th-TH';
+      
+      // ตั้งค่ารหัสภาษาสำหรับ Web Speech Synthesis แต่ละสำเนียง
+      if (currentLang === 'en') {
+        currentUtterance.lang = 'en-US';
+      } else if (currentLang === 'de') {
+        currentUtterance.lang = 'de-DE'; // รองรับทั้งเยอรมันและสวิสเยอรมัน (de-CH)
+      } else if (currentLang === 'fr') {
+        currentUtterance.lang = 'fr-FR';
+      } else {
+        currentUtterance.lang = 'th-TH';
+      }
+      
       currentUtterance.rate = 0.95;
 
       currentUtterance.onstart = () => {
@@ -1466,7 +1355,7 @@
       const btn = document.getElementById('voice-btn');
       const icon = document.getElementById('voice-btn-icon');
       const text = document.getElementById('voice-btn-text');
-      const t = i18n[currentLang];
+      const t = i18n[currentLang] || i18n.th;
       if (speaking) {
         if (btn) btn.classList.add('speaking');
         if (icon) icon.innerText = '⏹️';
