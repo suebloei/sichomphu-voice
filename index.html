@@ -39,30 +39,39 @@
       position: relative;
     }
 
-    /* แถบเตือนสำหรับเปิดใน LINE / Messenger เพื่อบังคับเปิด Chrome/Safari */
-    #inapp-warning-bar {
+    /* กล่องแจ้งเตือนพิเศษสำหรับ Facebook / Messenger */
+    #messenger-guide-box {
       display: none;
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: #ffffff;
-      padding: 8px 12px;
-      font-size: 0.75rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 99;
+      background: #fef3c7;
+      border-bottom: 2px solid #f59e0b;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: #92400e;
+      line-height: 1.4;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
-    #inapp-warning-bar a {
-      background: #ffffff;
+    #messenger-guide-box strong {
       color: #b45309;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 12px;
-      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    .btn-force-open {
       display: inline-block;
-      margin-top: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      margin-top: 6px;
+      background: #f59e0b;
+      color: #ffffff;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.75rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
     /* Header */
@@ -466,7 +475,7 @@
       -webkit-appearance: none;
     }
 
-    /* Footer: ผู้พัฒนา จบในบรรทัดเดียว */
+    /* Footer: ผู้พัฒนา */
     footer {
       padding: 8px 12px 10px 12px;
       text-align: center;
@@ -549,10 +558,11 @@
 
   <div class="app-container">
 
-    <!-- แถบแจ้งเตือนดัก In-App Browser สำหรับ LINE / Messenger -->
-    <div id="inapp-warning-bar">
-      📢 หากกดแล้วไม่มีเสียงพูด กรุณาเปิดด้วยเบราว์เซอร์หลักของเครื่อง<br>
-      <a href="javascript:void(0)" onclick="openExternalBrowser()">👉 แตะที่นี่เพื่อเปิดใน Chrome / Safari</a>
+    <!-- แถบเตือนแนะนำวิธีเปิดภายนอกสำหรับ Messenger / Facebook -->
+    <div id="messenger-guide-box">
+      <strong>⚠️ กำลังเปิดใน Messenger (เสียงอาจไม่ดัง)</strong>
+      โปรดแตะจุด 3 จุด (⋮ หรือ ⋯) ที่มุมบนขวาหน้าจอ แล้วเลือก <b>"เปิดใน Chrome"</b> หรือ <b>"เปิดในเบราว์เซอร์ระบบ"</b><br>
+      <button class="btn-force-open" onclick="openExternalBrowser()">👉 แตะตรงนี้เพื่อลองดีดเปิด Chrome</button>
     </div>
 
     <!-- Header -->
@@ -693,33 +703,35 @@
   </div>
 
   <script>
-    // ตรวจจับ In-App Browser เพื่อแสดงแถบเตือน
+    // ตรวจจับ In-App Browser ของ Messenger / Facebook
     function checkInApp() {
       var ua = navigator.userAgent || navigator.vendor || window.opera;
       var isLine = ua.indexOf('Line') > -1 || ua.indexOf('LINE') > -1;
       var isFb = ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('Messenger') > -1;
       var isApple = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-      // ถ้าเป็น In-App บน Android (ซึ่งบล็อก Speech API แน่นอน) ให้เปิดแถบเตือน
-      if (!isApple && (isLine || isFb)) {
-        var warningBar = document.getElementById('inapp-warning-bar');
-        if (warningBar) warningBar.style.display = 'block';
+      // ถ้าเป็น LINE บน Android ให้รีไดเรกต์ด้วย openExternalBrowser ทันที
+      if (!isApple && isLine) {
+        if (window.location.href.indexOf('openExternalBrowser=1') === -1) {
+          var sep = window.location.href.indexOf('?') > -1 ? '&' : '?';
+          window.location.href = window.location.href + sep + 'openExternalBrowser=1';
+        }
+        return;
+      }
+
+      // ถ้าเปิดใน Facebook / Messenger บน Android ให้แสดงกล่องคำแนะนำ
+      if (!isApple && isFb) {
+        var box = document.getElementById('messenger-guide-box');
+        if (box) box.style.display = 'block';
       }
     }
 
-    // คำสั่งเปิด External Browser
+    // คำสั่งเปิด External Browser ด้วยเทคนิค Intent พิเศษ
     function openExternalBrowser() {
-      var url = window.location.href;
-      var ua = navigator.userAgent || navigator.vendor || window.opera;
-      var isLine = ua.indexOf('Line') > -1 || ua.indexOf('LINE') > -1;
-      
-      if (isLine) {
-        var sep = url.indexOf('?') > -1 ? '&' : '?';
-        window.location.href = url + sep + 'openExternalBrowser=1';
-      } else {
-        var cleanUrl = url.replace(/^https?:\/\//, '');
-        window.location.href = 'intent://' + cleanUrl + '#Intent;scheme=https;package=com.android.chrome;end';
-      }
+      var url = window.location.href.split('?')[0];
+      // Intent พิเศษที่ใช้แพ็กเกจ Chrome โดยตรง
+      var chromeIntent = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end';
+      window.location.href = chromeIntent;
     }
 
     const i18n = {
@@ -1413,7 +1425,7 @@
     function playAudio() {
       const data = database.find(i => i.id === currentId);
       if (!data || !('speechSynthesis' in window)) {
-        alert('อุปกรณ์หรือแอปนี้ไม่รองรับระบบสังเคราะห์เสียง กรุณาแตะเปิดด้วยเบราว์เซอร์ Chrome หรือ Safari ครับ');
+        alert('เบราว์เซอร์นี้ไม่รองรับระบบสังเคราะห์เสียง กรุณาแตะเปิดด้วย Chrome หรือ Safari ครับ');
         return;
       }
 
