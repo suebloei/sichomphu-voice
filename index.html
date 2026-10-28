@@ -17,6 +17,11 @@
       -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
 
+    /* ตัวแปรขนาดฟอนต์สำหรับการปรับขนาด (A- / A+) */
+    :root {
+      --content-font-scale: 1rem;
+    }
+
     body {
       font-family: 'Sarabun', sans-serif;
       background-color: #f1f5f9;
@@ -78,7 +83,7 @@
     header {
       background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
       color: #ffffff;
-      padding: 8px 12px;
+      padding: 8px 10px;
       position: relative;
       z-index: 20;
     }
@@ -87,20 +92,20 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 6px;
+      gap: 4px;
     }
 
     .brand-box {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex: 1;
       min-width: 0;
     }
 
     .logo-badge {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       background: #ffffff;
       border-radius: 10px;
       display: flex;
@@ -112,24 +117,24 @@
     }
 
     .brand-text h1 {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 800;
       line-height: 1.2;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       white-space: nowrap;
     }
 
     .tag-kk {
       background: rgba(255,255,255,0.25);
-      font-size: 0.6rem;
-      padding: 1px 5px;
-      border-radius: 8px;
+      font-size: 0.58rem;
+      padding: 1px 4px;
+      border-radius: 6px;
     }
 
     .brand-text p {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       color: #ffe4e6;
       white-space: nowrap;
     }
@@ -137,57 +142,63 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       flex-shrink: 0;
     }
 
-    .call-btn {
-      background-color: #fbbf24;
-      color: #451a03;
+    .action-btn {
       text-decoration: none;
       font-weight: 700;
-      font-size: 0.7rem;
-      padding: 4px 7px;
-      border-radius: 14px;
+      font-size: 0.68rem;
+      padding: 4px 6px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
       white-space: nowrap;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
       cursor: pointer;
+      border: none;
+    }
+
+    .share-btn {
+      background-color: #10b981;
+      color: #ffffff;
     }
 
     .map-btn {
       background-color: #38bdf8;
       color: #082f49;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.7rem;
-      padding: 4px 7px;
-      border-radius: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      white-space: nowrap;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      cursor: pointer;
     }
 
-    /* แถบสลับภาษา */
-    .lang-bar {
+    .call-btn {
+      background-color: #fbbf24;
+      color: #451a03;
+    }
+
+    /* แถบสลับภาษาและปรับขนาดตัวอักษร */
+    .toolbar-row {
       margin-top: 6px;
-      background: rgba(0,0,0,0.18);
-      border-radius: 8px;
-      padding: 3px 6px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
     }
 
+    .lang-bar {
+      background: rgba(0,0,0,0.18);
+      border-radius: 8px;
+      padding: 2px 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
     .lang-btns {
       display: flex;
-      gap: 4px;
+      gap: 3px;
       overflow-x: auto;
       scrollbar-width: none;
       padding: 2px 0;
@@ -198,9 +209,9 @@
       border: none;
       background: transparent;
       color: #ffffff;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 3px 6px;
       border-radius: 6px;
       cursor: pointer;
       white-space: nowrap;
@@ -212,6 +223,31 @@
       background: #ffffff;
       color: #be123c;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* ปุ่มปรับขนาดตัวอักษร A- / A+ */
+    .font-resizer-wrap {
+      display: flex;
+      background: rgba(0,0,0,0.22);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .font-resizer-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: baseline;
+      font-weight: 800;
+    }
+    .font-resizer-btn:active {
+      background: rgba(255,255,255,0.25);
     }
 
     /* กล่องค้นหา & สถานะเวลาเปิดทำการ */
@@ -250,9 +286,9 @@
 
     .office-status-badge {
       background: rgba(0,0,0,0.22);
-      padding: 3px 8px;
+      padding: 3px 7px;
       border-radius: 8px;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -261,8 +297,8 @@
     }
 
     .status-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       display: inline-block;
     }
@@ -378,7 +414,7 @@
       pointer-events: none;
     }
 
-    /* Detail Box */
+    /* Detail Box: ผูกกับขนาดฟอนต์แบบย่อ-ขยายได้ */
     .detail-box {
       border: 1.5px solid #fecdd3;
       border-radius: 16px;
@@ -387,6 +423,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      font-size: var(--content-font-scale);
     }
 
     .detail-head {
@@ -398,14 +435,14 @@
     }
 
     .detail-head h2 {
-      font-size: 0.95rem;
+      font-size: calc(var(--content-font-scale) * 1.05);
       font-weight: 800;
       color: #0f172a;
     }
 
     .badge-sub {
       display: inline-block;
-      font-size: 0.62rem;
+      font-size: calc(var(--content-font-scale) * 0.7);
       background: #ffe4e6;
       color: #9f1239;
       padding: 1px 6px;
@@ -418,7 +455,7 @@
       border-left: 3.5px solid #e11d48;
       padding: 5px 8px;
       border-radius: 0 8px 8px 0;
-      font-size: 0.72rem;
+      font-size: calc(var(--content-font-scale) * 0.8);
       font-weight: 700;
       color: #881337;
     }
@@ -448,7 +485,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.65rem;
+      font-size: calc(var(--content-font-scale) * 0.7);
       font-weight: 700;
       flex-shrink: 0;
     }
@@ -459,13 +496,13 @@
     }
 
     .doc-item .info strong {
-      font-size: 0.75rem;
+      font-size: calc(var(--content-font-scale) * 0.82);
       display: block;
       color: #1e293b;
     }
 
     .doc-item .info span {
-      font-size: 0.65rem;
+      font-size: calc(var(--content-font-scale) * 0.72);
       color: #64748b;
       display: block;
     }
@@ -475,7 +512,7 @@
       border: 1px solid #fef08a;
       border-radius: 10px;
       padding: 6px 8px;
-      font-size: 0.68rem;
+      font-size: calc(var(--content-font-scale) * 0.75);
       color: #713f12;
       display: flex;
       gap: 6px;
@@ -497,13 +534,13 @@
     }
 
     .stat-card .label {
-      font-size: 0.62rem;
+      font-size: calc(var(--content-font-scale) * 0.68);
       color: #64748b;
       font-weight: 600;
     }
 
     .stat-card .val {
-      font-size: 0.75rem;
+      font-size: calc(var(--content-font-scale) * 0.82);
       font-weight: 800;
       color: #0f172a;
       margin-top: 1px;
@@ -558,22 +595,25 @@
       -webkit-appearance: none;
     }
 
-    /* Footer: ผู้พัฒนา */
+    /* Footer: ผู้พัฒนา จบในบรรทัดเดียว ไม่ล้นจอ 100% */
     footer {
-      padding: 8px 12px 10px 12px;
+      padding: 8px 8px 10px 8px;
       text-align: center;
       border-top: 1px solid #f1f5f9;
       background-color: #ffffff;
+      overflow: hidden;
     }
 
     .developer-text {
-      font-size: 0.65rem;
+      /* ปรับขนาดตามหน้าจออัตโนมัติ เพื่อให้อยู่ในบรรทัดเดียวเสมอ */
+      font-size: clamp(0.48rem, 2.1vw, 0.65rem);
       color: #64748b;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display: block;
       width: 100%;
+      letter-spacing: -0.02em;
     }
 
     /* Responsive */
@@ -594,24 +634,23 @@
         box-shadow: none;
       }
       header {
-        padding: 6px 12px;
+        padding: 6px 10px;
       }
       .brand-box {
-        gap: 6px;
+        gap: 4px;
       }
       .logo-badge {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
       }
       .brand-text h1 {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
       }
       .brand-text p {
         display: none;
       }
-      .lang-bar {
+      .toolbar-row {
         margin-top: 4px;
-        padding: 2px 4px;
       }
       .search-status-bar {
         margin-top: 4px;
@@ -651,7 +690,7 @@
       <div class="header-row">
         <div class="brand-box">
           <div class="logo-badge">
-            <svg viewBox="0 0 100 100" width="24" height="24" fill="none">
+            <svg viewBox="0 0 100 100" width="22" height="22" fill="none">
               <ellipse cx="25" cy="46" rx="15" ry="17" fill="#f472b6"/>
               <ellipse cx="25" cy="46" rx="10" ry="12" fill="#fbcfe8"/>
               <ellipse cx="75" cy="46" rx="15" ry="17" fill="#f472b6"/>
@@ -670,31 +709,44 @@
           </div>
           <div class="brand-text">
             <h1 id="ui-district">ที่ว่าการอำเภอสีชมพู <span class="tag-kk" id="ui-province">ขอนแก่น</span></h1>
-            <!-- อัปเดตชื่อ ช้างชมพู -->
             <p id="ui-subtitle">ช้างชมพู นำทางเตรียมเอกสาร</p>
           </div>
         </div>
 
-        <!-- ปุ่มโทร และปุ่มแผนที่นำทาง Google Maps -->
+        <!-- ปุ่มโทร, ปุ่มแผนที่ และปุ่มแชร์ส่งต่อให้ญาติ -->
         <div class="header-actions">
-          <a href="https://maps.google.com/?q=ที่ว่าการอำเภอสีชมพู+ขอนแก่น" target="_blank" class="map-btn" id="ui-map" title="นำทางผ่าน Google Maps">
+          <button type="button" class="action-btn share-btn" onclick="shareToFamily()" id="ui-share" title="แชร์หน้านี้ให้ญาติใน LINE">
+            📤 แชร์
+          </button>
+          <a href="https://maps.google.com/?q=ที่ว่าการอำเภอสีชมพู+ขอนแก่น" target="_blank" class="action-btn map-btn" id="ui-map" title="นำทางผ่าน Google Maps">
             📍 แผนที่
           </a>
-          <a href="tel:043399140" class="call-btn" id="ui-call">
-            📞 043-399-140
+          <a href="tel:043399140" class="action-btn call-btn" id="ui-call">
+            📞 โทร
           </a>
         </div>
       </div>
 
-      <!-- แถบสลับ 5 ภาษา -->
-      <div class="lang-bar">
-        <span id="ui-lang-title">🔊 ภาษา:</span>
-        <div class="lang-btns">
-          <button type="button" id="btn-th" class="lang-btn active" data-lang="th">ไทย</button>
-          <button type="button" id="btn-is" class="lang-btn" data-lang="is">อีสาน</button>
-          <button type="button" id="btn-en" class="lang-btn" data-lang="en">EN</button>
-          <button type="button" id="btn-de" class="lang-btn" data-lang="de">DE 🇩🇪🇨🇭</button>
-          <button type="button" id="btn-fr" class="lang-btn" data-lang="fr">FR 🇫🇷</button>
+      <!-- แถบสลับ 5 ภาษา และปุ่มปรับขนาดตัวอักษร ก-/ก+ หรือ A-/A+ -->
+      <div class="toolbar-row">
+        <div class="lang-bar">
+          <div class="lang-btns">
+            <button type="button" id="btn-th" class="lang-btn active" data-lang="th">ไทย</button>
+            <button type="button" id="btn-is" class="lang-btn" data-lang="is">อีสาน</button>
+            <button type="button" id="btn-en" class="lang-btn" data-lang="en">EN</button>
+            <button type="button" id="btn-de" class="lang-btn" data-lang="de">DE 🇩🇪🇨🇭</button>
+            <button type="button" id="btn-fr" class="lang-btn" data-lang="fr">FR 🇫🇷</button>
+          </div>
+        </div>
+
+        <!-- ปุ่มปรับขนาดตัวอักษรเฉพาะภาษา -->
+        <div class="font-resizer-wrap">
+          <button type="button" class="font-resizer-btn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร">
+            <span id="font-btn-small" style="font-size:0.75rem;">ก-</span>
+          </button>
+          <button type="button" class="font-resizer-btn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร">
+            <span id="font-btn-large" style="font-size:0.95rem;">ก+</span>
+          </button>
         </div>
       </div>
 
@@ -719,7 +771,6 @@
         <div class="alert-card">
           <span style="font-size:1.2rem;">🐘</span>
           <div>
-            <!-- อัปเดตชื่อ น้องช้างชมพู -->
             <strong id="ui-notice-head">อ่านหนังสือไม่ออก น้องช้างชมพูช่วยอ่านให้ฟังเด้อ!</strong>
             <p id="ui-notice-body">แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง</p>
           </div>
@@ -744,7 +795,7 @@
       <!-- รายละเอียดเอกสารและปุ่มฟังเสียง -->
       <div class="landscape-right-col">
         
-        <div class="detail-box">
+        <div class="detail-box" id="detail-box-wrap">
           <div class="detail-head">
             <div>
               <span class="badge-sub" id="display-badge">งานทะเบียนราษฎรและบัตร</span>
@@ -796,7 +847,7 @@
 
     </main>
 
-    <!-- Footer: ผู้พัฒนา -->
+    <!-- Footer: ผู้พัฒนา จบในบรรทัดเดียว ไม่ล้นจอ -->
     <footer>
       <span class="developer-text" id="ui-developer">
         พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น
@@ -832,6 +883,35 @@
       window.location.href = chromeIntent;
     }
 
+    // ฟังก์ชันแชร์ส่งต่อให้ญาติใน LINE / โซเชียลมีเดีย
+    function shareToFamily() {
+      var shareUrl = window.location.href.split('?')[0] + '?openExternalBrowser=1';
+      var currentService = database.find(i => i.id === currentId);
+      var serviceName = currentService ? (currentService.title[currentLang] || currentService.title.th) : 'เตรียมเอกสาร';
+      var shareTitle = 'เสียงนำทางเตรียมเอกสาร: ' + serviceName + ' (ที่ว่าการอำเภอสีชมพู)';
+      var shareText = 'ตรวจสอบเอกสารที่ต้องใช้ในการติดต่อ ' + serviceName + ' พร้อมเสียงบรรยายจากน้องช้างชมพู:';
+
+      if (navigator.share) {
+        navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl
+        }).catch(err => console.log('Share dismissed:', err));
+      } else {
+        // Fallback ส่งเข้า LINE โดยตรง
+        window.open('https://line.me/R/msg/text/?' + encodeURIComponent(shareText + ' ' + shareUrl), '_blank');
+      }
+    }
+
+    // ฟังก์ชันปรับขนาดตัวอักษร A- / A+
+    let currentFontScale = 1.0;
+    function changeFontSize(delta) {
+      currentFontScale += delta * 0.1;
+      if (currentFontScale < 0.85) currentFontScale = 0.85;
+      if (currentFontScale > 1.4) currentFontScale = 1.4;
+      document.documentElement.style.setProperty('--content-font-scale', currentFontScale + 'rem');
+    }
+
     function updateOfficeStatus() {
       const now = new Date();
       const day = now.getDay();
@@ -862,16 +942,16 @@
       }
     }
 
-    // อัปเดตพจนานุกรม UI ด้วยชื่อ "ช้างชมพู"
+    // พจนานุกรม UI
     const i18n = {
       th: {
         district: "ที่ว่าการอำเภอสีชมพู",
         province: "ขอนแก่น",
         subtitle: "ช้างชมพู นำทางเตรียมเอกสาร",
-        call: "📞 043-399-140",
+        call: "📞 โทร",
         map: "📍 แผนที่",
+        share: "📤 แชร์",
         searchPlaceholder: "พิมพ์ค้นหาบริการ เช่น บัตร, สมรส...",
-        langTitle: "🔊 ภาษา:",
         noticeHead: "อ่านหนังสือไม่ออก น้องช้างชมพูช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
         all: "ทั้งหมด",
@@ -885,16 +965,18 @@
         feeLabel: "💰 ค่าธรรมเนียม",
         btnPlay: "กดเพื่อฟังเสียงบรรยาย",
         btnStop: "กดเพื่อหยุดฟังเสียง",
+        fontSmall: "ก-",
+        fontLarge: "ก+",
         developer: "พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น"
       },
       is: {
         district: "ที่ว่าการอำเภอสีชมพู",
         province: "ขอนแก่น",
         subtitle: "ช้างชมพู นำทางเตรียมเอกสาร",
-        call: "📞 043-399-140",
+        call: "📞 โทร",
         map: "📍 แผนที่",
+        share: "📤 แชร์",
         searchPlaceholder: "ค้นหาบริการ เช่น เฮ็ดบัตร, แต่งงาน...",
-        langTitle: "🔊 ภาษา:",
         noticeHead: "อ่านหนังสือไม่ออก น้องช้างชมพูช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
         all: "ทั้งหมด",
@@ -908,16 +990,18 @@
         feeLabel: "💰 ค่าธรรมเนียม",
         btnPlay: "กดเพื่อฟังเสียงเว้าสู่ฟัง",
         btnStop: "กดเพื่อหยุดฟังเสียง",
+        fontSmall: "ก-",
+        fontLarge: "ก+",
         developer: "พัฒนาโดย นายนพคุณ สืบเลย และนายปัญญา คำสะไมล์ โรงเรียนสีชมพูศึกษา องค์การบริหารส่วนจังหวัดขอนแก่น"
       },
       en: {
         district: "Si Chomphu District Office",
         province: "Khon Kaen",
         subtitle: "Chang Chomphu Voice Guide",
-        call: "📞 043-399-140",
+        call: "📞 Call",
         map: "📍 Maps",
+        share: "📤 Share",
         searchPlaceholder: "Search service e.g. ID, Marriage...",
-        langTitle: "🔊 Language:",
         noticeHead: "Audio Assistance Available!",
         noticeBody: "Tap a service, then tap the audio button below to listen.",
         all: "All",
@@ -931,16 +1015,18 @@
         feeLabel: "💰 Official Fee",
         btnPlay: "Listen to Voice Guide",
         btnStop: "Stop Audio Guide",
-        developer: "Developed by Mr.Noppakhun Suebloei and Mr.Panya Khamsmile, Sichomphusuksa School, Khon Kaen Provincial Administrative Organization"
+        fontSmall: "A-",
+        fontLarge: "A+",
+        developer: "Developed by Mr.Noppakhun Suebloei and Mr.Panya Khamsmile, Sichomphusuksa School, Khon Kaen PAO"
       },
       de: {
         district: "Bezirksamt Si Chomphu",
         province: "Khon Kaen",
         subtitle: "Chang Chomphu Sprachführer",
-        call: "📞 043-399-140",
+        call: "📞 Anruf",
         map: "📍 Karte",
+        share: "📤 Teilen",
         searchPlaceholder: "Dienst suchen z.B. Ausweis, Ehe...",
-        langTitle: "🔊 Sprache:",
         noticeHead: "Audio-Hilfe verfügbar!",
         noticeBody: "Dienst auswählen und unten auf Audio tippen.",
         all: "Alle",
@@ -954,16 +1040,18 @@
         feeLabel: "💰 Gebühr",
         btnPlay: "Audio anhören",
         btnStop: "Audio stoppen",
+        fontSmall: "A-",
+        fontLarge: "A+",
         developer: "Entwickelt von Mr.Noppakhun Suebloei und Mr.Panya Khamsmile, Sichomphusuksa Schule"
       },
       fr: {
         district: "Bureau de District de Si Chomphu",
         province: "Khon Kaen",
         subtitle: "Chang Chomphu Guide Vocal",
-        call: "📞 043-399-140",
+        call: "📞 Appel",
         map: "📍 Plan",
+        share: "📤 Partager",
         searchPlaceholder: "Rechercher e.g. Carte, Mariage...",
-        langTitle: "🔊 Langue:",
         noticeHead: "Assistance Vocale Disponible!",
         noticeBody: "Sélectionnez un service et appuyez sur Audio ci-dessous.",
         all: "Tous",
@@ -977,6 +1065,8 @@
         feeLabel: "💰 Frais officiels",
         btnPlay: "Écouter le guide",
         btnStop: "Arrêter l'audio",
+        fontSmall: "A-",
+        fontLarge: "A+",
         developer: "Développé par Mr.Noppakhun Suebloei et Mr.Panya Khamsmile, École de Sichomphusuksa"
       }
     };
@@ -1355,8 +1445,8 @@
       document.getElementById('ui-subtitle').innerText = t.subtitle;
       document.getElementById('ui-call').innerText = t.call;
       document.getElementById('ui-map').innerText = t.map;
+      document.getElementById('ui-share').innerText = t.share;
       document.getElementById('service-search').placeholder = t.searchPlaceholder;
-      document.getElementById('ui-lang-title').innerText = t.langTitle;
       document.getElementById('ui-notice-head').innerText = t.noticeHead;
       document.getElementById('ui-notice-body').innerText = t.noticeBody;
 
@@ -1372,6 +1462,10 @@
       document.getElementById('ui-fee-label').innerText = t.feeLabel;
       document.getElementById('voice-btn-text').innerText = isSpeaking ? t.btnStop : t.btnPlay;
       document.getElementById('ui-developer').innerText = t.developer;
+
+      // อัปเดตตัวอักษรบนปุ่มปรับขนาดฟอนต์ (ก-/ก+ หรือ A-/A+)
+      document.getElementById('font-btn-small').innerText = t.fontSmall;
+      document.getElementById('font-btn-large').innerText = t.fontLarge;
     }
 
     function filterCat(cat) {
