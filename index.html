@@ -87,7 +87,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
     }
 
     .brand-box {
@@ -112,7 +112,7 @@
     }
 
     .brand-text h1 {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 800;
       line-height: 1.2;
       display: flex;
@@ -123,15 +123,22 @@
 
     .tag-kk {
       background: rgba(255,255,255,0.25);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       padding: 1px 5px;
       border-radius: 8px;
     }
 
     .brand-text p {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: #ffe4e6;
       white-space: nowrap;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
     }
 
     .call-btn {
@@ -139,19 +146,34 @@
       color: #451a03;
       text-decoration: none;
       font-weight: 700;
-      font-size: 0.72rem;
-      padding: 4px 8px;
-      border-radius: 16px;
+      font-size: 0.7rem;
+      padding: 4px 7px;
+      border-radius: 14px;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
+      gap: 3px;
       white-space: nowrap;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
       cursor: pointer;
     }
 
-    /* แถบสลับภาษาแบบเลื่อนได้ (Scrollable Multi-language Tabs) */
+    .map-btn {
+      background-color: #38bdf8;
+      color: #082f49;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 4px 7px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    /* แถบสลับภาษา */
     .lang-bar {
       margin-top: 6px;
       background: rgba(0,0,0,0.18);
@@ -191,6 +213,61 @@
       color: #be123c;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
+
+    /* กล่องค้นหา & สถานะเวลาเปิดทำการ */
+    .search-status-bar {
+      margin-top: 6px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      border-radius: 8px;
+      padding: 4px 8px 4px 26px;
+      font-size: 0.72rem;
+      color: #0f172a;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      pointer-events: none;
+    }
+
+    .office-status-badge {
+      background: rgba(0,0,0,0.22);
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .status-dot.open { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+    .status-dot.closed { background: #ef4444; }
 
     /* Main Content */
     main {
@@ -536,6 +613,9 @@
         margin-top: 4px;
         padding: 2px 4px;
       }
+      .search-status-bar {
+        margin-top: 4px;
+      }
       main {
         display: flex;
         flex-direction: column;
@@ -594,12 +674,18 @@
           </div>
         </div>
 
-        <a href="tel:043399140" class="call-btn" id="ui-call">
-          📞 043-399-140
-        </a>
+        <!-- ปุ่มโทร และปุ่มแผนที่นำทาง Google Maps -->
+        <div class="header-actions">
+          <a href="https://maps.google.com/?q=ที่ว่าการอำเภอสีชมพู+ขอนแก่น" target="_blank" class="map-btn" id="ui-map" title="นำทางผ่าน Google Maps">
+            📍 แผนที่
+          </a>
+          <a href="tel:043399140" class="call-btn" id="ui-call">
+            📞 043-399-140
+          </a>
+        </div>
       </div>
 
-      <!-- แถบสลับ 5 ภาษา (ไทย, อีสาน, EN, DE/สวิส, FR) -->
+      <!-- แถบสลับ 5 ภาษา -->
       <div class="lang-bar">
         <span id="ui-lang-title">🔊 ภาษา:</span>
         <div class="lang-btns">
@@ -608,6 +694,18 @@
           <button type="button" id="btn-en" class="lang-btn" data-lang="en">EN</button>
           <button type="button" id="btn-de" class="lang-btn" data-lang="de">DE 🇩🇪🇨🇭</button>
           <button type="button" id="btn-fr" class="lang-btn" data-lang="fr">FR 🇫🇷</button>
+        </div>
+      </div>
+
+      <!-- กล่องค้นหาด่วน & ป้ายเวลาทำการ (Live Status) -->
+      <div class="search-status-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="service-search" class="search-input" placeholder="พิมพ์ค้นหาบริการ เช่น บัตร, สมรส...">
+        </div>
+        <div class="office-status-badge" id="office-status" title="เวลาทำการ: จันทร์ - ศุกร์ 08:30 - 16:30 น.">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">ตรวจเวลาทำการ...</span>
         </div>
       </div>
     </header>
@@ -732,6 +830,38 @@
       window.location.href = chromeIntent;
     }
 
+    // ฟังก์ชันคำนวณเวลาเปิด-ปิดทำการแบบสด
+    function updateOfficeStatus() {
+      const now = new Date();
+      const day = now.getDay(); // 0 = อาทิตย์, 1-5 = จันทร์-ศุกร์, 6 = เสาร์
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const timeVal = hour * 60 + minute;
+
+      // จันทร์ - ศุกร์ (8:30 - 16:30 น.)
+      const isOpen = (day >= 1 && day <= 5) && (timeVal >= 8 * 60 + 30 && timeVal <= 16 * 60 + 30);
+      const dot = document.getElementById('status-dot');
+      const text = document.getElementById('status-text');
+
+      const statusMap = {
+        th: { open: "เปิดทำการ (08:30-16:30)", closed: "นอกเวลาทำการ" },
+        is: { open: "เปิดทำการอยู่เด้อ", closed: "ปิดทำการแล้ว" },
+        en: { open: "Open (8:30 AM - 4:30 PM)", closed: "Closed Now" },
+        de: { open: "Geöffnet (08:30-16:30)", closed: "Geschlossen" },
+        fr: { open: "Ouvert (08:30-16:30)", closed: "Fermé actuellement" }
+      };
+
+      const langStatus = statusMap[currentLang] || statusMap.th;
+
+      if (isOpen) {
+        dot.className = "status-dot open";
+        text.innerText = langStatus.open;
+      } else {
+        dot.className = "status-dot closed";
+        text.innerText = langStatus.closed;
+      }
+    }
+
     // รองรับ UI 5 ภาษา
     const i18n = {
       th: {
@@ -739,6 +869,8 @@
         province: "ขอนแก่น",
         subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
         call: "📞 043-399-140",
+        map: "📍 แผนที่",
+        searchPlaceholder: "พิมพ์ค้นหาบริการ เช่น บัตร, สมรส...",
         langTitle: "🔊 ภาษา:",
         noticeHead: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
@@ -760,6 +892,8 @@
         province: "ขอนแก่น",
         subtitle: "น้องช้างพาเพลิน แนะนำเอกสาร",
         call: "📞 043-399-140",
+        map: "📍 แผนที่",
+        searchPlaceholder: "ค้นหาบริการ เช่น เฮ็ดบัตร, แต่งงาน...",
         langTitle: "🔊 ภาษา:",
         noticeHead: "อ่านหนังสือไม่ออก น้องช้างช่วยอ่านให้ฟังเด้อ!",
         noticeBody: "แตะเลือกบริการ แล้วแตะปุ่มฟังเสียงด้านล่าง",
@@ -781,6 +915,8 @@
         province: "Khon Kaen",
         subtitle: "Document Preparation Voice Guide",
         call: "📞 043-399-140",
+        map: "📍 Maps",
+        searchPlaceholder: "Search service e.g. ID, Marriage...",
         langTitle: "🔊 Language:",
         noticeHead: "Audio Assistance Available!",
         noticeBody: "Tap a service, then tap the audio button below to listen.",
@@ -802,6 +938,8 @@
         province: "Khon Kaen",
         subtitle: "Sprachführer für Dokumente",
         call: "📞 043-399-140",
+        map: "📍 Karte",
+        searchPlaceholder: "Dienst suchen z.B. Ausweis, Ehe...",
         langTitle: "🔊 Sprache:",
         noticeHead: "Audio-Hilfe verfügbar!",
         noticeBody: "Dienst auswählen und unten auf Audio tippen.",
@@ -823,6 +961,8 @@
         province: "Khon Kaen",
         subtitle: "Guide Vocal des Démarches",
         call: "📞 043-399-140",
+        map: "📍 Plan",
+        searchPlaceholder: "Rechercher e.g. Carte, Mariage...",
         langTitle: "🔊 Langue:",
         noticeHead: "Assistance Vocale Disponible!",
         noticeBody: "Sélectionnez un service et appuyez sur Audio ci-dessous.",
@@ -1137,6 +1277,7 @@
     let currentId = 'id_expired';
     let currentCategory = 'all';
     let currentLang = 'th';
+    let searchQuery = '';
     let isSpeaking = false;
     let synth = window.speechSynthesis;
     let currentUtterance = null;
@@ -1145,6 +1286,8 @@
       checkInApp();
       setupEventListeners();
       applyLanguageTexts();
+      updateOfficeStatus();
+      setInterval(updateOfficeStatus, 60000); // อัปเดตสถานะเปิดทำการทุก 1 นาที
       renderServices();
       loadDetail(currentId);
     });
@@ -1165,6 +1308,14 @@
           if (cat) filterCat(cat);
         });
       });
+
+      const searchInput = document.getElementById('service-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          searchQuery = e.target.value.trim().toLowerCase();
+          renderServices();
+        });
+      }
 
       const voiceBtn = document.getElementById('voice-btn');
       if (voiceBtn) {
@@ -1192,6 +1343,7 @@
       if (activeBtn) activeBtn.classList.add('active');
 
       applyLanguageTexts();
+      updateOfficeStatus();
       renderServices();
       loadDetail(currentId);
     }
@@ -1202,6 +1354,8 @@
       document.getElementById('ui-province').innerText = t.province;
       document.getElementById('ui-subtitle').innerText = t.subtitle;
       document.getElementById('ui-call').innerText = t.call;
+      document.getElementById('ui-map').innerText = t.map;
+      document.getElementById('service-search').placeholder = t.searchPlaceholder;
       document.getElementById('ui-lang-title').innerText = t.langTitle;
       document.getElementById('ui-notice-head').innerText = t.noticeHead;
       document.getElementById('ui-notice-body').innerText = t.noticeBody;
@@ -1232,9 +1386,23 @@
       const container = document.getElementById('service-list');
       container.innerHTML = '';
 
-      const filtered = currentCategory === 'all' 
+      let filtered = currentCategory === 'all' 
         ? database 
         : database.filter(item => item.cat === currentCategory);
+
+      // กรองผ่านกล่องค้นหาด่วน (Search Filter)
+      if (searchQuery) {
+        filtered = filtered.filter(item => {
+          const title = (item.title[currentLang] || item.title.th).toLowerCase();
+          const summary = (item.summary[currentLang] || item.summary.th).toLowerCase();
+          return title.includes(searchQuery) || summary.includes(searchQuery);
+        });
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<span style="font-size:0.75rem; color:#94a3b8; padding:8px;">ไม่พบรายการที่ค้นหา</span>';
+        return;
+      }
 
       filtered.forEach(s => {
         const chip = document.createElement('div');
@@ -1311,11 +1479,10 @@
       const text = data.speech[currentLang] || data.speech.th;
       currentUtterance = new SpeechSynthesisUtterance(text);
       
-      // ตั้งค่ารหัสภาษาสำหรับ Web Speech Synthesis แต่ละสำเนียง
       if (currentLang === 'en') {
         currentUtterance.lang = 'en-US';
       } else if (currentLang === 'de') {
-        currentUtterance.lang = 'de-DE'; // รองรับทั้งเยอรมันและสวิสเยอรมัน (de-CH)
+        currentUtterance.lang = 'de-DE';
       } else if (currentLang === 'fr') {
         currentUtterance.lang = 'fr-FR';
       } else {
